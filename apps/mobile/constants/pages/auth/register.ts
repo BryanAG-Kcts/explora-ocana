@@ -2,9 +2,12 @@ import { z } from 'zod'
 
 export const RegisterSchema = z
   .object({
-    username: z
-      .string('Debes ingresar un nombre de usuario')
-      .min(3, 'Tu nombre de usuario debe tener al menos 3 caracteres'),
+    name: z
+      .string('Debes ingresar un nombre válido')
+      .min(1, 'Tu nombre debe tener al menos 1 carácter'),
+    lastname: z
+      .string('Debes ingresar un apellido válido')
+      .min(1, 'Tu apellido debe tener al menos 1 carácter'),
     email: z
       .email('Debes ingresar un email válido')
       .min(1, 'Debes ingresar un email válido'),

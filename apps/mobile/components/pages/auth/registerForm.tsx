@@ -6,6 +6,7 @@ import { FormInput } from '@/components/global/formInput'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { axiosInstance } from '@/constants/global/axios'
 import {
   RegisterSchema,
   type RegisterSchemaType
@@ -15,17 +16,41 @@ export function RegisterForm() {
   const { control, handleSubmit } = useForm<RegisterSchemaType>({
     resolver: zodResolver(RegisterSchema)
   })
-  const onSubmit: SubmitHandler<RegisterSchemaType> = data => console.log(data)
+  const onSubmit: SubmitHandler<RegisterSchemaType> = async form => {
+    const { data } = await axiosInstance
+      .post('/auth/register', form)
+      .catch(err => {
+        console.log(err)
+        return { data: null }
+      })
+
+    console.log(data)
+  }
 
   return (
     <View className='flex-1 p-4 gap-4'>
       <Controller
         control={control}
-        name='username'
+        name='name'
         render={({ field, fieldState }) => (
           <FormInput
-            label='Nombre de usuario'
-            hint='John Doe'
+            label='Nombres'
+            hint='Ingresa tu nombre'
+            value={field.value}
+            onChangeText={field.onChange}
+            error={fieldState.error?.message}
+            leftComponent={<Icon as={User} size={18} />}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name='lastname'
+        render={({ field, fieldState }) => (
+          <FormInput
+            label='Apellidos'
+            hint='Ingresa tus apellidos'
             value={field.value}
             onChangeText={field.onChange}
             error={fieldState.error?.message}

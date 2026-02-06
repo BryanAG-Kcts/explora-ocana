@@ -5,6 +5,7 @@ import { PortalHost } from '@rn-primitives/portal'
 import { Slot } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Toast from 'react-native-toast-message'
 import { useUniwind, withUniwind } from 'uniwind'
 import { NAV_THEME } from '@/lib/theme'
 
@@ -24,6 +25,7 @@ export default function RootLayout() {
         <Slot />
       </StyledSafeAreaView>
       <PortalHost />
+      <Toast />
     </ThemeProvider>
   )
 }
