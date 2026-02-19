@@ -31,8 +31,9 @@ export function FormInput({ error, ...props }: Props) {
         customLabelStyles={{
           colorFocused: labelStyles.color as string,
           colorBlurred: labelStyles.color as string,
-          topFocused: -27,
-          fontSizeFocused: 12
+          topFocused: -35,
+          fontSizeFocused: 12,
+          leftFocused: -35
         }}
         animationDuration={150}
       />

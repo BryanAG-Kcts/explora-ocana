@@ -1,13 +1,11 @@
 import { z } from 'zod'
+import { i18n } from '@/constants/global/i18n'
 
 export const LoginSchema = z.object({
-  email: z
-    .email('Debes ingresar un email válido')
-    .min(1, 'Debes ingresar un email válido'),
+  email: z.email(i18n.t('authValidations.email')),
   password: z
-    .string('Debes ingresar una contraseña')
-    .min(1, 'Debes ingresar una contraseña')
-    .min(6, 'La contraseña debe tener al menos 6 caracteres')
+    .string(i18n.t('authValidations.password'))
+    .min(6, i18n.t('authValidations.passwordMinLength'))
 })
 
 export type LoginSchemaType = z.infer<typeof LoginSchema>
