@@ -1,0 +1,83 @@
+import { useLocalSearchParams } from 'expo-router'
+import * as Speech from 'expo-speech'
+import { ArrowLeft, ArrowRight, Clock, Volume2 } from 'lucide-react-native'
+import { View } from 'react-native'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon'
+import { Text } from '@/components/ui/text'
+
+export default function Quest() {
+  const { quest } = useLocalSearchParams()
+  const addMessage = () => {
+    const thingToSay =
+      'wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa'
+    Speech.speak(thingToSay)
+  }
+
+  return (
+    <View>
+      <View className='flex-row p-4 gap-4 items-center'>
+        <Icon as={ArrowLeft} />
+        <Text variant='h4'>Lección {quest}</Text>
+      </View>
+      <View className='bg-blue-600 h-52 justify-end'>
+        <View className='items-start gap-2 p-4'>
+          <Badge>
+            <Text>Capítulo 1: Antepasados</Text>
+          </Badge>
+
+          <Text variant='h2' className='text-white'>
+            Los indios
+          </Text>
+        </View>
+      </View>
+
+      <View className='p-4'>
+        <View className='flex-row justify-between items-center'>
+          <Text variant='h3'>Los indios y cultura</Text>
+          <Button size='icon' className='rounded-full' onPress={addMessage}>
+            <Icon as={Volume2} size={28} className='text-white' />
+          </Button>
+        </View>
+
+        <View className='flex-row gap-2 items-center'>
+          <Icon as={Clock} size={16} className='text-muted-foreground' />
+          <Text variant='muted'>3 Minutos de lectura</Text>
+        </View>
+      </View>
+
+      <View className='p-4 gap-2'>
+        <Text>
+          wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa
+          wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa
+        </Text>
+        <Text>
+          wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa
+          wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa
+        </Text>
+        <Text variant='blockquote'>
+          wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa
+          wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa
+        </Text>
+
+        <Text>
+          wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa
+          wasa wasa wasa wasa wasa wasa wasa wasa wasa wasa
+        </Text>
+
+        <View className='flex-row justify-between py-4'>
+          <Button variant='outline'>
+            <Icon as={ArrowLeft} />
+            <Text>Regresar</Text>
+          </Button>
+
+          <Button>
+            <Text>Continuar</Text>
+            <Icon as={ArrowRight} className='text-primary-foreground' />
+          </Button>
+        </View>
+      </View>
+    </View>
+  )
+}
