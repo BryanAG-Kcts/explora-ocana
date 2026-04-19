@@ -35,6 +35,10 @@ export default function Login() {
           {i18n.t('login.registerHere')}
         </Link>
       </Text>
+
+      <Link href='/home' className='text-primary'>
+        Directo a home
+      </Link>
     </View>
   )
 }

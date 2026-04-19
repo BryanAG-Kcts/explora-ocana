@@ -1,33 +1,29 @@
-import { LogIn, Sparkles } from 'lucide-react-native'
-import { TouchableOpacity } from 'react-native'
+import { Animated, TouchableOpacity, View } from 'react-native'
 import type { Route } from 'react-native-tab-view'
-import { Badge } from '@/components/ui/badge'
-import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { cn } from '@/lib/utils'
 
 interface Props {
   route: Route
   isActive: boolean
+  opacity: Animated.AnimatedInterpolation<number>
   onPress: () => void
 }
-export function TabItem({ route, isActive, onPress }: Props) {
+export function TabItem({ route, isActive, opacity, onPress }: Props) {
   return (
-    <TouchableOpacity className='flex-1 px-3' onPress={onPress}>
-      <Badge className='p-2 gap-2' variant={isActive ? 'default' : 'outline'}>
-        <Icon
-          as={POSSIBLE_ICONS[route.icon as keyof typeof POSSIBLE_ICONS]}
-          className={isActive ? 'text-primary-foreground' : 'text-border'}
-        />
+    <View className='rounded-full flex-1 overflow-hidden relative'>
+      <Animated.View
+        style={{ opacity }}
+        className='absolute w-full flex-1 h-full bg-primary left-0 top-0'
+      />
 
-        {isActive && (
-          <Text className='text-primary-foreground'>{route.title}</Text>
-        )}
-      </Badge>
-    </TouchableOpacity>
+      <TouchableOpacity onPress={onPress} className='px-4 py-2'>
+        <Text
+          className={cn('text-center', !isActive && 'text-muted-foreground')}
+        >
+          {route.title}
+        </Text>
+      </TouchableOpacity>
+    </View>
   )
-}
-
-const POSSIBLE_ICONS = {
-  LogIn,
-  Sparkles
 }
