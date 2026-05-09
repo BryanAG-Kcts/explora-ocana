@@ -1,7 +1,7 @@
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import * as Speech from 'expo-speech'
 import { ArrowLeft, ArrowRight, Clock, Volume2 } from 'lucide-react-native'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { InformativeQuestion } from '@/components/pages/home/informativeQuestion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -29,8 +29,10 @@ export default function Quest() {
   return (
     <View>
       <View className='flex-row p-4 gap-4 items-center'>
-        <Icon as={ArrowLeft} />
-        <Text variant='h4'>Lección {quest}</Text>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Icon as={ArrowLeft} />
+        </TouchableOpacity>
+        <Text variant='h4'>Lección 1</Text>
       </View>
 
       <View className='bg-blue-600 h-52 justify-end'>

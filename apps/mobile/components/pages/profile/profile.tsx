@@ -14,7 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 
-export default function Profile() {
+export function Profile() {
   return (
     <ScrollView className='gap-7' contentContainerStyle={{ gap: 28 }}>
       <View className='flex-row gap-4 items-center justify-between p-2 px-5 border-b border-primary/30'>
@@ -30,7 +30,9 @@ export default function Profile() {
         <View className='border-4 p-2 border-primary/30 rounded-full'>
           <Avatar alt='Usuario' className='size-32'>
             <AvatarImage
-              source={{ uri: 'https://github.com/bryanag-kcts.png' }}
+              source={{
+                uri: 'https://www.pngkey.com/png/full/50-506462_we-love-cactus-logo-cactus-logo.png'
+              }}
             />
             <AvatarFallback>
               <Text>US</Text>

@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import { LoginForm } from '@/components/pages/auth/loginForm'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { i18n } from '@/constants/global/i18n'
+import { I18N } from '@/locales/i18n'
 
 export default function Login() {
   return (
@@ -19,24 +19,24 @@ export default function Login() {
       </View>
 
       <Text variant='h1'>
-        {i18n.t('login.title')}
+        {I18N.t('LOGIN.TITLE')}
         <Text variant='h1' className='text-primary'>
-          {i18n.t('login.strongTitle')}
+          {I18N.t('LOGIN.TITLE_2')}
         </Text>
       </Text>
 
-      <Text className='text-center'>{i18n.t('login.description')}</Text>
+      <Text className='text-center'>{I18N.t('LOGIN.DESC')}</Text>
       <View className='w-full h-30 bg-primary/30 rounded' />
-
       <LoginForm />
+
       <Text>
-        {i18n.t('login.doNotHaveAccount')}
-        <Link href='/auth/register' className='text-primary'>
-          {i18n.t('login.registerHere')}
+        {I18N.t('LOGIN.NO_ACCOUNT')}
+        <Link href='/auth/register' className='text-primary underline'>
+          {I18N.t('LOGIN.REGISTER_HERE')}
         </Link>
       </Text>
 
-      <Link href='/home' className='text-primary'>
+      <Link href='/home' className='text-primary underline'>
         Directo a home
       </Link>
     </View>

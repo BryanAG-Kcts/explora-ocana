@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import { ArrowLeft, ArrowRight } from 'lucide-react-native'
 import { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
@@ -13,6 +14,7 @@ export default function Quiz() {
   const { current, currentIndex, goNext } = useStep(QUESTIONS, 0)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const [hasSubmitted, setHasSubmitted] = useState(false)
+  const router = useRouter()
 
   const progressValue = ((currentIndex + 1) / QUESTIONS.length) * 100
 
@@ -36,13 +38,13 @@ export default function Quiz() {
       return
     }
 
-    console.log('¡Quiz terminado!')
+    router.replace('/home')
   }
 
   return (
     <View className='flex-1 bg-background'>
       <View className='flex-row p-4 gap-4 items-center'>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.back()}>
           <Icon as={ArrowLeft} />
         </TouchableOpacity>
         <Text variant='h4'>Lección 1</Text>
@@ -105,7 +107,13 @@ export default function Quiz() {
           disabled={selectedOption === null}
           className={selectedOption === null ? 'opacity-50' : ''}
         >
-          <Text>{hasSubmitted ? 'Siguiente Pregunta' : 'Comprobar'}</Text>
+          <Text>
+            {currentIndex === QUESTIONS.length - 1
+              ? 'Terminar intento'
+              : hasSubmitted
+                ? 'Siguiente Pregunta'
+                : 'Comprobar'}
+          </Text>
           <Icon as={ArrowRight} className='text-primary-foreground' />
         </Button>
       </View>

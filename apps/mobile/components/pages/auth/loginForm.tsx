@@ -6,8 +6,8 @@ import { FormInput } from '@/components/global/formInput'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { i18n } from '@/constants/global/i18n'
 import { LoginSchema, type LoginSchemaType } from '@/constants/pages/auth/login'
+import { i18n } from '@/locales/i18n'
 
 export function LoginForm() {
   const { control, handleSubmit } = useForm<LoginSchemaType>({
@@ -22,8 +22,8 @@ export function LoginForm() {
         name='email'
         render={({ field, fieldState }) => (
           <FormInput
-            label={i18n.t('login.emailLabel')}
-            hint={i18n.t('login.emailHint')}
+            label={i18n.t('LOGIN.EMAIL_LABEL')}
+            hint={i18n.t('LOGIN.EMAIL_HINT')}
             value={field.value}
             onChangeText={field.onChange}
             error={fieldState.error?.message}
@@ -38,8 +38,8 @@ export function LoginForm() {
           name='password'
           render={({ field, fieldState }) => (
             <FormInput
-              label={i18n.t('login.passwordLabel')}
-              hint={i18n.t('login.passwordHint')}
+              label={i18n.t('LOGIN.PASSWORD_LABEL')}
+              hint={i18n.t('LOGIN.PASSWORD_HINT')}
               value={field.value}
               onChangeText={field.onChange}
               error={fieldState.error?.message}
@@ -50,12 +50,12 @@ export function LoginForm() {
         />
 
         <Text variant='small' className='text-right text-primary'>
-          {i18n.t('login.passwordForgot')}
+          {i18n.t('LOGIN.PASSWORD_FORGOT')}
         </Text>
       </View>
 
       <Button onPress={handleSubmit(onSubmit)}>
-        <Text>{i18n.t('login.loginButton')}</Text>
+        <Text>{i18n.t('LOGIN.LOGIN_BUTTON')}</Text>
       </Button>
     </View>
   )
