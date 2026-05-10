@@ -5,24 +5,35 @@ export const learningRoute = [
     '1a',
     'Sección A',
     [
-      new Node('2a', 'quest', 0, 0, [
-        new Node('5a', 'quiz', 100, 290, [
-          new Node('6a', 'quiz', 0, 500, [], true)
+      new Node('quest-1', 'quest', 0, 0, [
+        new Node('5a', 'ar', 100, 290, [
+          new Node('quiz-1', 'quiz', 0, 450, [
+            new Node('quest-5', 'quest', 250, 480, [
+              new Node('quest-6', 'quest', 50, 650, [], true)
+            ])
+          ])
         ])
       ]),
-      new Node('3a', 'ar', 180, 128, [new Node('4a', 'quiz', 250, 450, [])])
+      new Node('quiz-2', 'quiz', 250, 100, [], true)
     ],
     250,
-    500
+    650
   ),
   new RouteSection(
     '1b',
     'Sección B',
     [
-      new Node('2b', 'quest', 0, 0, []),
-      new Node('3b', 'quest', 180, 128, [new Node('4b', 'quest', 250, 250, [])])
+      new Node('quest-2', 'quest', 0, 0, [
+        new Node('quiz-3', 'quiz', 250, 100, [
+          new Node('quest-3', 'quest', 0, 200, [
+            new Node('quiz-4', 'quiz', 250, 250, [
+              new Node('quest-4', 'quest', 50, 350, [])
+            ])
+          ])
+        ])
+      ])
     ],
     250,
-    250
+    350
   )
 ]

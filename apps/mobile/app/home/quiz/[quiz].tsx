@@ -1,16 +1,18 @@
-import { useRouter } from 'expo-router'
+import { useLocalSearchParams, useRouter } from 'expo-router'
 import { ArrowLeft, ArrowRight } from 'lucide-react-native'
 import { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Progress } from '@/components/ui/progress'
 import { Text } from '@/components/ui/text'
-import { getOptionStyle, QUESTIONS } from '@/constants/pages/home/quiz'
+import { getOptionStyle, QUIZZES } from '@/constants/pages/home/quiz'
 import { useStep } from '@/hooks/useStep'
 
 export default function Quiz() {
+  const { quiz } = useLocalSearchParams()
+  const QUESTIONS = QUIZZES[quiz as keyof typeof QUIZZES]
   const { current, currentIndex, goNext } = useStep(QUESTIONS, 0)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -74,7 +76,7 @@ export default function Quiz() {
         </Text>
       </View>
 
-      <View className='p-4 gap-3 flex-1'>
+      <ScrollView contentContainerClassName='p-4 gap-3'>
         {current.options.map((optionText, index) => {
           const props = getOptionStyle(
             selectedOption === index,
@@ -99,7 +101,7 @@ export default function Quiz() {
             </TouchableOpacity>
           )
         })}
-      </View>
+      </ScrollView>
 
       <View className='p-4 pb-8 pt-2'>
         <Button
