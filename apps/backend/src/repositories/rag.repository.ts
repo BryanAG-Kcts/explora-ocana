@@ -1,10 +1,7 @@
 // apps/backend/src/repositories/rag.repository.ts
 
 import { db } from '../services/pg.service'
-import type {
-  RetrievedChunk,
-  ChunkMetadata
-} from '../interfaces/rag.interfaces'
+import type { RetrievedChunk, ChunkMetadata } from '../interfaces/rag.interface'
 import { RAG_CONSTANTS } from '../constants/rag'
 
 // Convierte array JS al formato string que entiende pgvector
@@ -63,9 +60,7 @@ export const ragRepository = {
 
   // Se elimina todos los chunks de un documento y su instancia en la tabla documents
   async deleteByDocumentId(nameDocument: string): Promise<void> {
-    await db.none('DELETE FROM documents WHERE name = $1', [
-      nameDocument
-    ])
+    await db.none('DELETE FROM documents WHERE name = $1', [nameDocument])
   },
 
   async createDocument(params: {

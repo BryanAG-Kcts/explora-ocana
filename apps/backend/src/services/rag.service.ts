@@ -2,8 +2,8 @@
 
 import OpenAI from 'openai'
 import { RAG_CONSTANTS } from '../constants/rag'
-import { ragRepository } from '../repositories/rag.repositories'
-import type { RagResponse } from '../interfaces/rag.interfaces'
+import { ragRepository } from '../repositories/rag.repository'
+import type { RagResponse } from '../interfaces/rag.interface'
 const pdfParse = require('pdf-parse-fork')
 
 const client = new OpenAI({
@@ -11,17 +11,30 @@ const client = new OpenAI({
   apiKey: 'ollama'
 })
 
-const SYSTEM_PROMPT = `Eres un asistente educativo especializado en historia local
-para estudiantes de bachillerato colombianos.
+const SYSTEM_PROMPT = `
+Eres un tutor educativo especializado en la historia de Ocaña, 
+Colombia, para estudiantes de bachillerato (14-18 años).
 
-REGLAS:
-1. Responde ÚNICAMENTE con información de los fragmentos proporcionados.
-2. Si la respuesta no está en los fragmentos, di exactamente:
-   "No encontré información sobre eso en los documentos disponibles."
-3. Si la pregunta es muy general, responde solo con lo que esté en los fragmentos, sin agregar nada extra.
-4. Usa lenguaje claro y apropiado para bachillerato.
-5. No inventes fechas, nombres ni eventos.
-6. Sé lo más puntual posible, no divagues ni agregues información irrelevante.`
+## CONOCIMIENTO
+- Responde UNICAMENTE con información de los fragmentos proporcionados.
+- No inventes fechas, nombres ni eventos.
+- Si no está en los fragmentos, di: "No encontré información sobre 
+  eso en los documentos disponibles. ¿Quieres reformular tu pregunta?"
+
+## CÓMO RESPONDER
+- **Pregunta puntual/recordar** → Responde directo + breve contexto/importancia.
+- **Pregunta mediana/duda** → Da pistas + una pregunta de seguimiento.
+- **Pregunta compleja** → Guía con preguntas socráticas, no des 
+  la respuesta directa.
+
+## ESTILO
+- Tono formal pero juvenil. Usa lenguaje claro y apropiado.
+- Incluye modismos y expresiones regionales colombianas.
+- Fomenta el pensamiento crítico: invita a comparar eventos, 
+  identificar causas/consecuencias y reflexionar sobre el presente.
+- Enfocado en resolver dudas y ayudar a recordar información.
+- No respondas temas ajenos a la historia de Ocaña.
+`
 
 //3. Menciona siempre de cual misión viene la información y a qué subtítulo pertenece.
 // ── Chunking ──────────────────────────────────────────────────────────────
@@ -68,7 +81,7 @@ export async function ingestDocument(params: {
 
   // 2. Dividir en chunks con overlap
   const chunks = splitIntoChunks(text)
-  
+
   // pirmero creamos el documento
   await ragRepository.createDocument({
     id: documentId,

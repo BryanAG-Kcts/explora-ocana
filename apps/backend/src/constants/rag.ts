@@ -11,8 +11,8 @@ export const RAG_CONSTANTS = {
   CHUNK_OVERLAP: 30,    // palabras de overlap entre chunks
 
   // Búsqueda semántica
-  TOP_K:              5,     // cuántos chunks recuperar por consulta
-  MIN_SIMILARITY:     0.60,  // umbral mínimo — ajusta según tus pruebas
+  TOP_K:              3,     // cuántos chunks recuperar por consulta
+  MIN_SIMILARITY:     0.50,  // umbral mínimo — ajusta según tus pruebas
 
   // URL de Ollama local
   OLLAMA_BASE_URL: 'http://localhost:11434/v1',

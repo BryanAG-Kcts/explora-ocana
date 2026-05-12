@@ -1,4 +1,4 @@
-import type { RegisterSchema } from '../interfaces/auth.interfaces'
+import type { RegisterSchema } from '../interfaces/auth.interface'
 import { db } from '../services/pg.service'
 
 export const userRepository = {
@@ -16,24 +16,26 @@ export const userRepository = {
         userData.email,
         userData.password,
         userData.birthdate,
-        userData.phoneNumber,
+        userData.phone,
         userData.gender,
-        userData.countryId,
-        userData.departmentId,
-        userData.municipalityId,
-        userData.documentTypeId,
-        userData.document,
-        userData.communityId,
-        userData.communeId,
-        userData.neighborhoodId,
+        userData.country,
+        userData.department,
+        userData.city,
+        userData.documentType,
+        userData.documentNumber,
+        userData.ethnicGroup,
+        userData.communeId, //falta q front lo envíe
+        userData.neighborhood,
         // ---- Tipo de usuario
-        userData.typeUser,
+        userData.role, // type_user
+
         // ---- Datos de estudiante
-        userData.studentId,
-        userData.grade,
+        userData.schoolLevel, // grade_student || grade_teacher
+        userData.school, // Es el mismo teacher_school_id || student_school_id
+
         // --- Datos de docente
-        userData.schoolId,
-        userData.teacherId
+        userData.schoolLevel, // grade_student || grade_teacher
+        userData.school
       ]
     )
   }

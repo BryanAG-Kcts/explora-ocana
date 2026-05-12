@@ -4,8 +4,8 @@ import {
   generateRefreshToken,
   verifyRefreshToken
 } from '../constants/jwt'
-import type { LoginSchema, RegisterSchema } from '../interfaces/auth.interfaces'
-import { userRepository } from '../repositories/user.repositories'
+import type { LoginSchema, RegisterSchema } from '../interfaces/auth.interface'
+import { userRepository } from '../repositories/user.repository'
 
 export const authService = {
   register: async (data: RegisterSchema) => {

@@ -3,7 +3,8 @@ import express, { type Express } from 'express'
 import { authRouter } from '../routes/auth.routes'
 import { environment } from './environment'
 import { ragRouter } from '../routes/rag.routes'
-import { routerAssets } from '../routes/assets.route'
+import { assetsRouter } from '../routes/assets.route'
+import { dataRouter } from '../routes/data.route'
 
 export class Server {
   app: Express
@@ -19,8 +20,9 @@ export class Server {
 
   routes() {
     this.app.use('/auth', authRouter)
+    this.app.use('/data', dataRouter)
     this.app.use('/api/rag', ragRouter)
-    this.app.use('/api/assets', routerAssets)
+    this.app.use('/api/assets', assetsRouter)
     this.app.all('/{*splat}', (_, res) => {
       res.json({ msg: 'Hello World!' })
     })

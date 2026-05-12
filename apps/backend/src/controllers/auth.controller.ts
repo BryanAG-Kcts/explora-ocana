@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 import { authService } from '../services/auth.service'
-import { loginSchema, registerSchema } from '../interfaces/auth.interfaces'
+import { loginSchema, registerSchema } from '../interfaces/auth.interface'
 
 export const authController = {
   registerUser: async (req: Request, res: Response) => {
@@ -18,7 +18,7 @@ export const authController = {
         res.status(409).json({ error: 'El email ya está en uso' })
         return
       }
-      res.status(500).json({ error: 'Error interno del servidor', e})
+      res.status(500).json({ error: 'Error interno del servidor', e })
     }
   },
 
@@ -31,7 +31,9 @@ export const authController = {
 
     try {
       // Luego del login exitoso, devolvemos el usuario y los tokens
-      const {user, accessToken, refreshToken} = await authService.login(parsed.data)
+      const { user, accessToken, refreshToken } = await authService.login(
+        parsed.data
+      )
       res.status(200).json({ user, accessToken, refreshToken })
     } catch (e: unknown) {
       if (e instanceof Error && e.message === 'INVALID_CREDENTIALS') {
@@ -53,7 +55,12 @@ export const authController = {
       const tokens = await authService.refresh(refreshToken)
       res.status(200).json(tokens)
     } catch (e: unknown) {
-      res.status(401).json({ error: 'Refresh token inválido o expirado', msg: e instanceof Error ? e.message : 'Error desconocido' })
+      res
+        .status(401)
+        .json({
+          error: 'Refresh token inválido o expirado',
+          msg: e instanceof Error ? e.message : 'Error desconocido'
+        })
     }
   }
 }
