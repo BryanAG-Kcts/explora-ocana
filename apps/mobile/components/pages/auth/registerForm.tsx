@@ -15,7 +15,6 @@ import { FormSelect } from '@/components/global/formSelect'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { i18n } from '@/constants/global/i18n'
 import {
   armedConflicts,
   cities,
@@ -31,6 +30,7 @@ import {
   schoolLevels,
   schools
 } from '@/constants/pages/auth/register'
+import { i18n } from '@/locales/i18n'
 
 export function RegisterForm() {
   const { control, handleSubmit, watch } = useForm<RegisterSchemaType>({
@@ -43,7 +43,7 @@ export function RegisterForm() {
   return (
     <ScrollView className='w-full'>
       <View className='flex-1 gap-9 w-full py-5'>
-        <Text variant='h3'>{i18n.t('register.personalDataTitle')}</Text>
+        <Text variant='h3'>{i18n.t('REGISTER.PERSONAL_DATA_TITLE')}</Text>
 
         <View className='flex-row gap-2'>
           <Controller
@@ -51,8 +51,8 @@ export function RegisterForm() {
             name='name'
             render={({ field, fieldState }) => (
               <FormInput
-                label={i18n.t('register.nameLabel')}
-                hint={i18n.t('register.nameHint')}
+                label={i18n.t('REGISTER.NAME_LABEL')}
+                hint={i18n.t('REGISTER.NAME_HINT')}
                 value={field.value}
                 onChangeText={field.onChange}
                 error={fieldState.error?.message}
@@ -67,8 +67,8 @@ export function RegisterForm() {
             name='lastName'
             render={({ field, fieldState }) => (
               <FormInput
-                label={i18n.t('register.lastNameLabel')}
-                hint={i18n.t('register.lastNameHint')}
+                label={i18n.t('REGISTER.LAST_NAME_LABEL')}
+                hint={i18n.t('REGISTER.LAST_NAME_HINT')}
                 value={field.value}
                 onChangeText={field.onChange}
                 error={fieldState.error?.message}
@@ -89,18 +89,18 @@ export function RegisterForm() {
                 data={documentTypes}
                 value={field.value}
                 onValueChange={field.onChange}
-                label={i18n.t('register.documentTypeLabel')}
+                label={i18n.t('REGISTER.DOCUMENT_TYPE_LABEL')}
               />
             )}
           />
 
           <Controller
             control={control}
-            name='documentNumber'
+            name='document'
             render={({ field, fieldState }) => (
               <FormInput
-                label={i18n.t('register.documentNumberLabel')}
-                hint={i18n.t('register.documentNumberHint')}
+                label={i18n.t('REGISTER.DOCUMENT_LABEL')}
+                hint={i18n.t('REGISTER.DOCUMENT_HINT')}
                 value={field.value}
                 onChangeText={field.onChange}
                 error={fieldState.error?.message}
@@ -117,8 +117,8 @@ export function RegisterForm() {
             name='birthdate'
             render={({ field, fieldState }) => (
               <FormInput
-                label={i18n.t('register.birthdateLabel')}
-                hint={i18n.t('register.birthdateHint')}
+                label={i18n.t('REGISTER.BIRTHDATE_LABEL')}
+                hint={i18n.t('REGISTER.BIRTHDATE_HINT')}
                 value={field.value}
                 onChangeText={field.onChange}
                 error={fieldState.error?.message}
@@ -132,7 +132,7 @@ export function RegisterForm() {
 
           <Controller
             control={control}
-            name='genre'
+            name='gender'
             defaultValue={genres[0]}
             render={({ field }) => (
               <FormSelect
@@ -140,7 +140,7 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1/3'
-                label={i18n.t('register.genreLabel')}
+                label={i18n.t('REGISTER.GENDER_LABEL')}
               />
             )}
           />
@@ -157,7 +157,7 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
-                label={i18n.t('register.armedConflictLabel')}
+                label={i18n.t('REGISTER.ARMED_CONFLICT_LABEL')}
               />
             )}
           />
@@ -172,7 +172,7 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
-                label={i18n.t('register.ethnicGroupLabel')}
+                label={i18n.t('REGISTER.ETHIC_GROUP_LABEL')}
               />
             )}
           />
@@ -189,7 +189,7 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
-                label={i18n.t('register.countryLabel')}
+                label={i18n.t('REGISTER.COUNTRY_LABEL')}
               />
             )}
           />
@@ -204,7 +204,7 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
-                label={i18n.t('register.departmentLabel')}
+                label={i18n.t('REGISTER.DEPARTMENT_LABEL')}
                 disabled={!isCountryColombia}
               />
             )}
@@ -220,38 +220,56 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
-                label={i18n.t('register.cityLabel')}
+                label={i18n.t('REGISTER.CITY_LABEL')}
                 disabled={!isCountryColombia}
               />
             )}
           />
         </View>
 
-        <Controller
-          control={control}
-          name='neighborhood'
-          defaultValue={neighborhoods[0]}
-          render={({ field }) => (
-            <FormSelect
-              data={neighborhoods}
-              value={field.value}
-              onValueChange={field.onChange}
-              className='flex-1 h-12'
-              label={i18n.t('register.neighborhoodLabel')}
-              disabled={!isCountryColombia}
-            />
-          )}
-        />
+        <View className='flex-row gap-2 items-center h-12'>
+          <Controller
+            control={control}
+            name='commune'
+            defaultValue={neighborhoods[0]}
+            render={({ field }) => (
+              <FormSelect
+                data={neighborhoods}
+                value={field.value}
+                onValueChange={field.onChange}
+                className='flex-1 h-12'
+                label={i18n.t('REGISTER.COMMUNE_LABEL')}
+                disabled={!isCountryColombia}
+              />
+            )}
+          />
 
-        <Text variant='h3'>{i18n.t('register.userDataTitle')}</Text>
+          <Controller
+            control={control}
+            name='neighborhood'
+            defaultValue={neighborhoods[0]}
+            render={({ field }) => (
+              <FormSelect
+                data={neighborhoods}
+                value={field.value}
+                onValueChange={field.onChange}
+                className='flex-1 h-12'
+                label={i18n.t('REGISTER.NEIGHBORHOOD_LABEL')}
+                disabled={!isCountryColombia}
+              />
+            )}
+          />
+        </View>
+
+        <Text variant='h3'>{i18n.t('REGISTER.USER_DATA_TITLE')}</Text>
 
         <Controller
           control={control}
           name='email'
           render={({ field, fieldState }) => (
             <FormInput
-              label={i18n.t('register.emailLabel')}
-              hint={i18n.t('register.emailHint')}
+              label={i18n.t('REGISTER.EMAIL_LABEL')}
+              hint={i18n.t('REGISTER.EMAIL_HINT')}
               value={field.value}
               onChangeText={field.onChange}
               error={fieldState.error?.message}
@@ -266,8 +284,8 @@ export function RegisterForm() {
             name='phoneExtension'
             render={({ field, fieldState }) => (
               <FormInput
-                label={i18n.t('register.phoneExtensionLabel')}
-                hint={i18n.t('register.phoneExtensionHint')}
+                label={i18n.t('REGISTER.PHONE_EXTENSION_LABEL')}
+                hint={i18n.t('REGISTER.PHONE_EXTENSION_HINT')}
                 value={field.value}
                 onChangeText={field.onChange}
                 error={fieldState.error?.message}
@@ -283,8 +301,8 @@ export function RegisterForm() {
             name='phone'
             render={({ field, fieldState }) => (
               <FormInput
-                label={i18n.t('register.phoneLabel')}
-                hint={i18n.t('register.phoneHint')}
+                label={i18n.t('REGISTER.PHONE_LABEL')}
+                hint={i18n.t('REGISTER.PHONE_HINT')}
                 value={field.value}
                 onChangeText={field.onChange}
                 error={fieldState.error?.message}
@@ -307,7 +325,7 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
-                label={i18n.t('register.roleLabel')}
+                label={i18n.t('REGISTER.ROLE_LABEL')}
               />
             )}
           />
@@ -322,7 +340,7 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
-                label={i18n.t('register.schoolLabel')}
+                label={i18n.t('REGISTER.SCHOOL_LABEL')}
               />
             )}
           />
@@ -337,7 +355,7 @@ export function RegisterForm() {
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
-                label={i18n.t('register.schoolLevelLabel')}
+                label={i18n.t('REGISTER.SCHOOL_LEVEL_LABEL')}
               />
             )}
           />
@@ -348,8 +366,8 @@ export function RegisterForm() {
           name='password'
           render={({ field, fieldState }) => (
             <FormInput
-              label={i18n.t('register.passwordLabel')}
-              hint={i18n.t('register.passwordHint')}
+              label={i18n.t('REGISTER.PASSWORD_LABEL')}
+              hint={i18n.t('REGISTER.PASSWORD_HINT')}
               value={field.value}
               onChangeText={field.onChange}
               error={fieldState.error?.message}
@@ -364,8 +382,8 @@ export function RegisterForm() {
           name='confirmPassword'
           render={({ field, fieldState }) => (
             <FormInput
-              label={i18n.t('register.confirmPasswordLabel')}
-              hint={i18n.t('register.confirmPasswordHint')}
+              label={i18n.t('REGISTER.CONFIRM_PASSWORD_LABEL')}
+              hint={i18n.t('REGISTER.CONFIRM_PASSWORD_HINT')}
               value={field.value}
               onChangeText={field.onChange}
               error={fieldState.error?.message}
@@ -376,7 +394,7 @@ export function RegisterForm() {
         />
 
         <Button onPress={handleSubmit(onSubmit)}>
-          <Text>{i18n.t('register.registerButton')}</Text>
+          <Text>{i18n.t('REGISTER.REGISTER_BUTTON')}</Text>
         </Button>
       </View>
     </ScrollView>

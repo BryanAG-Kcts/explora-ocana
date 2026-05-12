@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import { RegisterForm } from '@/components/pages/auth/registerForm'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { i18n } from '@/constants/global/i18n'
+import { i18n } from '@/locales/i18n'
 
 export default function Register() {
   return (
@@ -14,16 +14,16 @@ export default function Register() {
       </View>
 
       <Text variant='h1'>
-        {i18n.t('register.title')}
+        {i18n.t('REGISTER.TITLE')}
         <Text variant='h1' className='text-primary'>
-          {i18n.t('register.strongTitle')}
+          {i18n.t('REGISTER.TITLE_2')}
         </Text>
       </Text>
 
       <Text>
-        {i18n.t('register.allReadyHaveAccount')}
-        <Link href='/auth/login' dismissTo className='text-primary'>
-          {i18n.t('register.loginHere')}
+        {i18n.t('REGISTER.HAVE_ACCOUNT')}
+        <Link href='/auth/login' dismissTo className='text-primary underline'>
+          {i18n.t('REGISTER.LOGIN_HERE')}
         </Link>
       </Text>
 

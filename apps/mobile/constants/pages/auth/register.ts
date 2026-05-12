@@ -1,58 +1,31 @@
 import { z } from 'zod'
 
+const OBJECT_SELECT_SCHEMA = z.object({
+  label: z.string(),
+  value: z.string()
+})
+
 export const RegisterSchema = z
   .object({
     name: z.string('Debes ingresar un nombre válido'),
     lastName: z.string('Debes ingresar un apellido válido'),
     email: z.email('Debes ingresar un email válido'),
-    documentType: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    documentNumber: z.string('Debes ingresar un número de documento válido'),
-    genre: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    armedConflict: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    ethnicGroup: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
+    documentType: OBJECT_SELECT_SCHEMA,
+    document: z.string('Debes ingresar un número de documento válido'),
+    gender: OBJECT_SELECT_SCHEMA,
+    armedConflict: OBJECT_SELECT_SCHEMA,
+    ethnicGroup: OBJECT_SELECT_SCHEMA,
     phone: z.string('Debes ingresar un número de celular válido'),
     phoneExtension: z.string('Debes ingresar una extensión telefónica válida'),
     birthdate: z.string('Debes ingresar una fecha de nacimiento válida'),
-    country: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    department: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    city: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    neighborhood: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    school: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    schoolLevel: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
-    role: z.object({
-      label: z.string(),
-      value: z.string()
-    }),
+    country: OBJECT_SELECT_SCHEMA,
+    department: OBJECT_SELECT_SCHEMA,
+    city: OBJECT_SELECT_SCHEMA,
+    neighborhood: OBJECT_SELECT_SCHEMA,
+    school: OBJECT_SELECT_SCHEMA,
+    schoolLevel: OBJECT_SELECT_SCHEMA,
+    role: OBJECT_SELECT_SCHEMA,
+    commune: OBJECT_SELECT_SCHEMA,
     password: z
       .string('Debes ingresar una contraseña')
       .min(6, 'La contraseña debe tener al menos 6 caracteres'),
