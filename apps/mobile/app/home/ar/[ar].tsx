@@ -5,14 +5,17 @@ import {
   ViroARSceneNavigator,
   ViroTrackingStateConstants // Importante para saber cuándo la cámara AR está lista
 } from '@reactvision/react-viro'
+import { useLocalSearchParams } from 'expo-router'
 import { useState } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import { Text } from '@/components/ui/text'
+import { AR_MODELS } from '@/constants/pages/home/arModels'
 
 interface Props {
   updateSceneNavigator: (state: string) => void
+  model: string | string[]
 }
-const Scene = ({ updateSceneNavigator }: Props) => {
+const Scene = ({ updateSceneNavigator, model }: Props) => {
   const [scale, setScale] = useState<[number, number, number]>([0.2, 0.2, 0.2])
   const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0])
   const [baseScale, setBaseScale] = useState<[number, number, number]>([
@@ -65,7 +68,7 @@ const Scene = ({ updateSceneNavigator }: Props) => {
     >
       <ViroAmbientLight color='#ffffff' intensity={200} />
       <Viro3DObject
-        source={require('../../../assets/mico.glb')}
+        source={AR_MODELS[model as keyof typeof AR_MODELS]}
         position={[0, 0, -1]}
         type='GLB'
         dragType='FixedToWorld'
@@ -81,12 +84,13 @@ const Scene = ({ updateSceneNavigator }: Props) => {
 }
 
 export default function Ar() {
+  const { ar } = useLocalSearchParams()
   const [state, setState] = useState('LOADING-AR')
   return (
     <View className='flex-1 bg-black relative'>
       <ViroARSceneNavigator
         initialScene={{
-          scene: () => <Scene updateSceneNavigator={setState} />
+          scene: () => <Scene updateSceneNavigator={setState} model={ar} />
         }}
       />
 

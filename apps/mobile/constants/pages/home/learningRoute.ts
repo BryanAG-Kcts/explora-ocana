@@ -6,7 +6,7 @@ export const learningRoute = [
     'Sección A',
     [
       new Node('quest-1', 'quest', 0, 0, [
-        new Node('5a', 'ar', 100, 290, [
+        new Node('ar-1', 'ar', 100, 290, [
           new Node('quiz-1', 'quiz', 0, 450, [
             new Node('quest-5', 'quest', 250, 480, [
               new Node('quest-6', 'quest', 50, 650, [], true)
@@ -14,7 +14,14 @@ export const learningRoute = [
           ])
         ])
       ]),
-      new Node('quiz-2', 'quiz', 250, 100, [], true)
+      new Node(
+        'quiz-2',
+        'quiz',
+        250,
+        100,
+        [new Node('ar-2', 'ar', 280, 300, [])],
+        true
+      )
     ],
     250,
     650
@@ -27,13 +34,15 @@ export const learningRoute = [
         new Node('quiz-3', 'quiz', 250, 100, [
           new Node('quest-3', 'quest', 0, 200, [
             new Node('quiz-4', 'quiz', 250, 250, [
-              new Node('quest-4', 'quest', 50, 350, [])
+              new Node('quest-4', 'quest', 50, 350, [
+                new Node('ar-3', 'ar', 250, 450, [])
+              ])
             ])
           ])
         ])
       ])
     ],
     250,
-    350
+    450
   )
 ]
