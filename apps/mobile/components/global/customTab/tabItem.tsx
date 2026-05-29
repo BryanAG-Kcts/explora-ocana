@@ -19,7 +19,10 @@ export function TabItem({ route, isActive, opacity, onPress }: Props) {
 
       <TouchableOpacity onPress={onPress} className='px-4 py-2'>
         <Text
-          className={cn('text-center', !isActive && 'text-muted-foreground')}
+          className={cn(
+            'text-center text-sm',
+            !isActive && 'text-muted-foreground'
+          )}
         >
           {route.title}
         </Text>

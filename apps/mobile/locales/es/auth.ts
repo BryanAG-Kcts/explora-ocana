@@ -49,7 +49,7 @@ export const AUTH = {
     ROLE_LABEL: 'Rol',
     REGISTER_BUTTON: 'Registrarse',
     USER_DATA_TITLE: 'Datos de usuario',
-    COMMUNE_LABEL: 'Comuna',
+    COMMUNE_LABEL: 'Comuna'
   },
   VALIDATOR: {
     EMAIL: 'Debes ingresar un correo electrónico válido',

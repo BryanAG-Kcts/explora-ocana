@@ -1,5 +1,6 @@
 import { Flame, Shield, Star } from 'lucide-react-native'
 import { View } from 'react-native'
+import { BorderHeader } from '@/components/global/borderHeader'
 import { ThemeToggle } from '@/components/global/themeToggle'
 import { Badge } from '@/components/ui/badge'
 import { Icon } from '@/components/ui/icon'
@@ -7,7 +8,7 @@ import { Text } from '@/components/ui/text'
 
 export function StatsBar() {
   return (
-    <View className='flex-row gap-4 items-center p-2 px-5 border-b border-primary/30'>
+    <BorderHeader>
       <View className='flex-row gap-2 items-center'>
         <Icon as={Flame} className='text-destructive' />
         <Text className='font-semibold'>12</Text>
@@ -24,6 +25,6 @@ export function StatsBar() {
       </Badge>
 
       <ThemeToggle />
-    </View>
+    </BorderHeader>
   )
 }

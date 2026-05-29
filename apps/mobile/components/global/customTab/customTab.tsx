@@ -6,8 +6,13 @@ import { TabBody } from './tabBody'
 interface Props {
   renderScene: ReturnType<typeof SceneMap>
   routes: Route[]
+  tabBarPosition?: 'top' | 'bottom'
 }
-export function CustomTab({ renderScene, routes }: Props) {
+export function CustomTab({
+  renderScene,
+  routes,
+  tabBarPosition = 'bottom'
+}: Props) {
   const layout = useWindowDimensions()
   const [index, setIndex] = useState(0)
   return (
@@ -16,7 +21,7 @@ export function CustomTab({ renderScene, routes }: Props) {
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
-      tabBarPosition='bottom'
+      tabBarPosition={tabBarPosition}
       lazy
       lazyPreloadDistance={1}
       renderTabBar={TabBody}
