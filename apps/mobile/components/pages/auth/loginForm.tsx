@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Lock, Mail } from 'lucide-react-native'
+import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { View } from 'react-native'
 import { FormInput } from '@/components/global/formInput'
@@ -8,11 +9,14 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { LoginSchema, type LoginSchemaType } from '@/constants/pages/auth/login'
 import { i18n } from '@/locales/i18n'
+import { ForgotPassword } from './forgotPassword'
 
 export function LoginForm() {
   const { control, handleSubmit } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema)
   })
+
+  const [isForgotModalVisible, setIsForgotModalVisible] = useState(false)
   const onSubmit: SubmitHandler<LoginSchemaType> = data => console.log(data)
 
   return (
@@ -49,14 +53,21 @@ export function LoginForm() {
           )}
         />
 
-        <Text variant='small' className='text-right text-primary'>
-          {i18n.t('LOGIN.PASSWORD_FORGOT')}
-        </Text>
+        <View className='flex-row justify-end'>
+          <Button variant='link' onPress={() => setIsForgotModalVisible(true)}>
+            <Text>{i18n.t('LOGIN.PASSWORD_FORGOT')}</Text>
+          </Button>
+        </View>
       </View>
 
       <Button onPress={handleSubmit(onSubmit)}>
         <Text>{i18n.t('LOGIN.LOGIN_BUTTON')}</Text>
       </Button>
+
+      <ForgotPassword
+        handleCloseModal={() => setIsForgotModalVisible(false)}
+        isForgotModalVisible={isForgotModalVisible}
+      />
     </View>
   )
 }

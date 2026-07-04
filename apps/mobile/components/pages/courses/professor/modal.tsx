@@ -1,12 +1,6 @@
 import { useState } from 'react'
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Modal,
-  Platform,
-  Pressable,
-  View
-} from 'react-native'
+import { Alert, KeyboardAvoidingView, Platform, View } from 'react-native'
+import { CustomModal } from '@/components/global/customModal'
 import { FormInput } from '@/components/global/formInput'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
@@ -46,49 +40,43 @@ export function ProfessorModal({
     Alert.alert('Éxito', `Grupo creado. Clave: ${generatedKey}`)
   }
   return (
-    <Modal
-      visible={isCreateModalVisible}
-      transparent
-      animationType='slide'
-      onRequestClose={() => setIsCreateModalVisible(false)}
+    <CustomModal
+      handleCloseModal={() => setIsCreateModalVisible(false)}
+      isModalVisible={isCreateModalVisible}
     >
-      <Pressable
-        className='flex-1 justify-end bg-black/50'
-        onPress={() => setIsCreateModalVisible(false)}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        className='flex-1 justify-end'
       >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-          <View className='bg-background w-full rounded-t-3xl p-6 shadow-lg border-t border-border'>
-            <Text className='text-xl font-bold mb-2'>Crear Nuevo Grupo</Text>
-            <Text className='text-sm text-zinc-500 mb-6'>
-              Asigna un nombre al grupo. La clave de matriculación se generará
-              automáticamente.
-            </Text>
+        <View className='bg-background w-full rounded-t-3xl p-6 shadow-lg border-t border-border'>
+          <Text className='text-xl font-bold mb-2'>Crear Nuevo Grupo</Text>
+          <Text className='text-sm text-zinc-500 mb-6'>
+            Asigna un nombre al grupo. La clave de matriculación se generará
+            automáticamente.
+          </Text>
 
-            <Text className='text-sm font-medium mb-2'>Nombre del Grupo</Text>
-            <FormInput
-              label=''
-              hint='Ej. Ciencias Naturales 101'
-              value={newGroupName}
-              onChangeText={setNewGroupName}
-            />
+          <Text className='text-sm font-medium mb-2'>Nombre del Grupo</Text>
+          <FormInput
+            label=''
+            hint='Ej. Ciencias Naturales 101'
+            value={newGroupName}
+            onChangeText={setNewGroupName}
+          />
 
-            <View className='flex-row justify-end mt-8 gap-3'>
-              <Button
-                variant='secondary'
-                onPress={() => setIsCreateModalVisible(false)}
-              >
-                <Text>Cancelar</Text>
-              </Button>
+          <View className='flex-row justify-end mt-8 gap-3'>
+            <Button
+              variant='secondary'
+              onPress={() => setIsCreateModalVisible(false)}
+            >
+              <Text>Cancelar</Text>
+            </Button>
 
-              <Button onPress={handleCreateGroup}>
-                <Text>Crear Grupo</Text>
-              </Button>
-            </View>
+            <Button onPress={handleCreateGroup}>
+              <Text>Crear Grupo</Text>
+            </Button>
           </View>
-        </KeyboardAvoidingView>
-      </Pressable>
-    </Modal>
+        </View>
+      </KeyboardAvoidingView>
+    </CustomModal>
   )
 }
