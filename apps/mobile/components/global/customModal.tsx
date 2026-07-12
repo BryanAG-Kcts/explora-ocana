@@ -20,9 +20,11 @@ export function CustomModal({
       animationType={type}
       onRequestClose={handleCloseModal}
     >
-      <Pressable className='flex-1 bg-black/50' onPress={handleCloseModal}>
-        {children}
-      </Pressable>
+      <Pressable
+        className='absolute flex-1 bg-black/50 top-0 left-0 right-0 bottom-0'
+        onPress={handleCloseModal}
+      />
+      {children}
     </Modal>
   )
 }
