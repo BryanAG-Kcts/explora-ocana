@@ -4,15 +4,15 @@ export const RAG_CONSTANTS = {
   EMBEDDING_DIMS:   768,
 
   // Modelo de chat local
-  CHAT_MODEL: 'llama3.2',
+  CHAT_MODEL: 'qwen2.5:3b',
 
   // Chunking
   CHUNK_SIZE:    150,   // palabras por chunk (óptimo para nomic-embed-text)
-  CHUNK_OVERLAP: 30,    // palabras de overlap entre chunks
+  CHUNK_OVERLAP: 10,    // palabras de overlap entre chunks
 
   // Búsqueda semántica
   TOP_K:              3,     // cuántos chunks recuperar por consulta
-  MIN_SIMILARITY:     0.50,  // umbral mínimo — ajusta según tus pruebas
+  MIN_SIMILARITY:     0.65,  // umbral mínimo — ajusta según tus pruebas
 
   // URL de Ollama local
   OLLAMA_BASE_URL: 'http://localhost:11434/v1',

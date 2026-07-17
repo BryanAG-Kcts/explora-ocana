@@ -38,5 +38,14 @@ export const userRepository = {
         userData.school
       ]
     )
+  },
+
+  getDataBasicUser: async (userId: string) => {
+    return await db.oneOrNone(
+      `SELECT u.id as "userId", u.racha, u.puntos, u.experiencia
+       FROM users u
+       WHERE u.id = $1`,
+      [userId]
+    );
   }
-}
+};
