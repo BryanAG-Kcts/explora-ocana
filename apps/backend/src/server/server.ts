@@ -1,10 +1,11 @@
 import cors from 'cors'
 import express, { type Express } from 'express'
-import { authRouter } from '../routes/auth.routes'
+import { authRouter } from '../routes/auth.route'
 import { environment } from './environment'
-import { ragRouter } from '../routes/rag.routes'
+import { ragRouter } from '../routes/rag.route'
 import { assetsRouter } from '../routes/assets.route'
 import { dataRouter } from '../routes/data.route'
+import { userRouter } from '../routes/user.route'
 
 export class Server {
   app: Express
@@ -22,6 +23,7 @@ export class Server {
     this.app.use('/auth', authRouter)
     this.app.use('/data', dataRouter)
     this.app.use('/api/rag', ragRouter)
+    this.app.use('/user', userRouter)
     this.app.use('/api/assets', assetsRouter)
     this.app.all('/{*splat}', (_, res) => {
       res.json({ msg: 'Hello World!' })

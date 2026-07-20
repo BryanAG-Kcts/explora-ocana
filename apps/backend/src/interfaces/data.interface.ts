@@ -14,13 +14,6 @@ export interface RegisterDataResponse {
   educationLevels: SelectOption[];
 }
 
-// export interface PodioStudent {
-//   id: string;
-//   name: string; 
-//   puntos: number;
-//   racha: number;
-// }
-
 export interface PodioStudent {
   user_experience_id: number;
   name: string;
