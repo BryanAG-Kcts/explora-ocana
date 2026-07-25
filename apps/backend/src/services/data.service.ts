@@ -11,7 +11,8 @@ export const dataService = {
       neighborhoods,
       schools,
       documentTypes,
-      educationLevels
+      educationLevels,
+      communities
     ] = await Promise.all([
       dataRepository.getCountries(),
       dataRepository.getDepartments(),
@@ -20,10 +21,11 @@ export const dataService = {
       dataRepository.getNeighborhoods(),
       dataRepository.getSchools(),
       dataRepository.getDocumentTypes(),
-      dataRepository.getEducationLevels()
+      dataRepository.getEducationLevels(),
+      dataRepository.getCommunities()
     ]);
 
-    return { countries, departments, municipalities, communes, neighborhoods, schools, documentTypes, educationLevels };
+    return { countries, departments, municipalities, communes, neighborhoods, schools, documentTypes, educationLevels, communities };
   },
 
   getPodioStudents: async (): Promise<PodioStudent[]> => {

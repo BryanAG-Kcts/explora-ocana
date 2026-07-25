@@ -1,6 +1,7 @@
 import { Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import {
+  NativeSelectScrollView,
   Select,
   SelectContent,
   SelectGroup,
@@ -35,15 +36,17 @@ export function FormSelect({ data, label, ...props }: Props) {
         <SelectValue placeholder='' />
       </SelectTrigger>
       <SelectContent insets={contentInsets}>
-        <SelectGroup>
-          {data.map(item => (
-            <SelectItem
-              key={item.value}
-              value={item.value}
-              label={item.label}
-            />
-          ))}
-        </SelectGroup>
+        <NativeSelectScrollView>
+          <SelectGroup>
+            {data.map(item => (
+              <SelectItem
+                key={item.value}
+                value={item.value}
+                label={item.label}
+              />
+            ))}
+          </SelectGroup>
+        </NativeSelectScrollView>
       </SelectContent>
 
       <Text className='absolute -top-4.5 left-1 font-semibold text-xs'>

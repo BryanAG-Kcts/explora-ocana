@@ -9,30 +9,29 @@ export const userRepository = {
 
   createUser: async (userData: RegisterSchema & { password: string }) => {
     return await db.oneOrNone(
-      `CALL create_full_user ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)  
-        RETURNING *`,
+      'CALL public.create_full_user($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)',
       [
         userData.name,
         userData.lastName,
         userData.email,
         userData.password,
-        userData.birthdate,
+        new Date(userData.birthdate),
         userData.phone,
         userData.gender,
         userData.country,
         userData.department,
         userData.city,
         userData.documentType,
-        userData.documentNumber,
+        userData.document,
         userData.ethnicGroup,
-        userData.communeId, //falta q front lo envíe
+        userData.armedConflict,
+        userData.commune,
         userData.neighborhood,
-        // ---- Tipo de usuario
-        userData.role, // type_user
+        userData.role,
 
         // ---- Datos de estudiante
-        userData.schoolLevel, // grade_student || grade_teacher
-        userData.school, // Es el mismo teacher_school_id || student_school_id
+        userData.schoolLevel,
+        userData.school,
 
         // --- Datos de docente
         userData.schoolLevel, // grade_student || grade_teacher
@@ -94,4 +93,4 @@ export const userRepository = {
       WHERE u.user_id = $1;`, [userId]
     )
   }
-};
+}

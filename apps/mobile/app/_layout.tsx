@@ -4,6 +4,7 @@ import { ThemeProvider } from '@react-navigation/native'
 import { PortalHost } from '@rn-primitives/portal'
 import { Slot } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import { useUniwind, withUniwind } from 'uniwind'
@@ -20,12 +21,14 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={NAV_THEME[theme ?? 'light']}>
-      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
-      <StyledSafeAreaView className='flex-1 bg-background'>
-        <Slot />
-      </StyledSafeAreaView>
-      <PortalHost />
-      <Toast />
+      <GestureHandlerRootView>
+        <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
+        <StyledSafeAreaView className='flex-1 bg-background'>
+          <Slot />
+        </StyledSafeAreaView>
+        <PortalHost />
+        <Toast />
+      </GestureHandlerRootView>
     </ThemeProvider>
   )
 }

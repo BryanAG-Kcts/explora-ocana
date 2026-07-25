@@ -14,9 +14,8 @@ export const authService = {
 
     const hashedPassword = await hashPassword(data.password)
     data.password = hashedPassword
-    const user = await userRepository.createUser({ ...data })
-    if (!user) throw new Error('Error al crear el usuario')
-    return user
+    await userRepository.createUser(data)
+    return true
   },
 
   login: async (data: LoginSchema) => {

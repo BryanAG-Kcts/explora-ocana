@@ -1,43 +1,45 @@
-import { db } from "../services/pg.service";
 import type {
   PodioGrades,
   PodioStudent,
-  SelectOption,
-} from "../interfaces/data.interface";
+  SelectOption
+} from '../interfaces/data.interface'
+import { db } from '../services/pg.service'
 
 export const dataRepository = {
   getCountries: async (): Promise<SelectOption[]> =>
-    db.manyOrNone(`SELECT name AS label, country_id AS value
+    db.manyOrNone(`SELECT name AS label, country_id::TEXT AS value
                    FROM countries ORDER BY name ASC`),
 
   getDepartments: async (): Promise<SelectOption[]> =>
-    db.manyOrNone(`SELECT name AS label, department_id AS value
+    db.manyOrNone(`SELECT INITCAP(name) AS label, department_id::TEXT AS value
                    FROM departments ORDER BY name ASC`),
 
   getMunicipalities: async (): Promise<SelectOption[]> =>
-    db.manyOrNone(`SELECT name AS label, municipality_id AS value
-                   FROM municipality ORDER BY name ASC`),
+    db.manyOrNone(`SELECT name AS label, municipality_id::TEXT AS value, department_id::TEXT "departmentId"
+                   FROM municipality ORDER BY name`),
 
   getCommunes: async (): Promise<SelectOption[]> =>
-    db.manyOrNone(`SELECT commune_name AS label, commune_id AS value
+    db.manyOrNone(`SELECT commune_name AS label, commune_id::TEXT AS value
                    FROM communes ORDER BY commune_name ASC`),
 
   getNeighborhoods: async (): Promise<SelectOption[]> =>
-    db.manyOrNone(`SELECT neighborhood_name AS label, neighborhood_id AS value
+    db.manyOrNone(`SELECT neighborhood_name AS label, neighborhood_id::TEXT AS value, commune_id::TEXT "communeId"
                    FROM neighborhoods ORDER BY neighborhood_name ASC`),
 
   getSchools: async (): Promise<SelectOption[]> =>
-    // No sé si debo retornar también el school_id
-    db.manyOrNone(`SELECT name AS label, type AS value
+    db.manyOrNone(`SELECT name AS label, school_id::TEXT AS value
                    FROM schools ORDER BY name ASC`),
 
   getDocumentTypes: async (): Promise<SelectOption[]> =>
-    db.manyOrNone(`SELECT name AS label, code AS value
+    db.manyOrNone(`SELECT code AS label, document_type_id::TEXT AS value
                    FROM document_types ORDER BY name ASC`),
 
   getEducationLevels: async (): Promise<SelectOption[]> =>
-    db.manyOrNone(`SELECT name AS label, code AS value
+    db.manyOrNone(`SELECT name AS label, education_level_id::TEXT AS value
                    FROM education_levels ORDER BY name ASC`),
+  getCommunities: async (): Promise<SelectOption[]> =>
+    db.manyOrNone(`SELECT community_name AS label, community_id::TEXT AS value
+                   FROM communities ORDER BY label ASC`),
 
   getPodioStudents: async (): Promise<PodioStudent[]> =>
     db.manyOrNone(
@@ -63,5 +65,5 @@ export const dataRepository = {
       GROUP BY s.grade
       ORDER BY total_experience_points DESC
       LIMIT 3;`
-    ),
-};
+    )
+}

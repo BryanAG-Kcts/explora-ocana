@@ -8,38 +8,131 @@ import {
   Plus,
   User
 } from 'lucide-react-native'
+import { useEffect, useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
-import { ScrollView, View } from 'react-native'
+import { ActivityIndicator, ScrollView, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { FormInput } from '@/components/global/formInput'
 import { FormSelect } from '@/components/global/formSelect'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
 import {
-  armedConflicts,
-  cities,
-  countries,
-  departments,
-  documentTypes,
-  ethnicGroups,
-  genres,
-  neighborhoods,
+  ARMED_CONFLICT,
+  COLOMBIA_COUNTRY_VALUE,
+  DEFAULT_OBJECT_SELECT,
+  type FormValues,
+  filterCities,
+  filterNeighborhoods,
+  GENDERS,
+  type Municipalities,
+  type Neighborhoods,
+  OCANA_VALUE,
   RegisterSchema,
   type RegisterSchemaType,
-  roles,
-  schoolLevels,
-  schools
+  ROLES
 } from '@/constants/pages/auth/register'
 import { i18n } from '@/locales/i18n'
 
 export function RegisterForm() {
-  const { control, handleSubmit, watch } = useForm<RegisterSchemaType>({
-    resolver: zodResolver(RegisterSchema)
-  })
+  const [formValues, setFormValues] = useState<FormValues | null>(null)
+  const [filteredCities, setFilteredCities] = useState<Municipalities[]>([])
+  const [filteredNeigh, setFilteredNeigh] = useState<Neighborhoods[]>([])
+  const { control, handleSubmit, watch, setValue } =
+    useForm<RegisterSchemaType>({
+      resolver: zodResolver(RegisterSchema)
+    })
 
-  const onSubmit: SubmitHandler<RegisterSchemaType> = data => console.log(data)
-  const isCountryColombia = watch('country')?.value === 'colombia'
+  useEffect(() => {
+    ;(async () => {
+      const res = axiosInstance.get<FormValues>('/data/register')
+      const [response, error] = await safePromise(res)
+      if (error || !response) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Ocurrió un error al obtener la información requerida'
+        })
 
+        return
+      }
+
+      setFormValues(response.data)
+    })()
+  }, [])
+
+  if (!formValues) {
+    return (
+      <View className='flex-1 items-center py-7'>
+        <ActivityIndicator size='large' />
+      </View>
+    )
+  }
+
+  const onSubmit: SubmitHandler<RegisterSchemaType> = async data => {
+    if (
+      data.country.value === COLOMBIA_COUNTRY_VALUE &&
+      data.department?.value === ''
+    ) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Debes escoger un departamento'
+      })
+
+      return
+    }
+
+    if (data.city?.value === OCANA_VALUE && data.commune?.value === '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Debes escoger una comuna'
+      })
+
+      return
+    }
+
+    const res = axiosInstance.post('/auth/register', {
+      ...data,
+      armedConflict: data.armedConflict.value === 'Y',
+      ethnicGroup: data.ethnicGroup.value,
+      country: data.country.value,
+      department: data.department?.value,
+      city: data.city?.value,
+      commune: data.commune?.value,
+      neighborhood: data.neighborhood?.value,
+      role: data.role.value,
+      school: data.school.value,
+      schoolLevel: data.schoolLevel.value,
+      documentType: data.documentType.value,
+      gender: data.gender.value,
+      phone: data.phone.replaceAll('-', '')
+    })
+
+    const [_, error] = await safePromise(res)
+    if (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2:
+          'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo más tarde.'
+      })
+
+      return
+    }
+
+    Toast.show({
+      type: 'success',
+      text1: 'Felicidades 🎉',
+      text2: 'Te has registrado exitosamente'
+    })
+  }
+
+  const isCountryColombia = watch('country')?.value === COLOMBIA_COUNTRY_VALUE
+  const isOtherCommune = watch('commune')?.value === '7'
+  const isOcana = watch('city')?.value === OCANA_VALUE
   return (
     <ScrollView className='w-full'>
       <View className='flex-1 gap-9 w-full py-5'>
@@ -83,10 +176,10 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='documentType'
-            defaultValue={documentTypes[0]}
+            defaultValue={formValues.documentTypes[0]}
             render={({ field }) => (
               <FormSelect
-                data={documentTypes}
+                data={formValues.documentTypes}
                 value={field.value}
                 onValueChange={field.onChange}
                 label={i18n.t('REGISTER.DOCUMENT_TYPE_LABEL')}
@@ -133,10 +226,10 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='gender'
-            defaultValue={genres[0]}
+            defaultValue={GENDERS[0]}
             render={({ field }) => (
               <FormSelect
-                data={genres}
+                data={GENDERS}
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1/3'
@@ -150,10 +243,10 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='armedConflict'
-            defaultValue={armedConflicts[0]}
+            defaultValue={ARMED_CONFLICT[0]}
             render={({ field }) => (
               <FormSelect
-                data={armedConflicts}
+                data={ARMED_CONFLICT}
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
@@ -165,10 +258,10 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='ethnicGroup'
-            defaultValue={ethnicGroups[0]}
+            defaultValue={formValues.communities[0]}
             render={({ field }) => (
               <FormSelect
-                data={ethnicGroups}
+                data={formValues.communities}
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
@@ -182,12 +275,18 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='country'
-            defaultValue={countries[0]}
+            defaultValue={formValues.countries[0]}
             render={({ field }) => (
               <FormSelect
-                data={countries}
+                data={formValues.countries}
                 value={field.value}
-                onValueChange={field.onChange}
+                onValueChange={e => {
+                  field.onChange(e)
+                  setValue('department', DEFAULT_OBJECT_SELECT)
+                  setValue('city', DEFAULT_OBJECT_SELECT)
+                  setValue('commune', DEFAULT_OBJECT_SELECT)
+                  setValue('neighborhood', DEFAULT_OBJECT_SELECT)
+                }}
                 className='flex-1'
                 label={i18n.t('REGISTER.COUNTRY_LABEL')}
               />
@@ -197,12 +296,22 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='department'
-            defaultValue={departments[0]}
             render={({ field }) => (
               <FormSelect
-                data={departments}
+                data={formValues.departments}
                 value={field.value}
-                onValueChange={field.onChange}
+                onValueChange={e => {
+                  field.onChange(e)
+                  const r = filterCities(
+                    formValues.municipalities,
+                    e?.value ?? ''
+                  )
+
+                  setFilteredCities(r)
+                  setValue('city', r[0])
+                  setValue('commune', DEFAULT_OBJECT_SELECT)
+                  setValue('neighborhood', DEFAULT_OBJECT_SELECT)
+                }}
                 className='flex-1'
                 label={i18n.t('REGISTER.DEPARTMENT_LABEL')}
                 disabled={!isCountryColombia}
@@ -213,12 +322,15 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='city'
-            defaultValue={cities[0]}
             render={({ field }) => (
               <FormSelect
-                data={cities}
+                data={filteredCities}
                 value={field.value}
-                onValueChange={field.onChange}
+                onValueChange={e => {
+                  field.onChange(e)
+                  setValue('commune', DEFAULT_OBJECT_SELECT)
+                  setValue('neighborhood', DEFAULT_OBJECT_SELECT)
+                }}
                 className='flex-1'
                 label={i18n.t('REGISTER.CITY_LABEL')}
                 disabled={!isCountryColombia}
@@ -231,15 +343,23 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='commune'
-            defaultValue={neighborhoods[0]}
             render={({ field }) => (
               <FormSelect
-                data={neighborhoods}
+                data={formValues.communes}
                 value={field.value}
-                onValueChange={field.onChange}
+                onValueChange={e => {
+                  field.onChange(e)
+                  const l = filterNeighborhoods(
+                    formValues.neighborhoods,
+                    e?.value ?? ''
+                  )
+
+                  setFilteredNeigh(l)
+                  setValue('neighborhood', l[0])
+                }}
                 className='flex-1 h-12'
                 label={i18n.t('REGISTER.COMMUNE_LABEL')}
-                disabled={!isCountryColombia}
+                disabled={!isCountryColombia || !isOcana}
               />
             )}
           />
@@ -247,15 +367,14 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='neighborhood'
-            defaultValue={neighborhoods[0]}
             render={({ field }) => (
               <FormSelect
-                data={neighborhoods}
+                data={filteredNeigh}
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1 h-12'
                 label={i18n.t('REGISTER.NEIGHBORHOOD_LABEL')}
-                disabled={!isCountryColombia}
+                disabled={!isCountryColombia || !isOcana || isOtherCommune}
               />
             )}
           />
@@ -318,10 +437,10 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='role'
-            defaultValue={roles[0]}
+            defaultValue={ROLES[0]}
             render={({ field }) => (
               <FormSelect
-                data={roles}
+                data={ROLES}
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
@@ -333,10 +452,10 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='school'
-            defaultValue={schools[0]}
+            defaultValue={formValues.schools[0]}
             render={({ field }) => (
               <FormSelect
-                data={schools}
+                data={formValues.schools}
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'
@@ -348,10 +467,10 @@ export function RegisterForm() {
           <Controller
             control={control}
             name='schoolLevel'
-            defaultValue={schoolLevels[0]}
+            defaultValue={formValues.educationLevels[0]}
             render={({ field }) => (
               <FormSelect
-                data={schoolLevels}
+                data={formValues.educationLevels}
                 value={field.value}
                 onValueChange={field.onChange}
                 className='flex-1'

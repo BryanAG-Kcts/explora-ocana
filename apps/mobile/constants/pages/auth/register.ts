@@ -19,13 +19,13 @@ export const RegisterSchema = z
     phoneExtension: z.string('Debes ingresar una extensión telefónica válida'),
     birthdate: z.string('Debes ingresar una fecha de nacimiento válida'),
     country: OBJECT_SELECT_SCHEMA,
-    department: OBJECT_SELECT_SCHEMA,
-    city: OBJECT_SELECT_SCHEMA,
-    neighborhood: OBJECT_SELECT_SCHEMA,
+    department: OBJECT_SELECT_SCHEMA.optional(),
+    city: OBJECT_SELECT_SCHEMA.optional(),
+    neighborhood: OBJECT_SELECT_SCHEMA.optional(),
     school: OBJECT_SELECT_SCHEMA,
     schoolLevel: OBJECT_SELECT_SCHEMA,
     role: OBJECT_SELECT_SCHEMA,
-    commune: OBJECT_SELECT_SCHEMA,
+    commune: OBJECT_SELECT_SCHEMA.optional(),
     password: z
       .string('Debes ingresar una contraseña')
       .min(6, 'La contraseña debe tener al menos 6 caracteres'),
@@ -39,70 +39,48 @@ export const RegisterSchema = z
   })
 
 export type RegisterSchemaType = z.infer<typeof RegisterSchema>
-export const documentTypes = [
-  { label: 'C.C.', value: 'CC' },
-  { label: 'T.I.', value: 'TI' },
-  { label: 'C.E.', value: 'CE' },
-  { label: 'P.P.', value: 'PP' }
-]
-export const genres = [
+type ObjectSelect = z.infer<typeof OBJECT_SELECT_SCHEMA>
+export type Municipalities = ObjectSelect & { departmentId: string }
+export type Neighborhoods = ObjectSelect & { communeId: string }
+
+export interface FormValues {
+  countries: ObjectSelect[]
+  departments: ObjectSelect[]
+  municipalities: Municipalities[]
+  communes: ObjectSelect[]
+  neighborhoods: Neighborhoods[]
+  schools: ObjectSelect[]
+  documentTypes: ObjectSelect[]
+  educationLevels: ObjectSelect[]
+  communities: ObjectSelect[]
+}
+
+export const GENDERS = [
   { label: 'Masculino', value: 'M' },
   { label: 'Femenino', value: 'F' },
   { label: 'Otro', value: 'O' }
 ]
-export const armedConflicts = [
+
+export const ARMED_CONFLICT = [
   { label: 'Sí', value: 'Y' },
   { label: 'No', value: 'N' }
 ]
-export const ethnicGroups = [
-  { label: 'Indígena', value: 'indigena' },
-  { label: 'Afrocolombiano', value: 'afrocolombiano' },
-  { label: 'Raizal', value: 'raizal' },
-  { label: 'Palenquero', value: 'palenquero' },
-  { label: 'Gitano', value: 'gitano' },
-  { label: 'Ninguno', value: 'ninguno' }
+
+export const ROLES = [
+  { label: 'Estudiante', value: 'student' },
+  { label: 'Docente', value: 'teacher' },
+  { label: 'Ciudadano', value: 'user' }
 ]
-export const countries = [
-  { label: 'Colombia', value: 'colombia' },
-  { label: 'Venezuela', value: 'venezuela' },
-  { label: 'Otro', value: 'otro' }
-]
-export const departments = [
-  { label: 'Norte de Santander', value: 'norte_de_santander' },
-  { label: 'Cesar', value: 'cesar' },
-  { label: 'Otro', value: 'otro' }
-]
-export const cities = [
-  { label: 'Ocaña', value: 'ocana' },
-  { label: 'Cúcuta', value: 'cucuta' },
-  { label: 'Otro', value: 'otro' }
-]
-export const neighborhoods = [
-  { label: 'Centro', value: 'centro' },
-  { label: 'San Luis', value: 'san_luis' },
-  { label: 'Otro', value: 'otro' }
-]
-export const schools = [
-  {
-    label: 'Institución Educativa Francisco de Paula Santander',
-    value: 'francisco_de_paula_santander'
-  },
-  {
-    label: 'Institución Educativa Técnica Simón Bolívar',
-    value: 'simon_bolivar'
-  },
-  { label: 'Otro', value: 'otro' }
-]
-export const schoolLevels = [
-  { label: 'Primaria', value: 'primaria' },
-  { label: 'Secundaria', value: 'secundaria' },
-  { label: 'Técnica', value: 'tecnica' },
-  { label: 'Tecnológica', value: 'tecnologica' },
-  { label: 'Profesional', value: 'profesional' },
-  { label: 'Otro', value: 'otro' }
-]
-export const roles = [
-  { label: 'Estudiante', value: 'estudiante' },
-  { label: 'Docente', value: 'docente' },
-  { label: 'Ciudadano', value: 'ciudadano' }
-]
+export const DEFAULT_OBJECT_SELECT: ObjectSelect = {
+  label: '',
+  value: ''
+}
+
+export const COLOMBIA_COUNTRY_VALUE = '37'
+export const OCANA_VALUE = '612'
+
+export const filterCities = (array: Municipalities[], department: string) =>
+  array.filter(m => m.departmentId === department)
+
+export const filterNeighborhoods = (array: Neighborhoods[], commune: string) =>
+  array.filter(m => m.communeId === commune)
