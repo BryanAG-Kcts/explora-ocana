@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { User } from '@/hooks/userStore'
 import { i18n } from '@/locales/i18n'
 
 export const LoginSchema = z.object({
@@ -9,3 +10,9 @@ export const LoginSchema = z.object({
 })
 
 export type LoginSchemaType = z.infer<typeof LoginSchema>
+
+export interface LoginResponse {
+  accessToken: string
+  refreshToken: string
+  user: User
+}

@@ -31,6 +31,7 @@ export const authService = {
     })
     const refreshToken = generateRefreshToken({ userId: user.id })
 
+    delete user.password
     return { user, accessToken, refreshToken }
   },
 

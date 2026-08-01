@@ -1,10 +1,44 @@
 import type { RegisterSchema } from '../interfaces/auth.interface'
-import { informationUser, ProfilelUser } from '../interfaces/user.interface';
+import type {
+  informationUser,
+  ProfilelUser
+} from '../interfaces/user.interface'
 import { db } from '../services/pg.service'
 
 export const userRepository = {
   findByEmail: async (email: string) => {
-    return await db.oneOrNone('SELECT * FROM users WHERE email = $1', [email])
+    return await db.oneOrNone(
+      `
+        SELECT 
+          u.user_id id,
+          u.password,
+        	u.name,
+        	u.last_name lastname,
+        	u.name || ' ' || u.last_name fullname,
+        	u.email,
+        	u.birthdate,
+        	u.phone_number phone,
+        	case u.gender when 'M' then 'Masculino' else 'Femenino' end gender,
+        	u.document,
+        	u.armedconflict,
+        	c.name country,
+        	d.name department,
+        	m.name city,
+        	co.commune_name commmune,
+        	n.neighborhood_name  neighborhood,
+        	doc.name || ' (' || doc.code || ')' "documentType",
+        	com.community_name "ethnicGroup"
+        FROM users u
+        inner join countries c on u.country_id = c.country_id
+        left join departments d on c.country_id = d.country_id
+        left join municipality m on d.department_id = m.department_id
+        left join communes co on u.commune_id = co.commune_id
+        left join neighborhoods n on u.neighborhood_id = n.neighborhood_id
+        inner join document_types doc on u.document_type_id = doc.document_type_id
+        inner join communities com on u.community_id = com.community_id
+        WHERE email = $1;`,
+      [email]
+    )
   },
 
   createUser: async (userData: RegisterSchema & { password: string }) => {
@@ -34,13 +68,13 @@ export const userRepository = {
         userData.school,
 
         // --- Datos de docente
-        userData.schoolLevel, // grade_student || grade_teacher
-        userData.school
+        userData.school,
+        userData.schoolLevel
       ]
     )
   },
 
-  getProfileUser: async (userId: number) : Promise<ProfilelUser | null> => {
+  getProfileUser: async (userId: number): Promise<ProfilelUser | null> => {
     return await db.oneOrNone(
       `SELECT
         u.name,
@@ -49,11 +83,14 @@ export const userRepository = {
         ue.experience_points
       FROM exploraocanna.users u
       LEFT JOIN exploraocanna.user_experience ue ON ue.user_id = u.user_id
-      WHERE u.user_id = $1;`, [userId]
+      WHERE u.user_id = $1;`,
+      [userId]
     )
   },
 
-  getInformationUser: async (userId: number) : Promise<informationUser | null> => {
+  getInformationUser: async (
+    userId: number
+  ): Promise<informationUser | null> => {
     return await db.oneOrNone(
       `SELECT
         u.name,
@@ -90,7 +127,8 @@ export const userRepository = {
       LEFT JOIN exploraocanna.schools ssch ON ssch.school_id = st.school_id
       LEFT JOIN exploraocanna.schools tsch ON tsch.school_id = te.school_id
       LEFT JOIN exploraocanna.education_levels el ON el.education_level_id = te.education_level_id
-      WHERE u.user_id = $1;`, [userId]
+      WHERE u.user_id = $1;`,
+      [userId]
     )
   }
 }
