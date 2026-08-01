@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'expo-router'
 import { Lock, Mail } from 'lucide-react-native'
 import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
@@ -8,16 +9,20 @@ import { FormInput } from '@/components/global/formInput'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { saveTokens } from '@/constants/global/authStorage'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import {
   type LoginResponse,
   LoginSchema,
   type LoginSchemaType
 } from '@/constants/pages/auth/login'
+import { useUserStore } from '@/hooks/userStore'
 import { i18n } from '@/locales/i18n'
 import { ForgotPassword } from './forgotPassword'
 
 export function LoginForm() {
+  const { setUser } = useUserStore()
+  const router = useRouter()
   const { control, handleSubmit } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema)
   })
@@ -26,7 +31,7 @@ export function LoginForm() {
   const onSubmit: SubmitHandler<LoginSchemaType> = async data => {
     const res = axiosInstance.post<LoginResponse>('/auth/login', data)
     const [response, error] = await safePromise(res)
-    if (error) {
+    if (error || !response?.data) {
       Toast.show({
         type: 'error',
         text1: 'Error',
@@ -36,7 +41,9 @@ export function LoginForm() {
       return
     }
 
-    console.log(response?.data)
+    await saveTokens(response.data.accessToken, response.data.refreshToken)
+    setUser(response.data.user)
+    router.replace('/home')
   }
 
   return (

@@ -51,7 +51,14 @@
           }
         }
       ],
-      "react-native-enriched-markdown"
+      "react-native-enriched-markdown",
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true,
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

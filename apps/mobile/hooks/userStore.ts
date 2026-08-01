@@ -25,7 +25,7 @@ interface Store {
   getUser: () => User | null
   setUser: (user: User) => void
 }
-export const useStore = create<Store>((set, get) => ({
+export const useUserStore = create<Store>((set, get) => ({
   user: null,
   getUser: () => get().user,
   setUser: user => set({ user })
