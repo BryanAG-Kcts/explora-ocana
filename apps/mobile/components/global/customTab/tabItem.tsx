@@ -1,10 +1,9 @@
 import { Animated, TouchableOpacity, View } from 'react-native'
-import type { Route } from 'react-native-tab-view'
-import { Text } from '@/components/ui/text'
-import { cn } from '@/lib/utils'
+import { Icon } from '@/components/ui/icon'
+import type { TabRoute } from './customTab'
 
 interface Props {
-  route: Route
+  route: TabRoute
   isActive: boolean
   opacity: Animated.AnimatedInterpolation<number>
   onPress: () => void
@@ -17,15 +16,12 @@ export function TabItem({ route, isActive, opacity, onPress }: Props) {
         className='absolute w-full flex-1 h-full bg-primary left-0 top-0'
       />
 
-      <TouchableOpacity onPress={onPress} className='px-4 py-2'>
-        <Text
-          className={cn(
-            'text-center text-sm',
-            !isActive && 'text-muted-foreground'
-          )}
-        >
-          {route.title}
-        </Text>
+      <TouchableOpacity onPress={onPress} className='px-4 py-2 items-center'>
+        <Icon
+          as={route.iconComponent}
+          size={22}
+          color={isActive ? 'white' : 'gray'}
+        />
       </TouchableOpacity>
     </View>
   )

@@ -1,11 +1,16 @@
+import type { LucideIcon } from 'lucide-react-native'
 import { useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { type Route, type SceneMap, TabView } from 'react-native-tab-view'
 import { TabBody } from './tabBody'
 
+export interface TabRoute extends Route {
+  iconComponent: LucideIcon
+}
+
 interface Props {
   renderScene: ReturnType<typeof SceneMap>
-  routes: Route[]
+  routes: TabRoute[]
   tabBarPosition?: 'top' | 'bottom'
 }
 export function CustomTab({

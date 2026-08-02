@@ -1,12 +1,13 @@
 import { View } from 'react-native'
-import type { Route, TabBarProps } from 'react-native-tab-view'
+import type { TabBarProps } from 'react-native-tab-view'
+import type { TabRoute } from './customTab'
 import { TabItem } from './tabItem'
 
 export function TabBody({
   navigationState,
   jumpTo,
   position
-}: TabBarProps<Route>) {
+}: TabBarProps<TabRoute>) {
   const inputRange = navigationState.routes.map((_, index) => index)
   return (
     <View className='flex-row gap-2 bg-secondary rounded-full overflow-hidden mx-4 p-1'>
