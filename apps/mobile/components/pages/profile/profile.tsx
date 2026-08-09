@@ -1,47 +1,52 @@
+import { useRouter } from 'expo-router'
 import {
   Bolt,
   ChevronRight,
-  Coins,
   Flame,
   LogOut,
   TestTubeDiagonal,
-  Trophy,
   UserRound
 } from 'lucide-react-native'
-import { useState } from 'react'
-import { Alert, ScrollView, TouchableOpacity, View } from 'react-native'
+import { useEffect, useState } from 'react'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { CustomAlertDialog } from '@/components/global/alertDialog'
 import { BorderHeader } from '@/components/global/borderHeader'
 import { CustomModal } from '@/components/global/customModal'
 import { ThemeToggle } from '@/components/global/themeToggle'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
+import { getInitials } from '@/constants/pages/profile/profile'
+import { useUserStore } from '@/hooks/userStore'
 import { ProfileInfo } from './profileInfo'
 import { StatCard } from './statCard'
 
-const USER_DATA = {
-  name: 'Andrés Mendoza',
-  createdAt: 'Octubre 2025',
-  streak: 12,
-  points: 450,
-  xp: 3200,
-  league: 'Oro',
-  initials: 'AM'
-}
-
 export function Profile() {
+  const { logOut, user } = useUserStore()
+  const router = useRouter()
+  const [userStats, setUserStats] = useState({
+    streak: null,
+    xp: null
+  })
   const [modalSelect, setModalSelect] = useState<'account' | 'settings' | ''>(
     ''
   )
 
-  const handleLogout = () => {
-    Alert.alert('Cerrar Sesión', '¿Estás seguro de que deseas salir?', [
-      { text: 'Cancelar', style: 'cancel' },
-      {
-        text: 'Salir',
-        style: 'destructive',
-        onPress: () => console.log('Sesión cerrada')
+  useEffect(() => {
+    ;(async () => {
+      const res = axiosInstance.get(`/user/${user?.id}/profile`)
+      const [response, error] = await safePromise(res)
+      if (error || !response?.data) {
+        return
       }
-    ])
+
+      setUserStats(response.data)
+    })()
+  }, [user])
+
+  async function handleLogout() {
+    await logOut()
+    router.replace('/auth/login')
   }
 
   return (
@@ -57,28 +62,24 @@ export function Profile() {
         <View className='items-center mb-8 mt-4'>
           <View className='w-24 h-24 bg-foreground rounded-full items-center justify-center mb-4 shadow-md'>
             <Text className='text-3xl font-bold text-background'>
-              {USER_DATA.initials}
+              {getInitials(user?.fullname || '')}
             </Text>
           </View>
-          <Text className='text-2xl font-bold'>{USER_DATA.name}</Text>
-          <Text variant='muted'>Miembro desde {USER_DATA.createdAt}</Text>
+          <Text className='text-2xl font-bold'>{user?.fullname}</Text>
+          <Text variant='muted'>Miembro desde {'---'}</Text>
         </View>
 
         <Text className='text-lg font-semibold mb-3'>Tus Estadísticas</Text>
-        <View className='flex-row flex-wrap justify-between mb-8'>
+        <View className='flex-row flex-wrap justify-between mb-5'>
           <StatCard
             title='Racha'
-            value={`${USER_DATA.streak} días`}
+            value={userStats.streak === null ? '-' : `${userStats.streak} días`}
             icon={<Icon as={Flame} size={18} className='text-destructive' />}
           />
-          <StatCard
-            title='Puntos'
-            value={USER_DATA.points}
-            icon={<Icon as={Coins} size={18} className='text-orange-500' />}
-          />
+
           <StatCard
             title='Total XP'
-            value={USER_DATA.xp}
+            value={userStats.xp === null ? '-' : userStats.xp}
             icon={
               <Icon
                 as={TestTubeDiagonal}
@@ -87,11 +88,11 @@ export function Profile() {
               />
             }
           />
-          <StatCard
+          {/* <StatCard
             title='Liga'
             value={USER_DATA.league}
             icon={<Icon as={Trophy} size={18} className='text-yellow-500' />}
-          />
+          /> */}
         </View>
 
         <View className='rounded-2xl border border-border overflow-hidden shadow-sm mb-8'>
@@ -121,17 +122,20 @@ export function Profile() {
             <Icon as={ChevronRight} size={12} />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={handleLogout}
-            className='flex-row justify-between items-center p-4'
+          <CustomAlertDialog
+            title='¿Cerrar sesión?'
+            desc='¿Estás seguro de que deseas cerrar sesión?'
+            onAccept={handleLogout}
           >
-            <View className='flex-row items-center gap-3'>
-              <Icon as={LogOut} size={18} className='text-destructive' />
-              <Text className='text-base font-medium text-destructive'>
-                Cerrar sesión
-              </Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity>
+              <View className='flex-row items-center p-4 border-b border-muted gap-3'>
+                <Icon as={LogOut} size={18} className='text-destructive' />
+                <Text className='text-base font-medium text-destructive'>
+                  Cerrar sesión
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </CustomAlertDialog>
         </View>
       </View>
 
@@ -139,7 +143,7 @@ export function Profile() {
         isModalVisible={modalSelect === 'account'}
         handleCloseModal={() => setModalSelect('')}
       >
-        <ProfileInfo />
+        {user && <ProfileInfo user={user} />}
       </CustomModal>
     </ScrollView>
   )

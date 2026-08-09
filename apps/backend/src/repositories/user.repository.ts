@@ -10,33 +10,78 @@ export const userRepository = {
     return await db.oneOrNone(
       `
         SELECT 
-          u.user_id id,
-          u.password,
-        	u.name,
-        	u.last_name lastname,
-        	u.name || ' ' || u.last_name fullname,
-        	u.email,
-        	u.birthdate,
-        	u.phone_number phone,
-        	case u.gender when 'M' then 'Masculino' else 'Femenino' end gender,
-        	u.document,
-        	u.armedconflict,
-        	c.name country,
-        	d.name department,
-        	m.name city,
-        	co.commune_name commmune,
-        	n.neighborhood_name  neighborhood,
-        	doc.name || ' (' || doc.code || ')' "documentType",
-        	com.community_name "ethnicGroup"
+            u.user_id id,
+            u.password,
+            u.name,
+            u.last_name "lastName",
+            u.name || ' ' || u.last_name fullname,
+            u.email,
+            u.birthdate,
+            u.phone_number phone,
+            CASE u.gender 
+                WHEN 'M' THEN 'Masculino' 
+                ELSE 'Femenino' 
+            END gender,
+            u.document,
+            u.armedconflict "armedConflict",
+            c.name country,
+            d.name department,
+            m.name city,
+            co.commune_name commune,
+            n.neighborhood_name neighborhood,
+            doc.name || ' (' || doc.code || ')' "documentType",
+            com.community_name "ethnicGroup",
+            
+            CASE
+                WHEN st.student_id IS NOT NULL THEN 'Estudiante'
+                WHEN te.teacher_id IS NOT NULL THEN 'Docente'
+            END role,
+            
+            COALESCE(ssch.name, tsch.name) school,
+            
+            el.name "educationLevel"
+            
         FROM users u
-        inner join countries c on u.country_id = c.country_id
-        left join departments d on c.country_id = d.country_id
-        left join municipality m on d.department_id = m.department_id
-        left join communes co on u.commune_id = co.commune_id
-        left join neighborhoods n on u.neighborhood_id = n.neighborhood_id
-        inner join document_types doc on u.document_type_id = doc.document_type_id
-        inner join communities com on u.community_id = com.community_id
-        WHERE email = $1;`,
+            
+        INNER JOIN countries c 
+            ON u.country_id = c.country_id
+            
+        LEFT JOIN departments d 
+            ON u.department_id = d.department_id
+            
+        LEFT JOIN municipality m 
+            ON u.municipality_id = m.municipality_id
+            
+        LEFT JOIN communes co 
+            ON u.commune_id = co.commune_id
+            
+        LEFT JOIN neighborhoods n 
+            ON u.neighborhood_id = n.neighborhood_id
+            
+        INNER JOIN document_types doc 
+            ON u.document_type_id = doc.document_type_id
+            
+        INNER JOIN communities com 
+            ON u.community_id = com.community_id
+            
+        LEFT JOIN student st 
+            ON st.user_id = u.user_id
+            
+        LEFT JOIN teacher te 
+            ON te.user_id = u.user_id
+            
+        LEFT JOIN schools ssch 
+            ON ssch.school_id = st.school_id
+            
+        LEFT JOIN schools tsch 
+            ON tsch.school_id = te.school_id
+            
+        LEFT JOIN education_levels el 
+            ON el.education_level_id = te.education_level_id 
+            OR el.education_level_id = st.grade
+            
+        WHERE u.email = $1 
+           OR u.user_id = $1;`,
       [email]
     )
   },
@@ -77,10 +122,8 @@ export const userRepository = {
   getProfileUser: async (userId: number): Promise<ProfilelUser | null> => {
     return await db.oneOrNone(
       `SELECT
-        u.name,
-        u.last_name,
-        ue.streak_days,
-        ue.experience_points
+        ue.streak_days streak,
+        ue.experience_points xp
       FROM exploraocanna.users u
       LEFT JOIN exploraocanna.user_experience ue ON ue.user_id = u.user_id
       WHERE u.user_id = $1;`,

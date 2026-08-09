@@ -1,9 +1,10 @@
 import { create } from 'zustand'
+import { removeTokens } from '@/constants/global/authStorage'
 
 export interface User {
   id: number
   name: string
-  lastname: string
+  lastName: string
   fullname: string
   email: string
   document: string
@@ -15,18 +16,26 @@ export interface User {
   country: string
   department: string | null
   city: string | null
-  commmune: string | null
+  commune: string | null
   neighborhood: string | null
-  armedconflict: boolean
+  armedConflict: boolean
+  role: string
+  school: string
+  educationLevel: string
 }
 
 interface Store {
   user: User | null
   getUser: () => User | null
   setUser: (user: User) => void
+  logOut: () => Promise<void>
 }
 export const useUserStore = create<Store>((set, get) => ({
   user: null,
   getUser: () => get().user,
-  setUser: user => set({ user })
+  setUser: user => set({ user }),
+  logOut: async () => {
+    set({ user: null })
+    await removeTokens()
+  }
 }))

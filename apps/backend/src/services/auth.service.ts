@@ -40,7 +40,9 @@ export const authService = {
 
     const accessToken = generateAccessToken({ userId: payload.userId })
     const newRefreshToken = generateRefreshToken({ userId: payload.userId })
+    const user = await userRepository.findByEmail(payload.userId.toString())
 
-    return { accessToken, refreshToken: newRefreshToken }
+    delete user.password
+    return { accessToken, refreshToken: newRefreshToken, user }
   }
 }
