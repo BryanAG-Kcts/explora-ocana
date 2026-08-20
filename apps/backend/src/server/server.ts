@@ -6,6 +6,7 @@ import { ragRouter } from '../routes/rag.route'
 import { assetsRouter } from '../routes/assets.route'
 import { dataRouter } from '../routes/data.route'
 import { userRouter } from '../routes/user.route'
+import { groupRouter } from '../routes/group.route'
 
 export class Server {
   app: Express
@@ -25,6 +26,7 @@ export class Server {
     this.app.use('/api/rag', ragRouter)
     this.app.use('/user', userRouter)
     this.app.use('/api/assets', assetsRouter)
+    this.app.use('/group', groupRouter)
     this.app.all('/{*splat}', (_, res) => {
       res.json({ msg: 'Hello World!' })
     })
