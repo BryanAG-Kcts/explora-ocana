@@ -2,6 +2,7 @@ import {
   BarChartIcon,
   GraduationCapIcon,
   HomeIcon,
+  SparkleIcon,
   UserCircleIcon
 } from 'lucide-react-native'
 import { SceneMap } from 'react-native-tab-view'
@@ -15,24 +16,45 @@ import { StudentCourses } from '@/components/pages/courses/student/studentCourse
 import { Home } from '@/components/pages/home/home'
 import { Leaderboard } from '@/components/pages/leaderboard/leaderboard'
 import { Profile } from '@/components/pages/profile/profile'
+import { useUserStore } from '@/hooks/userStore'
 
 const renderScene = SceneMap({
   home: Home,
   profile: Profile,
   leaderboard: Leaderboard,
   aiChat: AIChat,
-  courses: StudentCourses,
-  courses2: ProfessorCourses
+  studentCourses: StudentCourses,
+  professorCourses: ProfessorCourses
 })
-const routes: TabRoute[] = [
-  { key: 'home', iconComponent: HomeIcon },
-  { key: 'leaderboard', iconComponent: BarChartIcon },
-  { key: 'aiChat', iconComponent: BarChartIcon },
-  { key: 'profile', iconComponent: UserCircleIcon },
-  { key: 'courses', iconComponent: GraduationCapIcon },
-  { key: 'courses2', iconComponent: GraduationCapIcon }
-]
 
 export default function Index() {
+  const { user } = useUserStore()
+  let routes: TabRoute[] = [
+    { key: 'home', iconComponent: HomeIcon },
+    { key: 'leaderboard', iconComponent: BarChartIcon },
+    { key: 'aiChat', iconComponent: SparkleIcon },
+    { key: 'profile', iconComponent: UserCircleIcon }
+  ]
+
+  if (user?.role === 'Estudiante') {
+    routes = [
+      { key: 'home', iconComponent: HomeIcon },
+      { key: 'leaderboard', iconComponent: BarChartIcon },
+      { key: 'aiChat', iconComponent: SparkleIcon },
+      { key: 'studentCourses', iconComponent: GraduationCapIcon },
+      { key: 'profile', iconComponent: UserCircleIcon }
+    ]
+  }
+
+  if (user?.role === 'Docente') {
+    routes = [
+      { key: 'home', iconComponent: HomeIcon },
+      { key: 'leaderboard', iconComponent: BarChartIcon },
+      { key: 'aiChat', iconComponent: SparkleIcon },
+      { key: 'professorCourses', iconComponent: GraduationCapIcon },
+      { key: 'profile', iconComponent: UserCircleIcon }
+    ]
+  }
+
   return <CustomTab renderScene={renderScene} routes={routes} />
 }

@@ -1,29 +1,53 @@
-import { useState } from 'react'
+import { Activity } from 'lucide-react-native'
+import { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { BorderHeader } from '@/components/global/borderHeader'
 import { ThemeToggle } from '@/components/global/themeToggle'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
-import {
-  LEADERBOARD_DATA_SCHOOLS,
-  LEADERBOARD_DATA_USERS
-} from '@/constants/pages/leaderboard/Leaderboard'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
+import type { LeaderboardUser } from '@/constants/pages/leaderboard/Leaderboard'
 import { LeaderboardCards } from './leaderboardCards'
 import { PodiumCards } from './podiumCard'
 
 export function Leaderboard() {
   const [selectedStudents, setSelectedStudents] = useState(true)
+  const [students, setStudents] = useState<LeaderboardUser[]>([])
+  const [grades, setGrades] = useState<LeaderboardUser[]>([])
 
-  const topThreeStudents = LEADERBOARD_DATA_USERS.slice(0, 3)
-  const theRestStudents = LEADERBOARD_DATA_USERS.slice(3)
+  useEffect(() => {
+    ;(async () => {
+      const resStudent = axiosInstance.get('/data/ranking/students')
+      const [responseStudent, errorStudent] = await safePromise(resStudent)
+      if (errorStudent || !responseStudent?.data) {
+        return
+      }
+
+      setStudents(responseStudent.data)
+      const resGrades = axiosInstance.get('/data/ranking/grades')
+      const [responseGrades, errorGrades] = await safePromise(resGrades)
+      if (errorGrades || !responseGrades?.data) {
+        return
+      }
+
+      setGrades(responseGrades.data)
+    })()
+  }, [])
+
+  if (students.length === 0) {
+    return <Activity className='self-center' size={32} color='gray' />
+  }
+
+  const topThreeStudents = students.slice(0, 3)
+  const theRestStudents = students.slice(3)
   const podiumOrderStudents = [
     topThreeStudents[1],
     topThreeStudents[0],
     topThreeStudents[2]
   ]
 
-  const topThreeSchools = LEADERBOARD_DATA_SCHOOLS.slice(0, 3)
-  const theRestSchools = LEADERBOARD_DATA_SCHOOLS.slice(3)
+  const topThreeSchools = grades.slice(0, 3)
+  const theRestSchools = grades.slice(3)
   const podiumOrderSchools = [
     topThreeSchools[1],
     topThreeSchools[0],
@@ -68,14 +92,14 @@ export function Leaderboard() {
 
         {selectedStudents && (
           <>
-            <PodiumCards users={podiumOrderStudents} />
+            <PodiumCards podiumUsers={podiumOrderStudents} users={students} />
             <LeaderboardCards users={theRestStudents} />
           </>
         )}
 
         {!selectedStudents && (
           <>
-            <PodiumCards users={podiumOrderSchools} />
+            <PodiumCards podiumUsers={podiumOrderSchools} users={grades} />
             <LeaderboardCards users={theRestSchools} />
           </>
         )}

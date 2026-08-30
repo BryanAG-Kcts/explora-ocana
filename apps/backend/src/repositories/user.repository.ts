@@ -81,7 +81,7 @@ export const userRepository = {
             OR el.education_level_id = st.grade
             
         WHERE u.email = $1 
-           OR u.user_id = $1;`,
+           OR u.user_id::TEXT = $1;`,
       [email]
     )
   },
@@ -98,14 +98,14 @@ export const userRepository = {
         userData.phone,
         userData.gender,
         userData.country,
-        userData.department,
-        userData.city,
+        userData.department === '' ? null : userData.department,
+        userData.city === '' ? null : userData.city,
         userData.documentType,
         userData.document,
         userData.ethnicGroup,
         userData.armedConflict,
-        userData.commune,
-        userData.neighborhood,
+        userData.commune === '' ? null : userData.commune,
+        userData.neighborhood === '' ? null : userData.neighborhood,
         userData.role,
 
         // ---- Datos de estudiante

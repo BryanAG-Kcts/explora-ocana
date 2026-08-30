@@ -19,7 +19,7 @@ export interface User {
   commune: string | null
   neighborhood: string | null
   armedConflict: boolean
-  role: string
+  role: 'Estudiante' | 'Docente'
   school: string
   educationLevel: string
 }

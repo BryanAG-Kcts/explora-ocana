@@ -1,13 +1,10 @@
 import { ScrollView, View } from 'react-native'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Avatar } from '@/components/ui/avatar'
 import { Text } from '@/components/ui/text'
-import type {
-  LEADERBOARD_DATA_SCHOOLS,
-  LEADERBOARD_DATA_USERS
-} from '@/constants/pages/leaderboard/Leaderboard'
+import type { LeaderboardUser } from '@/constants/pages/leaderboard/Leaderboard'
 
 interface Props {
-  users: typeof LEADERBOARD_DATA_USERS | typeof LEADERBOARD_DATA_SCHOOLS
+  users: LeaderboardUser[]
 }
 export function LeaderboardCards({ users }: Props) {
   return (
@@ -25,10 +22,7 @@ export function LeaderboardCards({ users }: Props) {
             {index + 4}
           </Text>
 
-          <Avatar alt={user.name} className='size-11 bg-muted'>
-            <AvatarImage source={{ uri: user.avatar }} />
-          </Avatar>
-
+          <Avatar alt={user.name} className='size-11 bg-muted' />
           <View className='flex-1'>
             <Text className='font-bold text-sm'>{user.name}</Text>
             {(user.streak ?? 0) > 0 && (

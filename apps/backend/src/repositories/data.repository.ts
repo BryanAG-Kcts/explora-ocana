@@ -44,26 +44,28 @@ export const dataRepository = {
   getPodioStudents: async (): Promise<PodioStudent[]> =>
     db.manyOrNone(
       `SELECT
-        ue.user_experience_id,
+        ue.user_experience_id id,
         u.name,
-        u.last_name,
-        ue.experience_points,
-        ue.streak_days
+        u.last_name "lastName",
+        ue.experience_points xp,
+        ue.streak_days streak
       FROM exploraocanna.user_experience ue
       JOIN exploraocanna.users u ON u.user_id = ue.user_id
       ORDER BY ue.experience_points DESC
-      LIMIT 5;`
+      LIMIT 15;`
     ),
 
   getPodioGrades: async (): Promise<PodioGrades[]> =>
     db.manyOrNone(
       `SELECT
-        s.grade,
-        SUM(ue.experience_points) AS total_experience_points
-      FROM exploraocanna.student s
-      JOIN exploraocanna.user_experience ue ON ue.user_id = s.user_id
-      GROUP BY s.grade
-      ORDER BY total_experience_points DESC
-      LIMIT 3;`
+           s.grade id,
+       	   edu.name,
+           SUM(ue.experience_points) AS xp
+       FROM exploraocanna.student s
+       	JOIN exploraocanna.user_experience ue ON ue.user_id = s.user_id
+       	JOIN exploraocanna.education_levels edu ON edu.education_level_id = s.grade
+       GROUP BY s.grade, edu.name
+       ORDER BY xp DESC
+       LIMIT 15;`
     )
 }

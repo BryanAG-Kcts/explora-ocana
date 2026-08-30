@@ -1,25 +1,20 @@
 import { View } from 'react-native'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Avatar } from '@/components/ui/avatar'
 import { Text } from '@/components/ui/text'
-import {
-  LEADERBOARD_DATA_SCHOOLS,
-  LEADERBOARD_DATA_USERS
-} from '@/constants/pages/leaderboard/Leaderboard'
+import type { LeaderboardUser } from '@/constants/pages/leaderboard/Leaderboard'
 import { cn } from '@/lib/utils'
 
 interface Props {
-  users: typeof LEADERBOARD_DATA_USERS | typeof LEADERBOARD_DATA_SCHOOLS
+  users: (LeaderboardUser | null)[]
+  podiumUsers: (LeaderboardUser | null)[]
 }
-export function PodiumCards({ users }: Props) {
+export function PodiumCards({ users, podiumUsers }: Props) {
   return (
     <View className='flex-row justify-center items-end py-4'>
-      {users.map(user => {
-        const isFirst =
-          user.id === LEADERBOARD_DATA_USERS[0].id ||
-          user.id === LEADERBOARD_DATA_SCHOOLS[0].id
-        const isSecond =
-          user.id === LEADERBOARD_DATA_USERS[1].id ||
-          user.id === LEADERBOARD_DATA_SCHOOLS[1].id
+      {podiumUsers.map(user => {
+        if (!user) return null
+        const isFirst = user.id === users[0]?.id
+        const isSecond = user.id === users[1]?.id
 
         return (
           <View
@@ -30,13 +25,11 @@ export function PodiumCards({ users }: Props) {
               <Avatar
                 alt={user.name}
                 className={cn(
-                  'border-2 size-16 border-amber-600',
+                  'border-2 size-16 border-amber-600 bg-muted',
                   isSecond && 'border-slate-300',
                   isFirst && 'border-yellow-400 size-20'
                 )}
-              >
-                <AvatarImage source={{ uri: user.avatar }} />
-              </Avatar>
+              />
 
               <Text className='absolute bg-card px-2 py-0.5 rounded-full border border-border -top-2 right-0 text-xs'>
                 {isFirst ? '🥇' : isSecond ? '🥈' : '🥉'}

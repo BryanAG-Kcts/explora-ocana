@@ -14,6 +14,7 @@ export const authController = {
       const isRegister = await authService.register(parsed.data)
       res.status(201).json({ success: isRegister })
     } catch (e: unknown) {
+      console.log(e)
       if (e instanceof Error && e.message === 'EMAIL_IN_USE') {
         res.status(409).json({ error: 'El email ya está en uso' })
         return
