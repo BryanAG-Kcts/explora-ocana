@@ -217,7 +217,7 @@ export function RegisterForm() {
                 error={fieldState.error?.message}
                 leftComponent={<Icon as={Calendar} size={18} />}
                 viewClassName='flex-2/3'
-                mask='99/99/9999'
+                mask='9999/99/99'
                 keyboardType='numeric'
               />
             )}

@@ -2,8 +2,6 @@ packages:
   - apps/*
   - shared/*
 
-ignoredBuiltDependencies:
-  - bcrypt
-
-onlyBuiltDependencies:
-  - esbuild
+allowBuilds:
+  bcrypt: false
+  esbuild: false

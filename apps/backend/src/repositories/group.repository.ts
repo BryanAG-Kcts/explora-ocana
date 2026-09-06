@@ -4,14 +4,14 @@ import { db } from '../services/pg.service'
 export const groupRepository = {
     findByTeacherAndName: async (teacher_id: number, name: string) => {
         return await db.oneOrNone(
-            "SELECT * FROM groups WHERE teacher_id = $1 AND name = $2",
+            "SELECT * FROM courses WHERE teacher_id = $1 AND name = $2",
             [teacher_id, name]
         );
     },
 
     createGroup: async (teacher_id: number, name: string, access_code: string) => {
         return await db.oneOrNone(
-            "INSERT INTO groups (teacher_id, name, access_code) VALUES ($1, $2, $3) RETURNING *",
+            "INSERT INTO courses(teacher_id, name, access_code) VALUES ($1, $2, $3) RETURNING *",
             [teacher_id, name, access_code]
         );
     },
@@ -29,7 +29,7 @@ export const groupRepository = {
 
     getGroupStudents: async (group_id: number): Promise<InfoStudentsGroup[]> =>
         db.manyOrNone(
-            "SELECT * FROM course_students WHERE group_id = $1", [group_id]
+            "SELECT * FROM course_students WHERE course_id = $1", [group_id]
         ),
 
     getTotalMissions: async () => 
@@ -41,15 +41,15 @@ export const groupRepository = {
     getListGroupTeacher: async (teacher_id: number): Promise<listGroupTeacher[]> => 
         db.manyOrNone(
             `SELECT
-                c.course_id,
+                c.course_id as id,
                 c.name,
-                c.access_code,
-                COUNT(cs.course_student_id) AS students_count
+                c.access_code as "accessCode",
+                COUNT(cs.course_student_id) AS "studentsCount"
             FROM courses c
             LEFT JOIN course_students cs ON cs.course_id = c.course_id
             WHERE c.teacher_id = $1
-            GROUP BY c.course_id, c.name, c.access_code, 
-            ORDER BY c.name DESC;`, [teacher_id]
+            GROUP BY c.course_id, c.name, c.access_code
+            ORDER BY c.name DESC`, [teacher_id]
         ),
     
     verifyGroupAccess: async (group_id: number, access_code: string) =>

@@ -1,8 +1,6 @@
 import type { Request, Response } from "express";
 import { createGroupSchema, JoinGroupSchema } from "../interfaces/group.interface";
 import { groupService } from "../services/group.service";
-import { number, success } from "zod";
-
 
 export const groupController = {
     postCreateGroup: async (req: Request, res: Response) => {
@@ -11,26 +9,29 @@ export const groupController = {
             const newGroup = await groupService.createGroup({ teacher_id, name } );
             res.status(201).json({ success: true, access_code: newGroup.access_code });
         } catch (error) {
+            console.log(error)
             res.status(500).json({ success:false, message: 'Error al crear el grupo', error });
         }
         return
     },
     getInformationGroup: async (req: Request, res: Response) => {
         try{
-            const group_id = Number(req.params) 
+            const group_id = Number(req.params.group_id) 
             const data =  await groupService.inforGroup(group_id)
             res.status(201).json({ success: true, data: data})
         }catch (error) {
+            console.log(error)
             res.status(500).json({ success: false, message: 'Error al traer informacion de grupo', error });
         }
     },
 
     getListGroupTeacher: async (req: Request, res: Response) => {
         try {
-            const teacher_id = Number(req.params)
+            const teacher_id = Number(req.params.teacher_id)
             const data = await groupService.getTeacherGroups(teacher_id)
-            res.status(200).json({ success: true, data : data})
+            res.status(200).json({ success: true, courses : data})
         } catch (error) {
+            console.log(error)
             res.status(500).json({ success: false, message: 'Error al traer lista de grupos', error });
         }
     },

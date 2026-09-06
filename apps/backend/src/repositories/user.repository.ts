@@ -18,6 +18,7 @@ export const userRepository = {
             u.email,
             u.birthdate,
             u.phone_number phone,
+            TO_CHAR(u.created_at, 'DD/MM/YYYY') AS "createdAt",
             CASE u.gender 
                 WHEN 'M' THEN 'Masculino' 
                 ELSE 'Femenino' 
@@ -31,6 +32,8 @@ export const userRepository = {
             n.neighborhood_name neighborhood,
             doc.name || ' (' || doc.code || ')' "documentType",
             com.community_name "ethnicGroup",
+            st.student_id "studentId",
+            te.teacher_id "teacherId",
             
             CASE
                 WHEN st.student_id IS NOT NULL THEN 'Estudiante'
@@ -88,7 +91,7 @@ export const userRepository = {
 
   createUser: async (userData: RegisterSchema & { password: string }) => {
     return await db.oneOrNone(
-      'CALL public.create_full_user($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)',
+      'CALL create_full_user($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)',
       [
         userData.name,
         userData.lastName,

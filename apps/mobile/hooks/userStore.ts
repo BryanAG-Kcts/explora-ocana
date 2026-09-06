@@ -22,6 +22,9 @@ export interface User {
   role: 'Estudiante' | 'Docente'
   school: string
   educationLevel: string
+  createdAt: string
+  teacherId: string | null
+  studentId: string | null
 }
 
 interface Store {

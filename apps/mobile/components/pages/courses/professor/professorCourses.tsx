@@ -1,20 +1,47 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FlatList, TouchableOpacity, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { BorderHeader } from '@/components/global/borderHeader'
 import { ThemeToggle } from '@/components/global/themeToggle'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
-import {
-  INITIAL_GROUPS,
-  type TeacherCourse
-} from '@/constants/pages/courses/courses'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
+import type { TeacherCourse } from '@/constants/pages/courses/courses'
+import { useUserStore } from '@/hooks/userStore'
 import { CourseDetail } from './courseDetail'
 import { ProfessorModal } from './modal'
 
 export function ProfessorCourses() {
-  const [groups, setGroups] = useState<TeacherCourse[]>(INITIAL_GROUPS)
+  const { user } = useUserStore()
+  const [groups, setGroups] = useState<TeacherCourse[] | null>(null)
   const [activeGroup, setActiveGroup] = useState<TeacherCourse | null>(null)
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false)
+
+  useEffect(() => {
+    ;(async () => {
+      if (isCreateModalVisible) {
+        return
+      }
+
+      const res = axiosInstance.get(
+        `/group/teacher/list-groups/${user?.teacherId}`
+      )
+
+      const [response, error] = await safePromise(res)
+      if (error || !response?.data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2:
+            'Ocurrió un error al obtener los grupos. Por favor, inténtalo de nuevo más tarde.'
+        })
+
+        return
+      }
+
+      setGroups(response.data.courses)
+    })()
+  }, [user, isCreateModalVisible])
 
   if (activeGroup) {
     return (
@@ -50,7 +77,7 @@ export function ProfessorCourses() {
             >
               <View>
                 <Text className='text-lg font-semibold'>{item.name}</Text>
-                <Text variant='muted'>{item.students.length} estudiantes</Text>
+                <Text variant='muted'>{item.studentsCount} estudiantes</Text>
               </View>
 
               <Button variant='secondary' onPress={() => setActiveGroup(item)}>
@@ -64,8 +91,7 @@ export function ProfessorCourses() {
       <ProfessorModal
         isCreateModalVisible={isCreateModalVisible}
         setIsCreateModalVisible={setIsCreateModalVisible}
-        setGroups={setGroups}
-        groups={groups}
+        teacherId={user?.teacherId || ''}
       />
     </View>
   )

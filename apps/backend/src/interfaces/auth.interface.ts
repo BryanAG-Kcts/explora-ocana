@@ -19,8 +19,8 @@ export const registerSchema = z.object({
   birthdate: z.string().refine(
     date => {
       if (!date) return true
-      const parsedDate = Date.parse(date)
-      return !Number.isNaN(parsedDate) && new Date(parsedDate) < new Date()
+      const parsedDate = new Date(date)
+      return !Number.isNaN(parsedDate.getTime()) && parsedDate < new Date()
     },
     { message: 'Fecha de nacimiento inválida o en el futuro' }
   ),

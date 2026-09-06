@@ -34,7 +34,7 @@ export const AUTH = {
     PHONE_EXTENSION_LABEL: 'Ext.',
     PHONE_EXTENSION_HINT: '57',
     BIRTHDATE_LABEL: 'Fecha de nacimiento',
-    BIRTHDATE_HINT: 'DD/MM/AAAA',
+    BIRTHDATE_HINT: 'AAAA/MM/DD',
     PERSONAL_DATA_TITLE: 'Datos personales',
     DOCUMENT_TYPE_LABEL: 'Tipo',
     GENDER_LABEL: 'Género',

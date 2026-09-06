@@ -66,7 +66,7 @@ export function Profile() {
             </Text>
           </View>
           <Text className='text-2xl font-bold'>{user?.fullname}</Text>
-          <Text variant='muted'>Miembro desde {'---'}</Text>
+          <Text variant='muted'>Miembro desde {user?.createdAt}</Text>
         </View>
 
         <Text className='text-lg font-semibold mb-3'>Tus Estadísticas</Text>

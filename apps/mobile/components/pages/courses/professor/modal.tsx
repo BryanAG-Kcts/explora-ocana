@@ -1,44 +1,61 @@
 import { useState } from 'react'
-import { Alert, KeyboardAvoidingView, Platform, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { CustomModal } from '@/components/global/customModal'
 import { FormInput } from '@/components/global/formInput'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
-import type { TeacherCourse } from '@/constants/pages/courses/courses'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
 
 interface Props {
   isCreateModalVisible: boolean
   setIsCreateModalVisible: (visible: boolean) => void
-  setGroups: (groups: TeacherCourse[]) => void
-  groups: TeacherCourse[]
+  teacherId: string
 }
 export function ProfessorModal({
   isCreateModalVisible,
   setIsCreateModalVisible,
-  setGroups,
-  groups
+  teacherId
 }: Props) {
   const [newGroupName, setNewGroupName] = useState('')
 
-  const handleCreateGroup = () => {
-    if (!newGroupName.trim()) {
-      Alert.alert('Error', 'El nombre del grupo es obligatorio.')
+  async function handleCreateGroup() {
+    if (newGroupName.trim().length < 3) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'El nombre del grupo debe tener al menos 3 caracteres.'
+      })
+
       return
     }
 
-    const generatedKey = `${newGroupName.substring(0, 3).toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`
-    const newGroup: TeacherCourse = {
-      id: Date.now().toString(),
+    const res = axiosInstance.post('/group/teacher/create', {
       name: newGroupName,
-      enrollmentKey: generatedKey,
-      students: []
+      teacher_id: teacherId
+    })
+
+    const [response, error] = await safePromise(res)
+    if (error || !response?.data) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2:
+          'Ocurrió un error al crear el grupo. Por favor, inténtalo de nuevo más tarde.'
+      })
+
+      return
     }
 
-    setGroups([...groups, newGroup])
     setNewGroupName('')
     setIsCreateModalVisible(false)
-    Alert.alert('Éxito', `Grupo creado. Clave: ${generatedKey}`)
+    Toast.show({
+      type: 'success',
+      text1: 'Éxito',
+      text2: 'Grupo creado'
+    })
   }
+
   return (
     <CustomModal
       handleCloseModal={() => setIsCreateModalVisible(false)}

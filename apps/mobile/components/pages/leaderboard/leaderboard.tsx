@@ -1,6 +1,5 @@
-import { Activity } from 'lucide-react-native'
 import { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { BorderHeader } from '@/components/global/borderHeader'
 import { ThemeToggle } from '@/components/global/themeToggle'
 import { Button } from '@/components/ui/button'
@@ -12,8 +11,8 @@ import { PodiumCards } from './podiumCard'
 
 export function Leaderboard() {
   const [selectedStudents, setSelectedStudents] = useState(true)
-  const [students, setStudents] = useState<LeaderboardUser[]>([])
-  const [grades, setGrades] = useState<LeaderboardUser[]>([])
+  const [students, setStudents] = useState<LeaderboardUser[] | null>(null)
+  const [grades, setGrades] = useState<LeaderboardUser[] | null>(null)
 
   useEffect(() => {
     ;(async () => {
@@ -34,8 +33,8 @@ export function Leaderboard() {
     })()
   }, [])
 
-  if (students.length === 0) {
-    return <Activity className='self-center' size={32} color='gray' />
+  if (!students || !grades) {
+    return <ActivityIndicator className='self-center' size={32} color='gray' />
   }
 
   const topThreeStudents = students.slice(0, 3)

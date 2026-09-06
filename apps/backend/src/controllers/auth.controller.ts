@@ -39,6 +39,7 @@ export const authController = {
       )
       res.status(200).json({ user, accessToken, refreshToken })
     } catch (e: unknown) {
+      console.log(e)
       if (e instanceof Error && e.message === 'INVALID_CREDENTIALS') {
         res.status(401).json({ error: 'Credenciales inválidas' })
         return
