@@ -1,31 +1,65 @@
 import { useState } from 'react'
-import { Alert, KeyboardAvoidingView, Platform, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { CustomModal } from '@/components/global/customModal'
 import { FormInput } from '@/components/global/formInput'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
 import type { Course } from '@/constants/pages/courses/courses'
 
 interface Props {
   isModalVisible: boolean
   handleCloseModal: () => void
   selectedGroup: Course | null
+  studentId: string | null
 }
 export function ModalCourse({
   isModalVisible,
   handleCloseModal,
-  selectedGroup
+  selectedGroup,
+  studentId
 }: Props) {
   const [enrollmentKey, setEnrollmentKey] = useState('')
-  const handleEnroll = () => {
-    if (!enrollmentKey.trim()) {
-      Alert.alert('Error', 'Por favor ingresa la clave de matriculación.')
+
+  async function handleEnroll() {
+    if (enrollmentKey.trim().length < 4) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'La clave de matriculación debe tener al menos 4 caracteres.'
+      })
+
       return
     }
 
-    Alert.alert('Éxito', `Te has matriculado en ${selectedGroup?.name}`)
+    const res = axiosInstance.post('/group/student/join', {
+      group_id: selectedGroup?.id,
+      student_id: studentId,
+      access_code: enrollmentKey
+    })
 
+    const [response, error] = await safePromise(res)
+    console.log('response', response, 'error', error)
+    if (error || !response?.data) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2:
+          response?.data?.message ??
+          'Ocurrió un error al unirse al grupo. Por favor, inténtalo de nuevo más tarde.'
+      })
+
+      return
+    }
+
+    setEnrollmentKey('')
     handleCloseModal()
+    Toast.show({
+      type: 'success',
+      text1: 'Éxito',
+      text2: 'Te has unido al grupo'
+    })
   }
 
   return (

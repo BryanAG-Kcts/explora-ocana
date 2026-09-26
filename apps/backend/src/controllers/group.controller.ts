@@ -42,6 +42,7 @@ export const groupController = {
             await groupService.includeStudentGroup(data)
             res.status(201).json({ success: true, message: "Estudiante inscrito correctamente" });
         } catch (error) {
+            console.log(error)
             if (error instanceof Error) {
                 // Ambos mensajes son exactos los que se retornan desde group.service
                 if (error.message === "Curso y contraseña no coinciden") {

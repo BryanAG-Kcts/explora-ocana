@@ -1,15 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FlatList, TouchableOpacity, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { BorderHeader } from '@/components/global/borderHeader'
 import { ThemeToggle } from '@/components/global/themeToggle'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
-import { COURSES, type Course } from '@/constants/pages/courses/courses'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
+import type { Course } from '@/constants/pages/courses/courses'
+import { useUserStore } from '@/hooks/userStore'
 import { ModalCourse } from './modal'
 
 export function StudentCourses() {
+  const { user } = useUserStore()
   const [selectedGroup, setSelectedGroup] = useState<Course | null>(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [courses, setCourses] = useState<Course[] | null>(null)
+
+  useEffect(() => {
+    ;(async () => {
+      const res = axiosInstance.get(
+        `/group/student/list-groups/school/${user?.studentId}`
+      )
+
+      const [response, error] = await safePromise(res)
+      if (error || !response?.data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2:
+            'Ocurrió un error al obtener los grupos. Por favor, inténtalo de nuevo más tarde.'
+        })
+
+        return
+      }
+
+      setCourses(response.data.data)
+    })()
+  }, [user])
 
   const handleOpenModal = (group: Course) => {
     setSelectedGroup(group)
@@ -51,7 +78,7 @@ export function StudentCourses() {
         <Text>Escoge un grupo para unirte:</Text>
 
         <FlatList
-          data={COURSES}
+          data={courses}
           keyExtractor={item => item.id}
           renderItem={renderGroupItem}
           showsVerticalScrollIndicator={false}
@@ -61,6 +88,7 @@ export function StudentCourses() {
           isModalVisible={isModalVisible}
           handleCloseModal={handleCloseModal}
           selectedGroup={selectedGroup}
+          studentId={user?.studentId ?? ''}
         />
       </View>
     </View>

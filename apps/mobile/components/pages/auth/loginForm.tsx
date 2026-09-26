@@ -24,7 +24,11 @@ export function LoginForm() {
   const { setUser } = useUserStore()
   const router = useRouter()
   const { control, handleSubmit } = useForm<LoginSchemaType>({
-    resolver: zodResolver(LoginSchema)
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      password: 'Password',
+      email: '@g.com'
+    }
   })
 
   const [isForgotModalVisible, setIsForgotModalVisible] = useState(false)

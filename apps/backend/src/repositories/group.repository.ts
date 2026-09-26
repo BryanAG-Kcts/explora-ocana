@@ -88,10 +88,9 @@ export const groupRepository = {
     getListGroupsStudentSchool: async (student_id: number): Promise<listGroupStudentSchool[]> =>
         db.manyOrNone(
             `SELECT
-                c.course_id,
+                c.course_id id,
                 c.name,
-                u.name AS teacher_name,
-                u.last_name AS teacher_last_name
+                u.name || ' ' || u.last_name AS "teacherName"
             FROM exploraocanna.student s
             JOIN exploraocanna.teacher t ON t.school_id = s.school_id
             JOIN exploraocanna.courses c ON c.teacher_id = t.teacher_id
