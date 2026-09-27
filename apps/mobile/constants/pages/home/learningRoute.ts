@@ -14,7 +14,16 @@ export const learningRoute = [
                 'crossword',
                 50,
                 650,
-                [new Node('soup-1', 'soup', 200, 850, [], true)],
+                [
+                  new Node(
+                    'soup-1',
+                    'soup',
+                    200,
+                    850,
+                    [new Node('puzzle-1', 'puzzle', 250, 950, [], true)],
+                    true
+                  )
+                ],
                 true
               )
             ])
@@ -31,7 +40,7 @@ export const learningRoute = [
       )
     ],
     250,
-    850
+    950
   ),
   new RouteSection(
     '1b',
