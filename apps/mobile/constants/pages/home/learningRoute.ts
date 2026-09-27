@@ -9,7 +9,7 @@ export const learningRoute = [
         new Node('ar-1', 'ar', 100, 290, [
           new Node('quiz-1', 'quiz', 0, 450, [
             new Node('quest-5', 'quest', 250, 480, [
-              new Node('quest-6', 'quest', 50, 650, [], true)
+              new Node('crossword-1', 'crossword', 50, 650, [], true)
             ])
           ])
         ])
