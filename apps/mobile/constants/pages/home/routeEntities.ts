@@ -4,14 +4,16 @@ import {
   Box,
   Link,
   type LucideIcon,
-  ScrollText
+  ScrollText,
+  Soup
 } from 'lucide-react-native'
 
 const POSSIBLE_ICONS = {
   quest: Award,
   ar: Box,
   quiz: ScrollText,
-  crossword: Link
+  crossword: Link,
+  soup: Soup
 }
 
 export const RADIO_X = 60
@@ -29,7 +31,7 @@ export const ROUTE_NODE_SIZE = {
 
 export class Node {
   id: string
-  type: 'quest' | 'ar' | 'quiz' | 'crossword'
+  type: 'quest' | 'ar' | 'quiz' | 'crossword' | 'soup'
   xPosition: number
   yPosition: number
   nextNodes: Node[]

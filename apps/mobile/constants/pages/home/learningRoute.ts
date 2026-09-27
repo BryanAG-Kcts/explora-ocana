@@ -9,7 +9,14 @@ export const learningRoute = [
         new Node('ar-1', 'ar', 100, 290, [
           new Node('quiz-1', 'quiz', 0, 450, [
             new Node('quest-5', 'quest', 250, 480, [
-              new Node('crossword-1', 'crossword', 50, 650, [], true)
+              new Node(
+                'crossword-1',
+                'crossword',
+                50,
+                650,
+                [new Node('soup-1', 'soup', 200, 850, [], true)],
+                true
+              )
             ])
           ])
         ])
@@ -24,7 +31,7 @@ export const learningRoute = [
       )
     ],
     250,
-    650
+    850
   ),
   new RouteSection(
     '1b',
