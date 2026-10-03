@@ -7,6 +7,11 @@ export type RouteProgress = Record<string, NodeProgress>
 export const PROGRESS: RouteProgress = {
   '1a': {
     'quest-1': 'completed',
+    'ar-1': 'available',
+    'quiz-1': 'available',
+    'crossword-1': 'available',
+    'soup-1': 'available',
+    'puzzle-1': 'available'
   },
   '1b': {
     'quest-2': 'available'
