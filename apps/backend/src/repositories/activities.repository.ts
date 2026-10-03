@@ -1,62 +1,60 @@
-import type { Mission } from "../interfaces/missions.interface";
+import type { Activity } from "../interfaces/activities.interface";
 import { db } from "../services/pg.service";
 
-export const missionsRepository = {
+export const activitiesRepository = {
 
-    // Trae todas las misiones
-    getAllMissions: async (): Promise<Mission[]> => {
+    // Trae todas las actividades
+    getAllActivities: async (): Promise<Activity[]> => {
         return await db.manyOrNone(
             `
             SELECT
-                mission_id AS "missionId",
+                activity_id AS "activityId",
                 section_id AS "sectionId",
                 title,
-                description,
-                position
-            FROM exploraocanna.missions
-            ORDER BY position
+                description
+            FROM exploraocanna.activities
+            ORDER BY activity_id
             `
         );
     },
 
-    // Trae una misión específica
-    getMissionById: async (
-        mission_id: string
-    ): Promise<Mission | null> => {
+    // Trae una actividad específica
+    getActivityById: async (
+        activity_id: string
+    ): Promise<Activity | null> => {
         return await db.oneOrNone(
             `
             SELECT
-                mission_id AS "missionId",
+                activity_id AS "activityId",
                 section_id AS "sectionId",
                 title,
-                description,
-                position
-            FROM exploraocanna.missions
-            WHERE mission_id = $1
+                description
+            FROM exploraocanna.activities
+            WHERE activity_id = $1
             `,
-            [mission_id]
+            [activity_id]
         );
     },
 
-    // Guarda el progreso de la misión y, si es la primera vez,
+    // Guarda el progreso de la actividad y, si es la primera vez,
     // otorga la experiencia, actualiza el rango y actualiza la racha.
-    postSaveUserProgress: async (
+    postSaveUserActivityProgress: async (
         user_id: number,
         section_id: string,
-        mission_id: string,
+        activity_id: string,
         experience_points: number
     ) => {
 
         return await db.tx(async (t) => {
 
-            // 1. Intentamos registrar el progreso
+            // 1. Intentamos registrar el progreso de la actividad
             const progress = await t.oneOrNone(
                 `
-                INSERT INTO exploraocanna.user_progress
+                INSERT INTO exploraocanna.user_activity_progress
                     (
                         user_id,
                         section_id,
-                        mission_id,
+                        activity_id,
                         completed,
                         completed_at
                     )
@@ -68,23 +66,23 @@ export const missionsRepository = {
                         TRUE,
                         NOW()
                     )
-                ON CONFLICT (user_id, mission_id)
+                ON CONFLICT (user_id, activity_id)
                 DO NOTHING
                 RETURNING *;
                 `,
                 [
                     user_id,
                     section_id,
-                    mission_id
+                    activity_id
                 ]
             );
 
-            // 2. Si la misión ya había sido completada,
+            // 2. Si ya había realizado la actividad,
             // no damos experiencia.
             if (!progress) {
 
                 // Actualizamos la racha porque el usuario
-                // igualmente jugó hoy.
+                // igualmente realizó una actividad hoy.
                 const streak = await t.one(
                     `
                     UPDATE exploraocanna.user_experience
@@ -131,7 +129,7 @@ export const missionsRepository = {
                 };
             }
 
-            // 3. Primera vez que completa la misión:
+            // 3. Primera vez que realiza la actividad:
             // sumamos la experiencia y calculamos el nuevo rango.
             const experience = await t.one(
                 `
@@ -165,7 +163,6 @@ export const missionsRepository = {
             );
 
             // 4. Actualizamos la racha.
-            // Esto se hace cuando el usuario completa una misión.
             const streak = await t.one(
                 `
                 UPDATE exploraocanna.user_experience

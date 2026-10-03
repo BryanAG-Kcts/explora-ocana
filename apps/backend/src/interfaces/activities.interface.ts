@@ -1,14 +1,13 @@
-export interface Mission {
-    missionId: string;
+export interface Activity {
+    activityId: string;
     sectionId: string;
     title: string;
     description: string;
-    position: number;
 }
 
-export interface SaveProgressDto {
+export interface SaveActivityProgressDto {
     user_id: number;
     section_id: string;
-    mission_id: string;
+    activity_id: string;
     experience_points: number;
 }
