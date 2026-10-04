@@ -7,7 +7,8 @@ import { Icon } from '@/components/ui/icon'
 import {
   NODE_COLORS,
   type NodeProgress,
-  type NodeStatus
+  type NodeStatus,
+  type RouteProgress
 } from '@/constants/pages/home/home'
 import {
   type Node,
@@ -22,9 +23,16 @@ import { NodePath } from './nodePath'
 interface sProps {
   nodes: Node[]
   sectionProgress: NodeProgress
+  progress: RouteProgress
+  prevSectionId: string | null
 }
 
-export function RouteNodes({ nodes, sectionProgress }: sProps) {
+export function RouteNodes({
+  nodes,
+  sectionProgress,
+  progress,
+  prevSectionId
+}: sProps) {
   const router = useRouter()
   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
   const nodeMap = new Map(nodes.map(node => [node.id, node]))
@@ -40,18 +48,42 @@ export function RouteNodes({ nodes, sectionProgress }: sProps) {
     router.push(selectedNode.link)
   }
 
+  function getNodeStatus(sectionId: string | null, index: number) {
+    if (sectionId) {
+      const prevSectionProgress = progress[sectionId]
+      const isSectionCompleted =
+        prevSectionProgress.requiredCompleted >= prevSectionProgress.required
+      if (!isSectionCompleted) {
+        return 'locked'
+      }
+    }
+
+    const nodeStatus =
+      sectionProgress.completed === index
+        ? 'available'
+        : sectionProgress.completed < index
+          ? 'locked'
+          : 'completed'
+
+    return nodeStatus
+  }
+
   return (
     <>
-      {nodes.map(node => {
+      {nodes.map((node, index) => {
         const nextNodes = node.nextNodeIds
           .map(id => nodeMap.get(id))
           .filter((node): node is Node => node !== undefined)
+
+        const status = getNodeStatus(prevSectionId, index)
+
+        const pathStatus = getNodeStatus(prevSectionId, 1 + index)
 
         return (
           <Fragment key={node.id}>
             <RouteNode
               node={node}
-              nodeStatus={sectionProgress[node.id] ?? 'locked'}
+              nodeStatus={status}
               onPress={handleNodePress}
             />
 
@@ -60,7 +92,7 @@ export function RouteNodes({ nodes, sectionProgress }: sProps) {
                 originX={node.xPosition}
                 originY={node.yPosition}
                 nextNodes={nextNodes}
-                sectionProgress={sectionProgress}
+                sectionProgress={pathStatus}
               />
             )}
           </Fragment>

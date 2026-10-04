@@ -37,7 +37,12 @@ export function Home() {
           <View key={id}>
             <SectionTitle title={title} sectionNumber={index + 1} />
             <View style={{ width, height, gap: 70 }}>
-              <RouteNodes nodes={nodes} sectionProgress={progress[id]} />
+              <RouteNodes
+                nodes={nodes}
+                sectionProgress={progress[id]}
+                progress={progress}
+                prevSectionId={learningRoute[index - 1]?.id || null}
+              />
             </View>
           </View>
         ))}

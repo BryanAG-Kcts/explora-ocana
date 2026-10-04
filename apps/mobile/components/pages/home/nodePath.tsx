@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import Svg, { Path } from 'react-native-svg'
-import { NODE_COLORS, type NodeProgress } from '@/constants/pages/home/home'
+import { NODE_COLORS, type NodeStatus } from '@/constants/pages/home/home'
 import {
   type Node,
   ROUTE_NODE_SIZE
@@ -10,7 +10,7 @@ interface Props {
   originX: number
   originY: number
   nextNodes: Node[]
-  sectionProgress: NodeProgress
+  sectionProgress: NodeStatus
 }
 export function NodePath({
   originX,
@@ -39,7 +39,7 @@ export function NodePath({
             xPosition + ROUTE_NODE_SIZE.cx,
             yPosition + ROUTE_NODE_SIZE.cyTape
           )}
-          stroke={NODE_COLORS[sectionProgress[id] ?? 'locked'].bottom}
+          stroke={NODE_COLORS[sectionProgress].bottom}
           strokeWidth='12'
           fill='none'
           strokeLinecap='round'

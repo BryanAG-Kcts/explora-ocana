@@ -1,20 +1,23 @@
 import type { ColorValue } from 'react-native'
 
 export type NodeStatus = 'locked' | 'available' | 'completed'
-export type NodeProgress = Record<string, NodeStatus>
+export type NodeProgress = {
+  completed: number
+  required: number
+  requiredCompleted: number
+}
 export type RouteProgress = Record<string, NodeProgress>
 
 export const PROGRESS: RouteProgress = {
   '1a': {
-    'quest-1': 'completed',
-    'ar-1': 'available',
-    'quiz-1': 'available',
-    'crossword-1': 'available',
-    'soup-1': 'available',
-    'puzzle-1': 'available'
+    completed: 4,
+    required: 6,
+    requiredCompleted: 4
   },
   '1b': {
-    'quest-2': 'available'
+    completed: 0,
+    required: 5,
+    requiredCompleted: 0
   }
 }
 

@@ -12,7 +12,7 @@ export const learningRoute = [
         'Explora los acontecimientos y personajes que dieron forma a la historia de Ocaña.',
         0,
         0,
-        ['ar-1', 'quiz-2']
+        ['ar-1']
       ),
 
       new Node(
