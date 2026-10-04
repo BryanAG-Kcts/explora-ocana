@@ -4,10 +4,7 @@ import { activitiesService } from "../services/activities.service";
 export const activitiesController = {
 
     // Obtener todas las actividades
-    getAllActivities: async (
-        _req: Request,
-        res: Response
-    ): Promise<void> => {
+    getAllActivities: async (_req: Request,res: Response): Promise<void> => {
 
         try {
             const activities =
@@ -22,16 +19,10 @@ export const activitiesController = {
     },
 
     // Obtener una actividad por ID
-    getActivityById: async (
-        req: Request,
-        res: Response
-    ): Promise<void> => {
+    getActivityById: async (req: Request,res: Response): Promise<void> => {
         try {
             const { activity_id } = req.params;
-            const activity =
-                await activitiesService.getActivityById(
-                    activity_id as string
-                );
+            const activity = await activitiesService.getActivityById(activity_id as string);
             if (!activity) {
                 res.status(404).json({
                     error: "Actividad no encontrada"
@@ -48,13 +39,9 @@ export const activitiesController = {
     },
 
     // Guardar progreso de una actividad
-    postSaveUserActivityProgress: async (
-        req: Request,
-        res: Response
-    ): Promise<void> => {
+    postSaveUserActivityProgress: async (req: Request,res: Response): Promise<void> => {
         try {
             const {user_id,section_id,activity_id,experience_points} = req.body;
-
             const result = await activitiesService.postSaveUserActivityProgress(user_id,section_id,activity_id,experience_points);
 
             // La actividad ya había sido realizada anteriormente
@@ -69,9 +56,7 @@ export const activitiesController = {
 
             // Primera vez que realiza la actividad
             res.status(201).json({
-
-                message:
-                    "Actividad completada y experiencia otorgada.",
+                message: "Actividad completada y experiencia otorgada.",
                 experience_awarded: true,
                 progress: result.progress,
                 experience: result.experience,

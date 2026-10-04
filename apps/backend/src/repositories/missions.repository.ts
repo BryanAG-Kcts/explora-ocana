@@ -213,5 +213,56 @@ export const missionsRepository = {
                 streak
             };
         });
-    }
+    },
+
+   getRequiredWorkBySection: async () => {
+        return await db.one(
+        `
+        SELECT ARRAY(
+            SELECT
+                COUNT(DISTINCT m.mission_id)
+                +
+                COUNT(
+                    DISTINCT CASE
+                        WHEN a.required = TRUE
+                        THEN a.activity_id
+                    END
+                )
+            FROM exploraocanna.sections s
+            LEFT JOIN exploraocanna.missions m
+                ON s.section_id = m.section_id
+            LEFT JOIN exploraocanna.activities a
+                ON s.section_id = a.section_id
+            GROUP BY s.section_id
+            ORDER BY s.section_id
+        ) AS required_work;
+        `
+        );
+    },
+
+    getUserProgressBySection: async (user_id: number) => {
+        return await db.one(
+        `
+        SELECT ARRAY(
+            SELECT
+                COUNT(DISTINCT up.mission_id)
+                +
+                COUNT(DISTINCT uap.activity_id)
+            FROM exploraocanna.sections s
+
+            LEFT JOIN exploraocanna.user_progress up
+                ON s.section_id = up.section_id
+                AND up.user_id = $1
+
+            LEFT JOIN exploraocanna.user_activity_progress uap
+                ON s.section_id = uap.section_id
+                AND uap.user_id = $1
+
+            GROUP BY s.section_id
+            ORDER BY s.section_id
+        ) AS user_progress;
+        `,
+        [user_id]
+        );
+    },
 };

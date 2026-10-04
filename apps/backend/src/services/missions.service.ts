@@ -25,5 +25,13 @@ export const missionsService = {
             mission_id,
             experience_points
         );
-    }
+    },
+
+    getRequiredWorkBySection: async () => {
+        return await missionsRepository.getRequiredWorkBySection();
+    },
+
+    getUserProgressBySection: async (user_id: number) => {
+        return await missionsRepository.getUserProgressBySection(user_id);
+    },
 };

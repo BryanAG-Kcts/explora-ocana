@@ -6,12 +6,9 @@ export const missionsController = {
     getAllMissions: async (_req: Request, res: Response): Promise<void> => {
         try {
             const missions = await missionsService.getAllMissions();
-
             res.status(200).json(missions);
-
         } catch (error) {
             console.log("xxxxx ERROR REAL: ", error);
-
             res.status(500).json({
                 error: "error interno al obtener las misiones"
             });
@@ -22,7 +19,6 @@ export const missionsController = {
     getMissionById: async (req: Request, res: Response): Promise<void> => {
         try {
             const { mission_id } = req.params;
-
             const mission = await missionsService.getMissionById(
                 mission_id as string
             );
@@ -31,10 +27,8 @@ export const missionsController = {
                 res.status(404).json({
                     error: "Misión no encontrada"
                 });
-
                 return;
             }
-
             res.status(200).json(mission);
 
         } catch (error) {
@@ -47,26 +41,11 @@ export const missionsController = {
     },
 
     // Guardar el progreso del usuario en una misión
-    postSaveUserProgress: async (
-        req: Request,
-        res: Response
-    ): Promise<void> => {
+    postSaveUserProgress: async (req: Request,res: Response): Promise<void> => {
 
         try {
-
-            const {
-                user_id,
-                section_id,
-                mission_id,
-                experience_points
-            } = req.body;
-
-            const result = await missionsService.postSaveUserProgress(
-                user_id,
-                section_id,
-                mission_id,
-                experience_points
-            );
+            const {user_id,section_id,mission_id,experience_points} = req.body;
+            const result = await missionsService.postSaveUserProgress(user_id,section_id,mission_id,experience_points);
 
             // La misión ya había sido completada anteriormente
             if (!result.progress) {
@@ -86,12 +65,29 @@ export const missionsController = {
             });
 
         } catch (error) {
-
             console.error("xxxx ERROR REAL:", error);
-
             res.status(500).json({
                 error: "Error interno al guardar el progreso"
             });
         }
-    }
+    },
+
+    getRequiredWorkBySection: async (req: Request,res: Response) => {
+        try {
+            const result =await missionsService.getRequiredWorkBySection();
+            return res.status(200).json(result);
+        } catch (error) {
+            return res.status(500).json({message: "Error al obtener el trabajo requerido por sección."});
+        }
+    },
+
+    getUserProgressBySection: async (req: Request,res: Response) => {
+        try {
+            const user_id = Number(req.params.user_id);
+            const result =await missionsService.getUserProgressBySection(user_id);
+        return res.status(200).json(result);
+        } catch (error) {
+            return res.status(500).json({message: 'Error al obtener el progreso del usuario por sección.'});
+        }
+    },
 };
