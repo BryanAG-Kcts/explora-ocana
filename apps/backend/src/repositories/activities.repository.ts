@@ -210,5 +210,38 @@ export const activitiesRepository = {
                 streak
             };
         });
-    }
+    },
+
+    postSaveUserActivityResponse: async (user_id: number,activity_id: string,response: string) => {
+        return await db.oneOrNone(
+        `
+            INSERT INTO exploraocanna.user_activity_responses
+            (
+                user_id,
+                activity_id,
+                response
+            )
+            VALUES
+            (
+                $1,
+                $2,
+                $3
+            )
+            ON CONFLICT (user_id, activity_id)
+            DO NOTHING
+
+            RETURNING
+            response_id,
+            user_id,
+            activity_id,
+            response,
+            created_at;
+            `,
+        [
+            user_id,
+            activity_id,
+            response
+        ]
+        );
+    },
 };

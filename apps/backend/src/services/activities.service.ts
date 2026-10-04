@@ -15,17 +15,11 @@ export const activitiesService = {
     },
 
     // Guarda el progreso de una actividad
-    postSaveUserActivityProgress: async (
-        user_id: number,
-        section_id: string,
-        activity_id: string,
-        experience_points: number
-    ) => {
-        return await activitiesRepository.postSaveUserActivityProgress(
-            user_id,
-            section_id,
-            activity_id,
-            experience_points
-        );
-    }
+    postSaveUserActivityProgress: async (user_id: number,section_id: string,activity_id: string,experience_points: number) => {
+        return await activitiesRepository.postSaveUserActivityProgress(user_id,section_id,activity_id,experience_points);
+    },
+
+    postSaveUserActivityResponse: async (user_id: number,activity_id: string,response: string) => {
+        return await activitiesRepository.postSaveUserActivityResponse(user_id,activity_id,response);
+    },
 };

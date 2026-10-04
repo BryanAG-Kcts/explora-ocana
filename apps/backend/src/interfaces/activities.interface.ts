@@ -11,3 +11,9 @@ export interface SaveActivityProgressDto {
     activity_id: string;
     experience_points: number;
 }
+
+export interface SaveActivityResponseDto {
+    user_id: number;
+    activity_id: string;
+    response: string;
+}

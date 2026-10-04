@@ -70,5 +70,22 @@ export const activitiesController = {
                     "Error interno al guardar el progreso de la actividad"
             });
         }
-    }
+    },
+
+    postSaveUserActivityResponse: async (req: Request,res: Response): Promise<void> => {
+        try {
+            const {user_id,activity_id,response} = req.body;
+            const result =await activitiesService.postSaveUserActivityResponse(user_id,activity_id,response);
+            // La respuesta ya existía
+            if (!result) {
+                res.status(200).json({message: "El usuario ya había respondido esta actividad. La respuesta original se conserva."});
+                return;
+            }
+            // Primera respuesta del usuario
+            res.status(201).json({message: "Respuesta guardada correctamente.",response: result});
+        } catch (error) {
+            console.error("xxxx ERROR REAL:", error);
+            res.status(500).json({error: "Error interno al guardar la respuesta de la actividad"});
+        }
+    },
 };
