@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <Una vez> */
 import {
   BarChartIcon,
   GraduationCapIcon,
@@ -5,6 +6,7 @@ import {
   SparkleIcon,
   UserCircleIcon
 } from 'lucide-react-native'
+import { useEffect } from 'react'
 import { SceneMap } from 'react-native-tab-view'
 import AIChat from '@/components/global/aiChat'
 import {
@@ -16,6 +18,7 @@ import { StudentCourses } from '@/components/pages/courses/student/studentCourse
 import { Home } from '@/components/pages/home/home'
 import { Leaderboard } from '@/components/pages/leaderboard/leaderboard'
 import { Profile } from '@/components/pages/profile/profile'
+import { useNotificationStore } from '@/constants/global/notificationStore'
 import { useUserStore } from '@/hooks/userStore'
 
 const renderScene = SceneMap({
@@ -29,6 +32,14 @@ const renderScene = SceneMap({
 
 export default function Index() {
   const { user } = useUserStore()
+  const initializeNotifications = useNotificationStore(
+    state => state.initialize
+  )
+
+  useEffect(() => {
+    initializeNotifications()
+  }, [])
+
   let routes: TabRoute[] = [
     { key: 'home', iconComponent: HomeIcon },
     { key: 'leaderboard', iconComponent: BarChartIcon },

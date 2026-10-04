@@ -1,11 +1,35 @@
 import { Bell } from 'lucide-react-native'
-import { useState } from 'react'
 import { Switch, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
+import { useNotificationStore } from '@/constants/global/notificationStore'
 
 export function Notifications() {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true)
+  const {
+    enabled: notificationsEnabled,
+    enable,
+    disable
+  } = useNotificationStore()
+
+  const handleNotificationsChange = async (enabled: boolean) => {
+    if (enabled) {
+      const granted = await enable()
+
+      if (!granted) {
+        Toast.show({
+          type: 'warning',
+          text1: 'Notificaciones desactivadas',
+          text2:
+            'Debes permitir las notificaciones en la configuración del dispositivo.'
+        })
+      }
+
+      return
+    }
+
+    await disable()
+  }
 
   return (
     <View className='flex-1 justify-end'>
@@ -27,7 +51,7 @@ export function Notifications() {
 
           <Switch
             value={notificationsEnabled}
-            onValueChange={setNotificationsEnabled}
+            onValueChange={handleNotificationsChange}
           />
         </View>
       </View>
