@@ -59,6 +59,15 @@
           "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
         }
       ],
+      [
+        "@reactvision/react-viro",
+        {
+          "ios": {
+            "cameraUsagePermission": "$(PRODUCT_NAME) uses your camera for AR."
+          },
+          "android": { "xRMode": ["AR"] }
+        }
+      ],
       "expo-build-properties"
     ],
     "experiments": {
