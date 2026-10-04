@@ -1,6 +1,8 @@
 packages:
   - apps/*
   - shared/*
+  - '!apps/mobile'
+  - '!apps/ocana-app'
 
 allowBuilds:
   bcrypt: false

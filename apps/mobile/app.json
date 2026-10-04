@@ -1,18 +1,12 @@
 {
   "expo": {
-    "name": "Explora Ocaña",
+    "name": "OcañaApp",
     "slug": "explora_ocana",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "explora_ocana",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
@@ -26,12 +20,11 @@
       "bundleIdentifier": "com.kcts.explora-ocana"
     },
     "android": {
-      "edgeToEdgeEnabled": true,
-      "package": "com.kcts.explora_ocana",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "package": "com.cactuswow.explora_ocana",
       "permissions": ["CAMERA"]
     },
     "web": {
@@ -41,7 +34,15 @@
     },
     "plugins": [
       "expo-router",
-      "@reactvision/react-viro",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      "expo-status-bar",
       [
         "expo-localization",
         {
@@ -51,7 +52,6 @@
           }
         }
       ],
-      "react-native-enriched-markdown",
       [
         "expo-secure-store",
         {
@@ -59,14 +59,7 @@
           "faceIDPermission": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
         }
       ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "newArchEnabled": true
-          }
-        }
-      ]
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true

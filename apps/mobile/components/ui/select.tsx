@@ -8,7 +8,7 @@ import {
 import * as React from 'react'
 import { Platform, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { FadeIn, FadeOut } from 'react-native-reanimated'
+import { FadeIn, FadeOut, ReduceMotion } from 'react-native-reanimated'
 import { FullWindowOverlay as RNFullWindowOverlay } from 'react-native-screens'
 import { Icon } from '@/components/ui/icon'
 import { NativeOnlyAnimatedView } from '@/components/ui/native-only-animated-view'
@@ -66,7 +66,7 @@ function SelectTrigger({
       )}
       {...props}
     >
-      {children}
+      <>{children}</>
       <Icon
         as={ChevronDown}
         aria-hidden={true}
@@ -94,13 +94,15 @@ function SelectContent({
       <FullWindowOverlay>
         <SelectPrimitive.Overlay
           style={Platform.select({ native: StyleSheet.absoluteFill })}
+          asChild={Platform.OS !== 'web'}
         >
-          <TextClassContext.Provider value='text-popover-foreground'>
-            <NativeOnlyAnimatedView
-              className='z-50'
-              entering={FadeIn}
-              exiting={FadeOut}
-            >
+          <NativeOnlyAnimatedView
+            className='z-50'
+            entering={FadeIn.reduceMotion(ReduceMotion.System)}
+            exiting={FadeOut.reduceMotion(ReduceMotion.System)}
+            as='Pressable'
+          >
+            <TextClassContext.Provider value='text-popover-foreground'>
               <SelectPrimitive.Content
                 className={cn(
                   'bg-popover border-border relative z-50 min-w-32 rounded-md border shadow-md shadow-black/5',
@@ -141,8 +143,8 @@ function SelectContent({
                 </SelectPrimitive.Viewport>
                 <SelectScrollDownButton />
               </SelectPrimitive.Content>
-            </NativeOnlyAnimatedView>
-          </TextClassContext.Provider>
+            </TextClassContext.Provider>
+          </NativeOnlyAnimatedView>
         </SelectPrimitive.Overlay>
       </FullWindowOverlay>
     </SelectPrimitive.Portal>

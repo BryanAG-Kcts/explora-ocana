@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getAccessToken } from './authStorage'
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_AXIOS_BASE_URL || 'http://localhost:3000/'
+  baseURL: process.env.EXPO_PUBLIC_AXIOS_BASE_URL || 'http://192.168.1.42:3000/'
 })
 
 axiosInstance.interceptors.request.use(
