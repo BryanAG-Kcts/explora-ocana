@@ -111,7 +111,7 @@ export function Profile() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => setModalSelect('settings')}
+            onPress={() => router.push('/home/settings')}
             className='flex-row justify-between items-center p-4 border-b border-muted'
           >
             <View className='flex-row items-center gap-3'>
