@@ -1,12 +1,17 @@
-import { useState } from 'react'
 import { Switch, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text } from '@/components/ui/text'
+import { useAccessibilityStore } from '@/hooks/useAccesible'
 
 export function Accessibility() {
-  const [largeText, setLargeText] = useState(false)
-  const [reduceAnimations, setReduceAnimations] = useState(false)
-  const [highContrast, setHighContrast] = useState(false)
+  const {
+    largeText,
+    reduceAnimations,
+    highContrast,
+    setLargeText,
+    setReduceAnimations,
+    setHighContrast
+  } = useAccessibilityStore()
 
   return (
     <View className='flex-1 justify-end'>

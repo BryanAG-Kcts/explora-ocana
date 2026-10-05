@@ -29,7 +29,12 @@ export const groupRepository = {
 
     getGroupStudents: async (group_id: number): Promise<InfoStudentsGroup[]> =>
         db.manyOrNone(
-            "SELECT * FROM course_students WHERE course_id = $1", [group_id]
+            `select cs.*, us."name" || ' '|| us.last_name "name"
+             from exploraocanna.course_students cs
+             inner join exploraocanna.student st on cs.student_id = st.student_id
+             inner join exploraocanna.users us on us.user_id = st.user_id
+             WHERE course_id = $1
+            `, [group_id]
         ),
 
     getTotalMissions: async () => 
@@ -90,12 +95,15 @@ export const groupRepository = {
             `SELECT
                 c.course_id id,
                 c.name,
-                u.name || ' ' || u.last_name AS "teacherName"
+                u.name || ' ' || u.last_name "teacherName",
+				count(cs.student_id) "existe"
             FROM exploraocanna.student s
-            JOIN exploraocanna.teacher t ON t.school_id = s.school_id
-            JOIN exploraocanna.courses c ON c.teacher_id = t.teacher_id
-            JOIN exploraocanna.users u ON u.user_id = t.user_id
-            WHERE s.student_id = $1;`, [student_id]
+            INNER JOIN exploraocanna.teacher t ON t.school_id = s.school_id
+            INNER JOIN exploraocanna.courses c ON c.teacher_id = t.teacher_id
+            INNER JOIN exploraocanna.users u ON u.user_id = t.user_id
+			LEFT JOIN exploraocanna.course_students cs on cs.student_id = s.student_id and cs.course_id = c.course_id
+            WHERE s.student_id = $1
+			group by c.course_id, c.name, u.name || ' ' || u.last_name`, [student_id]
         )
     
 }

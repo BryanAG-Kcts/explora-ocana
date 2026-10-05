@@ -15,6 +15,7 @@ export function StudentCourses() {
   const [selectedGroup, setSelectedGroup] = useState<Course | null>(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [courses, setCourses] = useState<Course[] | null>(null)
+  const [existeEnCurso, setExisteEnCurso] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -35,6 +36,9 @@ export function StudentCourses() {
       }
 
       setCourses(response.data.data)
+      setExisteEnCurso(
+        response.data.data.some((student: Course) => student.existe !== '0')
+      )
     })()
   }, [user])
 
@@ -59,8 +63,12 @@ export function StudentCourses() {
         <Text variant='muted'>Prof: {item.teacherName}</Text>
       </View>
 
-      <Button onPress={() => handleOpenModal(item)}>
-        <Text>Unirse</Text>
+      <Button
+        onPress={() => handleOpenModal(item)}
+        disabled={existeEnCurso}
+        variant={item.existe === '0' && existeEnCurso ? 'secondary' : 'default'}
+      >
+        <Text>{item.existe === '0' ? 'Unirse' : 'Pertenece'}</Text>
       </Button>
     </TouchableOpacity>
   )

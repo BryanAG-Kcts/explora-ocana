@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import { Switch, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text } from '@/components/ui/text'
+import { useSoundStore } from '@/hooks/useSound'
 
 export function Sounds() {
-  const [soundsEnabled, setSoundsEnabled] = useState(true)
-  const [effectsEnabled, setEffectsEnabled] = useState(true)
+  const { soundsEnabled, effectsEnabled, setSoundsEnabled, setEffectsEnabled } =
+    useSoundStore()
 
   return (
     <View className='flex-1 justify-end'>
@@ -39,7 +39,6 @@ export function Sounds() {
                 value={effectsEnabled}
                 onValueChange={setEffectsEnabled}
                 disabled={!soundsEnabled}
-                
               />
             </View>
           </View>

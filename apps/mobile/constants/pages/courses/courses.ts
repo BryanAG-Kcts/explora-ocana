@@ -2,6 +2,7 @@ export interface Course {
   id: string
   name: string
   teacherName: string
+  existe: "1" | "0"
 }
 
 export interface StudentProgress {

@@ -79,11 +79,14 @@ export function CourseDetail({ activeGroup, setActiveGroup }: Props) {
               <View className='flex-row justify-between mb-2'>
                 <Text className='text-base font-medium'>{item.name}</Text>
                 <Text className='text-sm font-semibold text-secondary-foreground'>
-                  {item.progress}%
+                  {item.progress ?? 0}%
                 </Text>
               </View>
 
-              <Progress value={item.progress} indicatorClassName='bg-primary' />
+              <Progress
+                value={item.progress ?? 0}
+                indicatorClassName='bg-primary'
+              />
             </View>
           )}
         />
