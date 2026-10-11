@@ -13,6 +13,8 @@ import { CustomAlertDialog } from '@/components/global/alertDialog'
 import { BorderHeader } from '@/components/global/borderHeader'
 import { CustomModal } from '@/components/global/customModal'
 import { ThemeToggle } from '@/components/global/themeToggle'
+import { UserAvatar } from '@/components/global/userAvatar'
+import { Avatar } from '@/components/ui/avatar'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
@@ -60,11 +62,13 @@ export function Profile() {
 
       <View className='p-4'>
         <View className='items-center mb-8 mt-4'>
-          <View className='w-24 h-24 bg-foreground rounded-full items-center justify-center mb-4 shadow-md'>
-            <Text className='text-3xl font-bold text-background'>
-              {getInitials(user?.fullname || '')}
-            </Text>
-          </View>
+          <Avatar
+            alt={getInitials(user?.fullname || '')}
+            className='size-24 bg-muted mb-4'
+          >
+            <UserAvatar userId={user?.id ?? ''} />
+          </Avatar>
+
           <Text className='text-2xl font-bold'>{user?.fullname}</Text>
           <Text variant='muted'>Miembro desde {user?.createdAt}</Text>
         </View>

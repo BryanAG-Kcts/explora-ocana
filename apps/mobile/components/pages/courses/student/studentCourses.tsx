@@ -57,6 +57,7 @@ export function StudentCourses() {
       activeOpacity={0.7}
       onPress={() => handleOpenModal(item)}
       className='p-4 rounded-xl border border-border mb-3 shadow-sm flex-row justify-between items-center'
+      disabled={existeEnCurso}
     >
       <View>
         <Text className='text-lg font-semibold'>{item.name}</Text>

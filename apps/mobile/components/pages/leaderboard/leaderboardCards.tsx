@@ -1,7 +1,9 @@
 import { ScrollView, View } from 'react-native'
+import { UserAvatar } from '@/components/global/userAvatar'
 import { Avatar } from '@/components/ui/avatar'
 import { Text } from '@/components/ui/text'
 import type { LeaderboardUser } from '@/constants/pages/leaderboard/Leaderboard'
+import { getInitials } from '@/constants/pages/profile/profile'
 
 interface Props {
   users: LeaderboardUser[]
@@ -22,7 +24,12 @@ export function LeaderboardCards({ users }: Props) {
             {index + 4}
           </Text>
 
-          <Avatar alt={user.name} className='size-11 bg-muted' />
+          <Avatar
+            alt={getInitials(user?.name || '')}
+            className='size-24 bg-muted mb-4'
+          >
+            <UserAvatar userId={user?.id ?? ''} />
+          </Avatar>
           <View className='flex-1'>
             <Text className='font-bold text-sm'>{user.name}</Text>
             {(user.streak ?? 0) > 0 && (

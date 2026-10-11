@@ -14,27 +14,43 @@ export const learningRoute = [
         0,
         ['ar-1']
       ),
-
       new Node(
         'ar-1',
         'ar',
         'Explora el pasado',
         'Viaja al pasado y descubre lugares importantes que hacen parte de la memoria histórica de Ocaña.',
         100,
-        290,
+        110,
         ['quiz-1']
       ),
-
       new Node(
         'quiz-1',
         'quiz',
         'Pon a prueba tus conocimientos',
         'Responde preguntas sobre los acontecimientos y elementos históricos que has aprendido hasta ahora.',
         0,
-        450,
-        ['quest-5']
+        220,
+        ['ar-2']
       ),
-
+      new Node(
+        'ar-2',
+        'ar',
+        'Ocaña en realidad aumentada',
+        'Interactúa con elementos históricos mediante realidad aumentada y descubre una nueva forma de aprender.',
+        280,
+        300,
+        ['quiz-2']
+      ),
+      new Node(
+        'quiz-2',
+        'quiz',
+        '¿Cuánto recuerdas?',
+        'Pon a prueba tu memoria respondiendo preguntas sobre los contenidos que has explorado.',
+        50,
+        400,
+        ['quest-5'],
+        true
+      ),
       new Node(
         'quest-5',
         'quest',
@@ -44,7 +60,6 @@ export const learningRoute = [
         480,
         ['crossword-1']
       ),
-
       new Node(
         'crossword-1',
         'crossword',
@@ -55,45 +70,25 @@ export const learningRoute = [
         ['soup-1'],
         true
       ),
-
       new Node(
         'soup-1',
         'soup',
         'Busca en la historia',
         'Encuentra palabras relacionadas con la historia, cultura y patrimonio de Ocaña.',
         200,
-        850,
+        800,
         ['puzzle-1'],
         true
       ),
-
       new Node(
         'puzzle-1',
         'puzzle',
         'Arma la historia',
         'Completa el rompecabezas y descubre una imagen relacionada con el patrimonio histórico de Ocaña.',
         250,
-        950
-      ),
-
-      new Node(
-        'quiz-2',
-        'quiz',
-        '¿Cuánto recuerdas?',
-        'Pon a prueba tu memoria respondiendo preguntas sobre los contenidos que has explorado.',
-        250,
-        100,
-        ['ar-2'],
+        950,
+        [],
         true
-      ),
-
-      new Node(
-        'ar-2',
-        'ar',
-        'Ocaña en realidad aumentada',
-        'Interactúa con elementos históricos mediante realidad aumentada y descubre una nueva forma de aprender.',
-        280,
-        300
       )
     ],
     250,

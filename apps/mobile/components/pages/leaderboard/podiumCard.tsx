@@ -1,7 +1,9 @@
 import { View } from 'react-native'
+import { UserAvatar } from '@/components/global/userAvatar'
 import { Avatar } from '@/components/ui/avatar'
 import { Text } from '@/components/ui/text'
 import type { LeaderboardUser } from '@/constants/pages/leaderboard/Leaderboard'
+import { getInitials } from '@/constants/pages/profile/profile'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -23,14 +25,15 @@ export function PodiumCards({ users, podiumUsers }: Props) {
           >
             <View className='mb-2'>
               <Avatar
-                alt={user.name}
+                alt={getInitials(user?.name || '')}
                 className={cn(
                   'border-2 size-16 border-amber-600 bg-muted',
                   isSecond && 'border-slate-300',
                   isFirst && 'border-yellow-400 size-20'
                 )}
-              />
-
+              >
+                <UserAvatar userId={user?.id ?? ''} />
+              </Avatar>
               <Text className='absolute bg-card px-2 py-0.5 rounded-full border border-border -top-2 right-0 text-xs'>
                 {isFirst ? '🥇' : isSecond ? '🥈' : '🥉'}
               </Text>
