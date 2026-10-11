@@ -1,4 +1,6 @@
 import { create } from 'zustand'
+import { createJSONStorage, persist } from 'zustand/middleware'
+import { secureStorage } from '@/constants/global/secureStorage'
 
 interface SoundState {
   soundsEnabled: boolean
@@ -8,18 +10,25 @@ interface SoundState {
   setEffectsEnabled: (enabled: boolean) => void
 }
 
-export const useSoundStore = create<SoundState>(set => ({
-  soundsEnabled: true,
-  effectsEnabled: true,
-
-  setSoundsEnabled: enabled =>
-    set({
-      soundsEnabled: enabled,
-      ...(enabled ? {} : { effectsEnabled: false })
+export const useSoundStore = create<SoundState>()(
+  persist(
+    set => ({
+      soundsEnabled: true,
+      effectsEnabled: true,
+      setSoundsEnabled: enabled =>
+        set(state => ({
+          soundsEnabled: enabled,
+          effectsEnabled: enabled ? state.effectsEnabled : false
+        })),
+      setEffectsEnabled: enabled => set({ effectsEnabled: enabled })
     }),
-
-  setEffectsEnabled: enabled =>
-    set({
-      effectsEnabled: enabled
-    })
-}))
+    {
+      name: 'sound-settings',
+      storage: createJSONStorage(() => secureStorage),
+      partialize: state => ({
+        soundsEnabled: state.soundsEnabled,
+        effectsEnabled: state.effectsEnabled
+      })
+    }
+  )
+)

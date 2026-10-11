@@ -1,7 +1,7 @@
 import { Link, useRouter } from 'expo-router'
 import { ScrollText } from 'lucide-react-native'
-import { useEffect } from 'react'
-import { View } from 'react-native'
+import { useEffect, useState } from 'react'
+import { ActivityIndicator, View } from 'react-native'
 import { LoginForm } from '@/components/pages/auth/loginForm'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
@@ -17,11 +17,17 @@ import { I18N } from '@/locales/i18n'
 export default function Login() {
   const router = useRouter()
   const { setUser } = useUserStore()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     ;(async () => {
       const accessToken = await getAccessToken()
       const refreshToken = await getRefreshToken()
+      if (!accessToken || !refreshToken) {
+        setLoading(false)
+        return
+      }
+
       const res = axiosInstance.post('/auth/refresh', {
         accessToken,
         refreshToken
@@ -29,6 +35,7 @@ export default function Login() {
 
       const [response, error] = await safePromise(res)
       if (error || !response?.data) {
+        setLoading(false)
         return
       }
 
@@ -58,14 +65,21 @@ export default function Login() {
 
       <Text className='text-center'>{I18N.t('LOGIN.DESC')}</Text>
       <View className='w-full h-30 bg-primary/30 rounded' />
-      <LoginForm />
-
-      <Text>
-        {I18N.t('LOGIN.NO_ACCOUNT')}
-        <Link href='/auth/register' className='text-primary underline'>
-          {I18N.t('LOGIN.REGISTER_HERE')}
-        </Link>
-      </Text>
+      {loading ? (
+        <View className='flex-1 justify-center items-center'>
+          <ActivityIndicator size='large' />
+        </View>
+      ) : (
+        <>
+          <LoginForm />
+          <Text>
+            {I18N.t('LOGIN.NO_ACCOUNT')}
+            <Link href='/auth/register' className='text-primary underline'>
+              {I18N.t('LOGIN.REGISTER_HERE')}
+            </Link>
+          </Text>
+        </>
+      )}
     </View>
   )
 }

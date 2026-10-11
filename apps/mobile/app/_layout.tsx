@@ -3,11 +3,14 @@ import '@/global.css'
 import { PortalHost } from '@rn-primitives/portal'
 import { Slot } from 'expo-router'
 import { ThemeProvider } from 'expo-router/react-navigation'
+import * as SplashScreen from 'expo-splash-screen'
 import { StatusBar } from 'expo-status-bar'
+import { useEffect } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import { useUniwind, withUniwind } from 'uniwind'
+import { useSettingsHydration } from '@/hooks/useSettingsHydration'
 import { NAV_THEME } from '@/lib/theme'
 
 const StyledSafeAreaView = withUniwind(SafeAreaView)
@@ -19,6 +22,17 @@ export {
 
 export default function RootLayout() {
   const { theme } = useUniwind()
+  const settingsReady = useSettingsHydration()
+
+  useEffect(() => {
+    if (settingsReady) {
+      SplashScreen.hideAsync()
+    }
+  }, [settingsReady])
+
+  if (!settingsReady) {
+    return null
+  }
 
   return (
     <ThemeProvider value={NAV_THEME[theme ?? 'light']}>
