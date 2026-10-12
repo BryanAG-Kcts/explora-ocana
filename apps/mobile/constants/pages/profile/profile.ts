@@ -7,3 +7,8 @@ export const getInitials = (name: string): string => {
     .join('')
     .toUpperCase()
 }
+
+export interface UserStats {
+  xp: number
+  streak: number
+}

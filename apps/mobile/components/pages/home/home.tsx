@@ -1,20 +1,24 @@
-import { useEffect, useState } from 'react'
-import { ScrollView, View } from 'react-native'
+import { useEffect } from 'react'
+import { ActivityIndicator, ScrollView, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { PROGRESS } from '@/constants/pages/home/home'
 import { learningRoute } from '@/constants/pages/home/learningRoute'
+import { useGlobalState } from '@/hooks/useGlobalState'
 import { RouteNodes } from './routeNodes'
 import { SectionTitle } from './sectionTitle'
 import { StatsBar } from './statsBar'
 
 export function Home() {
-  const [progress, setProgress] = useState(PROGRESS)
+  const { progress, setProgress } = useGlobalState()
 
   useEffect(() => {
+    if (progress) return
+
     ;(async () => {
       const res = axiosInstance.get('/missions/')
       const [response, error] = await safePromise(res)
+      setProgress(PROGRESS)
       if (error || !response) {
         Toast.show({
           type: 'error',
@@ -27,7 +31,15 @@ export function Home() {
 
       setProgress(PROGRESS)
     })()
-  }, [])
+  }, [setProgress, progress])
+
+  if (!progress) {
+    return (
+      <View className='justify-center items-center flex-1'>
+        <ActivityIndicator size='large' />
+      </View>
+    )
+  }
 
   return (
     <ScrollView className='flex-1'>

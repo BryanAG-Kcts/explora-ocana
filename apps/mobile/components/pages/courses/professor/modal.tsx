@@ -11,11 +11,13 @@ interface Props {
   isCreateModalVisible: boolean
   setIsCreateModalVisible: (visible: boolean) => void
   teacherId: string
+  onCreated: () => Promise<void>
 }
 export function ProfessorModal({
   isCreateModalVisible,
   setIsCreateModalVisible,
-  teacherId
+  teacherId,
+  onCreated
 }: Props) {
   const [newGroupName, setNewGroupName] = useState('')
 
@@ -49,6 +51,7 @@ export function ProfessorModal({
 
     setNewGroupName('')
     setIsCreateModalVisible(false)
+    await onCreated()
     Toast.show({
       type: 'success',
       text1: 'Éxito',

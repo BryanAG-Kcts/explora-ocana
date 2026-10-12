@@ -5,16 +5,18 @@ import { ThemeToggle } from '@/components/global/themeToggle'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
-import type { LeaderboardUser } from '@/constants/pages/leaderboard/Leaderboard'
+import { useGlobalState } from '@/hooks/useGlobalState'
 import { LeaderboardCards } from './leaderboardCards'
 import { PodiumCards } from './podiumCard'
 
 export function Leaderboard() {
   const [selectedStudents, setSelectedStudents] = useState(true)
-  const [students, setStudents] = useState<LeaderboardUser[] | null>(null)
-  const [grades, setGrades] = useState<LeaderboardUser[] | null>(null)
+  const { leaderGrades, leaderStudents, setLeaderGrades, setLeaderStudents } =
+    useGlobalState()
 
   useEffect(() => {
+    if (leaderStudents && leaderGrades) return
+
     ;(async () => {
       const resStudent = axiosInstance.get('/data/ranking/students')
       const [responseStudent, errorStudent] = await safePromise(resStudent)
@@ -22,31 +24,31 @@ export function Leaderboard() {
         return
       }
 
-      setStudents(responseStudent.data)
+      setLeaderStudents(responseStudent.data)
       const resGrades = axiosInstance.get('/data/ranking/grades')
       const [responseGrades, errorGrades] = await safePromise(resGrades)
       if (errorGrades || !responseGrades?.data) {
         return
       }
 
-      setGrades(responseGrades.data)
+      setLeaderGrades(responseGrades.data)
     })()
-  }, [])
+  }, [leaderGrades, leaderStudents, setLeaderGrades, setLeaderStudents])
 
-  if (!students || !grades) {
+  if (!leaderStudents || !leaderGrades) {
     return <ActivityIndicator className='self-center' size={32} color='gray' />
   }
 
-  const topThreeStudents = students.slice(0, 3)
-  const theRestStudents = students.slice(3)
+  const topThreeStudents = leaderStudents.slice(0, 3)
+  const theRestStudents = leaderStudents.slice(3)
   const podiumOrderStudents = [
     topThreeStudents[1],
     topThreeStudents[0],
     topThreeStudents[2]
   ]
 
-  const topThreeSchools = grades.slice(0, 3)
-  const theRestSchools = grades.slice(3)
+  const topThreeSchools = leaderGrades.slice(0, 3)
+  const theRestSchools = leaderGrades.slice(3)
   const podiumOrderSchools = [
     topThreeSchools[1],
     topThreeSchools[0],
@@ -91,14 +93,20 @@ export function Leaderboard() {
 
         {selectedStudents && (
           <>
-            <PodiumCards podiumUsers={podiumOrderStudents} users={students} />
+            <PodiumCards
+              podiumUsers={podiumOrderStudents}
+              users={leaderStudents}
+            />
             <LeaderboardCards users={theRestStudents} />
           </>
         )}
 
         {!selectedStudents && (
           <>
-            <PodiumCards podiumUsers={podiumOrderSchools} users={grades} />
+            <PodiumCards
+              podiumUsers={podiumOrderSchools}
+              users={leaderGrades}
+            />
             <LeaderboardCards users={theRestSchools} />
           </>
         )}

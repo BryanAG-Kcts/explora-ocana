@@ -19,22 +19,23 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { getInitials } from '@/constants/pages/profile/profile'
+import { useGlobalState } from '@/hooks/useGlobalState'
 import { useUserStore } from '@/hooks/userStore'
 import { ProfileInfo } from './profileInfo'
 import { StatCard } from './statCard'
 
 export function Profile() {
   const { logOut, user } = useUserStore()
+  const { clean } = useGlobalState()
   const router = useRouter()
-  const [userStats, setUserStats] = useState({
-    streak: null,
-    xp: null
-  })
+  const { userStats, setUserStats } = useGlobalState()
   const [modalSelect, setModalSelect] = useState<'account' | 'settings' | ''>(
     ''
   )
 
   useEffect(() => {
+    if (userStats) return
+
     ;(async () => {
       const res = axiosInstance.get(`/user/${user?.id}/profile`)
       const [response, error] = await safePromise(res)
@@ -44,10 +45,11 @@ export function Profile() {
 
       setUserStats(response.data)
     })()
-  }, [user])
+  }, [user, setUserStats, userStats])
 
   async function handleLogout() {
     await logOut()
+    clean()
     router.replace('/auth/login')
   }
 
@@ -77,13 +79,15 @@ export function Profile() {
         <View className='flex-row flex-wrap justify-between mb-5'>
           <StatCard
             title='Racha'
-            value={userStats.streak === null ? '-' : `${userStats.streak} días`}
+            value={
+              userStats?.streak === null ? '-' : `${userStats?.streak} días`
+            }
             icon={<Icon as={Flame} size={18} className='text-destructive' />}
           />
 
           <StatCard
             title='Total XP'
-            value={userStats.xp === null ? '-' : userStats.xp}
+            value={userStats?.xp ?? '-'}
             icon={
               <Icon
                 as={TestTubeDiagonal}

@@ -7,41 +7,42 @@ import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import type { TeacherCourse } from '@/constants/pages/courses/courses'
+import { useGlobalState } from '@/hooks/useGlobalState'
 import { useUserStore } from '@/hooks/userStore'
 import { CourseDetail } from './courseDetail'
 import { ProfessorModal } from './modal'
 
 export function ProfessorCourses() {
   const { user } = useUserStore()
-  const [groups, setGroups] = useState<TeacherCourse[] | null>(null)
+  const { groups, setGroups } = useGlobalState()
   const [activeGroup, setActiveGroup] = useState<TeacherCourse | null>(null)
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false)
 
+  async function getGroups() {
+    const res = axiosInstance.get(
+      `/group/teacher/list-groups/${user?.teacherId}`
+    )
+
+    const [response, error] = await safePromise(res)
+    if (error || !response?.data) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2:
+          'Ocurrió un error al obtener los grupos. Por favor, inténtalo de nuevo más tarde.'
+      })
+
+      return
+    }
+
+    setGroups(response.data.courses)
+  }
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <One>
   useEffect(() => {
-    ;(async () => {
-      if (isCreateModalVisible) {
-        return
-      }
-
-      const res = axiosInstance.get(
-        `/group/teacher/list-groups/${user?.teacherId}`
-      )
-
-      const [response, error] = await safePromise(res)
-      if (error || !response?.data) {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2:
-            'Ocurrió un error al obtener los grupos. Por favor, inténtalo de nuevo más tarde.'
-        })
-
-        return
-      }
-
-      setGroups(response.data.courses)
-    })()
-  }, [user, isCreateModalVisible])
+    if (groups) return
+    getGroups()
+  }, [])
 
   if (activeGroup) {
     return (
@@ -92,6 +93,7 @@ export function ProfessorCourses() {
         isCreateModalVisible={isCreateModalVisible}
         setIsCreateModalVisible={setIsCreateModalVisible}
         teacherId={user?.teacherId || ''}
+        onCreated={getGroups}
       />
     </View>
   )

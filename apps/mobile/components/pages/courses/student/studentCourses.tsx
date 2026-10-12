@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import type { Course } from '@/constants/pages/courses/courses'
+import { useGlobalState } from '@/hooks/useGlobalState'
 import { useUserStore } from '@/hooks/userStore'
 import { ModalCourse } from './modal'
 
@@ -14,10 +15,12 @@ export function StudentCourses() {
   const { user } = useUserStore()
   const [selectedGroup, setSelectedGroup] = useState<Course | null>(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [courses, setCourses] = useState<Course[] | null>(null)
+  const { courses, setCourses } = useGlobalState()
   const [existeEnCurso, setExisteEnCurso] = useState(false)
 
   useEffect(() => {
+    if (courses) return
+
     ;(async () => {
       const res = axiosInstance.get(
         `/group/student/list-groups/school/${user?.studentId}`
@@ -40,7 +43,7 @@ export function StudentCourses() {
         response.data.data.some((student: Course) => student.existe !== '0')
       )
     })()
-  }, [user])
+  }, [user, setCourses, courses])
 
   const handleOpenModal = (group: Course) => {
     setSelectedGroup(group)
