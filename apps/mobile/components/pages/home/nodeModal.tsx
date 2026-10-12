@@ -48,7 +48,7 @@ export function MissionPopup({ node, visible, onClose, onStart }: Props) {
           <View className='mb-5 items-center'>
             <View className='h-20 w-20 items-center justify-center rounded-full bg-primary'>
               <Icon
-                as={node.icon}
+                as={node.lucideIcon}
                 size={42}
                 className='text-primary-foreground'
               />

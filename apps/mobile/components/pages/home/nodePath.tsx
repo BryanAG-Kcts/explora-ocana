@@ -9,45 +9,47 @@ import {
 interface Props {
   originX: number
   originY: number
-  nextNodes: Node[]
+  nextNode: Node
   sectionProgress: NodeStatus
+  finishY: number
 }
 export function NodePath({
   originX,
   originY,
-  nextNodes,
-  sectionProgress
+  nextNode,
+  sectionProgress,
+  finishY
 }: Props) {
-  return nextNodes.map(({ id, isOptional, xPosition, yPosition }) => (
+  return (
     <View
-      key={`${id}-path`}
+      key={`${nextNode.id}-path`}
       style={{
         position: 'absolute',
         top: 0,
         left: 0,
         width:
-          (originX > xPosition ? originX : xPosition) +
-          ROUTE_NODE_SIZE.svgWidth,
-        height: yPosition + ROUTE_NODE_SIZE.svgHeight
+          (originX > nextNode.xPosition ? originX : nextNode.xPosition) +
+          ROUTE_NODE_SIZE.width,
+        height: finishY + ROUTE_NODE_SIZE.height
       }}
     >
       <Svg>
         <Path
           d={generatePath(
-            originX + ROUTE_NODE_SIZE.cx,
-            originY + ROUTE_NODE_SIZE.cyTape,
-            xPosition + ROUTE_NODE_SIZE.cx,
-            yPosition + ROUTE_NODE_SIZE.cyTape
+            originX,
+            originY,
+            nextNode.xPosition + ROUTE_NODE_SIZE.width / 2,
+            finishY + ROUTE_NODE_SIZE.height / 2
           )}
           stroke={NODE_COLORS[sectionProgress].bottom}
           strokeWidth='12'
           fill='none'
           strokeLinecap='round'
-          strokeDasharray={isOptional ? '10, 20' : undefined}
+          strokeDasharray={nextNode.isOptional ? '10, 20' : undefined}
         />
       </Svg>
     </View>
-  ))
+  )
 }
 
 const generatePath = (x1: number, y1: number, x2: number, y2: number) => {

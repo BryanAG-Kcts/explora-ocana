@@ -33,10 +33,10 @@ export function Home() {
     <ScrollView className='flex-1'>
       <StatsBar />
       <View>
-        {learningRoute.map(({ id, width, height, nodes, title }, index) => (
+        {learningRoute.map(({ id, height, nodes, title }, index) => (
           <View key={id}>
             <SectionTitle title={title} sectionNumber={index + 1} />
-            <View style={{ width, height, gap: 70 }}>
+            <View style={{ height, gap: 70 }}>
               <RouteNodes
                 nodes={nodes}
                 sectionProgress={progress[id]}
