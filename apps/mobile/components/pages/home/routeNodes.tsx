@@ -86,12 +86,11 @@ export function RouteNodes({
             {nextNode && (
               <NodePath
                 originX={node.xPosition + ROUTE_NODE_SIZE.width / 2}
-                originY={
-                  index * ROUTE_NODE_SIZE.gap + ROUTE_NODE_SIZE.gap / 2
-                }
+                originY={index * ROUTE_NODE_SIZE.gap + ROUTE_NODE_SIZE.gap / 2}
                 nextNode={nextNode}
                 sectionProgress={pathStatus}
                 finishY={(index + 1) * ROUTE_NODE_SIZE.gap}
+                nodeIcon={node.iconName}
               />
             )}
           </Fragment>

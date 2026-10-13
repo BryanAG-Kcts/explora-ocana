@@ -1,13 +1,4 @@
-export const SOUPS = {
-  'soup-1': {
-    columns: 10,
-    rows: 10,
-    soup: ['REACT', 'NATIVE', 'JAVASCRIPT', 'TAILWIND', 'COMPONENTE', 'CHINO']
-  }
-}
-
 export const CELL_SIZE = 40
-
 const DIRECTIONS = [
   { row: 0, column: 1 },
   { row: 0, column: -1 },

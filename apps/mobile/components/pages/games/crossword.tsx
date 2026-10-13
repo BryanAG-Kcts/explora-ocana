@@ -1,15 +1,12 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <Array vacío> */
-import { useLocalSearchParams, useRouter } from 'expo-router'
-import { ArrowLeft } from 'lucide-react-native'
 import { useMemo, useState } from 'react'
-import { Pressable, TextInput, TouchableOpacity, View } from 'react-native'
+import { Pressable, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { CROSSWORDS } from '@/constants/pages/home/crossword'
+import type { CROSSWORD_STEP } from '@/constants/games/games'
 
-interface Props {
+interface CrosswordMapProps {
   rows: number
   columns: number
   words: {
@@ -18,8 +15,14 @@ interface Props {
     column: number
     direction: 'horizontal' | 'vertical'
   }[]
+  onComplete: () => void
 }
-export function CrosswordMap({ rows, columns, words = [] }: Props) {
+export function CrosswordMap({
+  rows,
+  columns,
+  words = [],
+  onComplete
+}: CrosswordMapProps) {
   const [letters, setLetters] = useState<Record<string, string>>({})
   const [checked, setChecked] = useState(false)
 
@@ -100,6 +103,9 @@ export function CrosswordMap({ rows, columns, words = [] }: Props) {
 
   const checkResults = () => {
     setChecked(true)
+    if (isComplete) {
+      onComplete()
+    }
   }
 
   const isComplete = useMemo(() => {
@@ -193,28 +199,22 @@ export function CrosswordMap({ rows, columns, words = [] }: Props) {
   )
 }
 
-export default function Crossword() {
-  const { crossword } = useLocalSearchParams()
-  const CROSSWORD = CROSSWORDS[crossword as keyof typeof CROSSWORDS]
-  const router = useRouter()
-
+interface Props {
+  crossword: CROSSWORD_STEP
+  onComplete: () => void
+}
+export function Crossword({ crossword, onComplete }: Props) {
   return (
     <ScrollView className='flex-1 bg-background'>
-      <View className='flex-row p-4 gap-4 items-center'>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Icon as={ArrowLeft} />
-        </TouchableOpacity>
-        <Text variant='h4'>Volver</Text>
-      </View>
-
       <CrosswordMap
-        rows={CROSSWORD.rows}
-        columns={CROSSWORD.columns}
-        words={CROSSWORD.words}
+        rows={crossword.rows}
+        columns={crossword.columns}
+        words={crossword.words}
+        onComplete={onComplete}
       />
 
       <View className='flex-row flex-wrap p-4 border border-border m-4 rounded bg-card'>
-        {CROSSWORD.hints.map((hint, index) => (
+        {crossword.hints.map((hint, index) => (
           <View key={index} className='w-1/2 py-2 px-1'>
             <Text className='text-base'>
               {index + 1}. {hint}

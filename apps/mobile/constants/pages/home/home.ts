@@ -1,4 +1,5 @@
 import type { ColorValue } from 'react-native'
+import type { NodeIcon } from './routeEntities'
 
 export type NodeStatus = 'locked' | 'available' | 'completed'
 export type NodeProgress = {
@@ -6,38 +7,19 @@ export type NodeProgress = {
   required: number
   requiredCompleted: number
 }
+
 export type RouteProgress = Record<string, NodeProgress>
-
-export const PROGRESS: RouteProgress = {
-  '1a': {
-    completed: 4,
-    required: 6,
-    requiredCompleted: 4
-  },
-  '1b': {
-    completed: 0,
-    required: 5,
-    requiredCompleted: 0
-  }
-}
-
 export const NODE_COLORS: Record<
-  NodeStatus,
-  {
-    top: ColorValue
-    bottom: ColorValue
-  }
+  NodeIcon,
+  [ColorValue, ColorValue, ColorValue]
 > = {
-  available: {
-    bottom: '#1e39ff',
-    top: '#4c6fff'
-  },
-  completed: {
-    bottom: '#1B5E20',
-    top: '#4CAF50'
-  },
-  locked: {
-    bottom: '#50515d',
-    top: '#9fa0ac'
-  }
+  book: ['#BFE5FF', '#F8EDDC', '#FCEDD5'],
+  quiz: ['#E5D2FF', '#FCCA3C', '#C34D0A'],
+  castle: ['#FFD4D1', '#FFBDB8', '#FFE4D8'],
+  puzzle: ['#F8B83A', '#8A56CC', '#4A78D0'],
+  paper: ['#E8D4B4', '#C42835', '#E8A428'],
+  chestCard: ['#8B5A33', '#D4A038', '#3B6396'],
+  compass: ['#A86F54', '#5B9844', '#4A6B8C'],
+  gear: ['#B07A48', '#9AA4B5', '#78645C'],
+  crystal: ['#A57DF0', '#62D9D9', '#2A447A']
 }

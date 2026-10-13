@@ -1,6 +1,4 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <Chat> */
-import { useLocalSearchParams, useRouter } from 'expo-router'
-import { ArrowLeft } from 'lucide-react-native'
 import { useMemo, useState } from 'react'
 import {
   Image,
@@ -8,7 +6,6 @@ import {
   type ImageSourcePropType,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   View
 } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
@@ -18,12 +15,9 @@ import Animated, {
   withSpring
 } from 'react-native-reanimated'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import {
-  generarPosicionesIniciales,
-  PUZZLES
-} from '@/constants/pages/home/puzzle'
+import type { PUZZLES_STEP } from '@/constants/games/games'
+import { generarPosicionesIniciales } from '@/constants/pages/home/puzzle'
 
 type RompecabezasProps = {
   image: ImageSourcePropType
@@ -33,7 +27,7 @@ type RompecabezasProps = {
   height?: number
   snapThreshold?: number
   imageResizeMode?: ImageResizeMode
-  onComplete?: () => void
+  onComplete: () => void
 }
 
 type PuzzlePieceProps = {
@@ -210,7 +204,7 @@ export function Rompecabezas({
       const next = new Set(previous)
       next.add(index)
       if (next.size === totalPieces) {
-        onComplete?.()
+        onComplete()
       }
 
       return next
@@ -307,29 +301,20 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function Puzzle() {
-  const { puzzle } = useLocalSearchParams()
-  const router = useRouter()
-  const pz = PUZZLES[puzzle as keyof typeof PUZZLES]
-
+interface Props {
+  puzzle: PUZZLES_STEP
+  onComplete: () => void
+}
+export function Puzzle({ puzzle, onComplete }: Props) {
   return (
     <ScrollView className='flex-1 bg-background'>
-      <View className='flex-row p-4 gap-4 items-center'>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Icon as={ArrowLeft} />
-        </TouchableOpacity>
-        <Text variant='h4'>Volver</Text>
-      </View>
-
       <Rompecabezas
-        image={pz.image}
-        rows={pz.rows}
-        columns={pz.columns}
+        image={puzzle.image}
+        rows={puzzle.rows}
+        columns={puzzle.columns}
         width={320}
         height={320}
-        onComplete={() => {
-          console.log('¡Rompecabezas completado!')
-        }}
+        onComplete={onComplete}
       />
     </ScrollView>
   )

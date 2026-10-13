@@ -1,28 +1,17 @@
 import { type ColorValue, View } from 'react-native'
 import Svg, { Path } from 'react-native-svg'
+import { NODE_COLORS } from '@/constants/pages/home/home'
 import {
   type NodeIcon,
   ROUTE_NODE_SIZE
 } from '@/constants/pages/home/routeEntities'
-
-const NODE_BLOBS: Record<NodeIcon, [ColorValue, ColorValue, ColorValue]> = {
-  book: ['#BFE5FF', '#F8EDDC', '#FCEDD5'],
-  quiz: ['#E5D2FF', '#FCCA3C', '#C34D0A'],
-  castle: ['#FFD4D1', '#FFBDB8', '#FFE4D8'],
-  puzzle: ['#F8B83A', '#8A56CC', '#4A78D0'],
-  paper: ['#E8D4B4', '#C42835', '#E8A428'],
-  chestCard: ['#8B5A33', '#D4A038', '#3B6396'],
-  compass: ['#A86F54', '#5B9844', '#4A6B8C'],
-  gear: ['#B07A48', '#9AA4B5', '#78645C'],
-  crystal: ['#A57DF0', '#62D9D9', '#2A447A']
-} as const
 
 interface Props {
   type: NodeIcon
   id: string
 }
 export function NodeBlobs({ type, id }: Props) {
-  const blobs = NODE_BLOBS[type]
+  const blobs = NODE_COLORS[type]
 
   return (
     <View

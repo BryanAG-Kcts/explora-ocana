@@ -1,20 +1,23 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <Array vacío> */
-import { useLocalSearchParams, useRouter } from 'expo-router'
-import { ArrowLeft } from 'lucide-react-native'
-import { useMemo, useRef, useState } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { ScrollView, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { CELL_SIZE, generatePuzzle, SOUPS } from '@/constants/pages/home/soup'
+import type { SOUP_STEP } from '@/constants/games/games'
+import { CELL_SIZE, generatePuzzle } from '@/constants/pages/home/soup'
 
-interface Props {
+interface SopaDeLetrasProps {
   rows?: number
   columns?: number
   words?: string[]
+  onComplete: () => void
 }
-
-export function SopaDeLetras({ rows = 10, columns = 10, words = [] }: Props) {
+export function SopaDeLetras({
+  rows = 10,
+  columns = 10,
+  words = [],
+  onComplete
+}: SopaDeLetrasProps) {
   const [selectedCells, setSelectedCells] = useState<
     { row: number; column: number }[]
   >([])
@@ -63,7 +66,6 @@ export function SopaDeLetras({ rows = 10, columns = 10, words = [] }: Props) {
     for (let i = 0; i < length; i++) {
       result.push({
         row: start.row + rowStep * i,
-
         column: start.column + columnStep * i
       })
     }
@@ -157,6 +159,12 @@ export function SopaDeLetras({ rows = 10, columns = 10, words = [] }: Props) {
     })
   }
 
+  useEffect(() => {
+    if (words.length === foundWords.length) {
+      onComplete()
+    }
+  }, [onComplete, foundWords, words])
+
   return (
     <View className='items-center'>
       <ScrollView
@@ -235,24 +243,18 @@ export function SopaDeLetras({ rows = 10, columns = 10, words = [] }: Props) {
   )
 }
 
-export default function Soup() {
-  const { soup } = useLocalSearchParams()
-  const router = useRouter()
-
-  const words = SOUPS[soup as keyof typeof SOUPS]
+interface Props {
+  soup: SOUP_STEP
+  onComplete: () => void
+}
+export function Soup({ soup, onComplete }: Props) {
   return (
     <ScrollView className='flex-1 bg-background'>
-      <View className='flex-row p-4 gap-4 items-center'>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Icon as={ArrowLeft} />
-        </TouchableOpacity>
-        <Text variant='h4'>Volver</Text>
-      </View>
-
       <SopaDeLetras
-        rows={words.rows}
-        columns={words.columns}
-        words={words.soup}
+        rows={soup.rows}
+        columns={soup.columns}
+        words={soup.soup}
+        onComplete={onComplete}
       />
     </ScrollView>
   )

@@ -29,11 +29,3 @@ export function generarPosicionesIniciales(
 
   return posiciones
 }
-
-export const PUZZLES = {
-  'puzzle-1': {
-    rows: 5,
-    columns: 3,
-    image: require('../../../assets/images/icon.png')
-  }
-}

@@ -3,19 +3,22 @@ import {
   ViroAmbientLight,
   ViroARScene,
   ViroARSceneNavigator,
-  ViroTrackingStateConstants // Importante para saber cuándo la cámara AR está lista
+  ViroTrackingStateConstants
 } from '@reactvision/react-viro'
-import { useLocalSearchParams } from 'expo-router'
+import * as Speech from 'expo-speech'
+import { Volume2 } from 'lucide-react-native'
 import { useState } from 'react'
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, type ImageSourcePropType, View } from 'react-native'
+import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { AR_MODELS } from '@/constants/pages/home/arModels'
+import type { AR_STEP } from '@/constants/games/games'
 
-interface Props {
+interface SceneProps {
   updateSceneNavigator: (state: string) => void
-  model: string | string[]
+  model: ImageSourcePropType
 }
-const Scene = ({ updateSceneNavigator, model }: Props) => {
+const Scene = ({ updateSceneNavigator, model }: SceneProps) => {
   const [scale, setScale] = useState<[number, number, number]>([0.2, 0.2, 0.2])
   const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0])
   const [baseScale, setBaseScale] = useState<[number, number, number]>([
@@ -68,7 +71,7 @@ const Scene = ({ updateSceneNavigator, model }: Props) => {
     >
       <ViroAmbientLight color='#ffffff' intensity={200} />
       <Viro3DObject
-        source={AR_MODELS[model as keyof typeof AR_MODELS]}
+        source={model}
         position={[0, 0, -1]}
         type='GLB'
         dragType='FixedToWorld'
@@ -83,14 +86,18 @@ const Scene = ({ updateSceneNavigator, model }: Props) => {
   )
 }
 
-export default function Ar() {
-  const { ar } = useLocalSearchParams()
+interface Props {
+  ar: AR_STEP
+}
+export function Ar({ ar }: Props) {
   const [state, setState] = useState('LOADING-AR')
   return (
     <View className='flex-1 bg-black relative'>
       <ViroARSceneNavigator
         initialScene={{
-          scene: () => <Scene updateSceneNavigator={setState} model={ar} />
+          scene: () => (
+            <Scene updateSceneNavigator={setState} model={ar.model} />
+          )
         }}
       />
 
@@ -111,7 +118,7 @@ export default function Ar() {
       )}
 
       {state === 'MODEL-READY' && (
-        <View className='absolute bottom-8 w-full items-center pointer-events-none'>
+        <View className='absolute bottom-4 w-full items-center pointer-events-none'>
           <View className='bg-black/60 px-4 py-2 rounded-full'>
             <Text className='text-primary-foreground'>
               Pellizca para escalar • Gira para rotar
@@ -119,6 +126,16 @@ export default function Ar() {
           </View>
         </View>
       )}
+
+      <View className='absolute top-4 left-4'>
+        <Button
+          size='icon'
+          className='rounded-full bg-black/60 '
+          onPress={() => Speech.speak(ar.speech)}
+        >
+          <Icon as={Volume2} size={28} className='text-white' />
+        </Button>
+      </View>
     </View>
   )
 }

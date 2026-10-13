@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { ActivityIndicator, ScrollView, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
-import { PROGRESS } from '@/constants/pages/home/home'
 import { learningRoute } from '@/constants/pages/home/learningRoute'
 import { useGlobalState } from '@/hooks/useGlobalState'
 import { RouteNodes } from './routeNodes'
@@ -61,4 +60,17 @@ export function Home() {
       </View>
     </ScrollView>
   )
+}
+
+const PROGRESS = {
+  '1a': {
+    completed: 4,
+    required: 6,
+    requiredCompleted: 4
+  },
+  '1b': {
+    completed: 0,
+    required: 5,
+    requiredCompleted: 0
+  }
 }
