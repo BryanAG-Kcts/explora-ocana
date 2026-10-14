@@ -48,7 +48,8 @@ export const dataRepository = {
         u.name || ' ' || u.last_name "name",
         ue.experience_points xp,
         ue.streak_days streak
-      FROM exploraocanna.users u
+      FROM exploraocanna.student st
+	    INNER JOIN exploraocanna.users u ON st.user_id = u.user_id 
       LEFT JOIN exploraocanna.user_experience ue ON u.user_id = ue.user_id
       ORDER BY ue.experience_points DESC, ue.last_activity, u.created_at
       LIMIT 15;`

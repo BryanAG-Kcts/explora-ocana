@@ -4,20 +4,21 @@ import Toast from 'react-native-toast-message'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { learningRoute } from '@/constants/pages/home/learningRoute'
 import { useGlobalState } from '@/hooks/useGlobalState'
+import { useUserStore } from '@/hooks/userStore'
 import { RouteNodes } from './routeNodes'
 import { SectionTitle } from './sectionTitle'
 import { StatsBar } from './statsBar'
 
 export function Home() {
   const { progress, setProgress } = useGlobalState()
+  const { user } = useUserStore()
 
   useEffect(() => {
     if (progress) return
 
     ;(async () => {
-      const res = axiosInstance.get('/missions/')
+      const res = axiosInstance.get(`/missions/user-progress/${user?.id}`)
       const [response, error] = await safePromise(res)
-      setProgress(PROGRESS)
       if (error || !response) {
         Toast.show({
           type: 'error',
@@ -30,7 +31,7 @@ export function Home() {
 
       setProgress(PROGRESS)
     })()
-  }, [setProgress, progress])
+  }, [setProgress, progress, user])
 
   if (!progress) {
     return (

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 import { Textarea } from '@/components/ui/textarea'
 import type { QUESTION_STEP } from '@/constants/games/games'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
 
 interface Props {
   question: QUESTION_STEP
@@ -15,6 +17,17 @@ export function Question({ question, onComplete }: Props) {
 
   async function onSubmit() {
     console.log(value)
+    const [_, error] = await safePromise(
+      axiosInstance.post('/soup/attempt', {})
+    )
+
+    if (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'No fue posible guardar la respuesta de la pregunta'
+      })
+    }
+
     onComplete()
   }
 

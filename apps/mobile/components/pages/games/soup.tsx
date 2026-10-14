@@ -2,10 +2,24 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import Toast from 'react-native-toast-message'
 import { Text } from '@/components/ui/text'
 import type { SOUP_STEP } from '@/constants/games/games'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { CELL_SIZE, generatePuzzle } from '@/constants/pages/home/soup'
 
+type Cell = {
+  row: number
+  column: number
+}
+
+function normalizeWord(word: string) {
+  return word
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/\s/g, '')
+}
 interface SopaDeLetrasProps {
   rows?: number
   columns?: number
@@ -18,15 +32,47 @@ export function SopaDeLetras({
   words = [],
   onComplete
 }: SopaDeLetrasProps) {
-  const [selectedCells, setSelectedCells] = useState<
-    { row: number; column: number }[]
-  >([])
+  const [selectedCells, setSelectedCells] = useState<Cell[]>([])
   const [foundWords, setFoundWords] = useState<string[]>([])
-  const startCell = useRef<{ row: number; column: number }>(null)
+
+  const startCell = useRef<Cell | null>(null)
+  const selectionRef = useRef<Cell[]>([])
   const puzzle = useMemo(
     () => generatePuzzle(rows, columns, words),
     [rows, columns, words]
   )
+
+  const [elapsedSeconds, setElapsedSeconds] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isTimerRunning, setIsTimerRunning] = useState(true)
+
+  const startTimeRef = useRef(Date.now())
+  const submittedRef = useRef(false)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <Chat>
+  useEffect(() => {
+    const isCompleted = words.length > 0 && foundWords.length === words.length
+
+    if (isCompleted) {
+      setIsTimerRunning(false)
+      void submitSoupResult()
+    }
+  }, [foundWords.length, words.length])
+
+  useEffect(() => {
+    if (!isTimerRunning) return
+
+    const interval = setInterval(() => {
+      setElapsedSeconds(Math.floor((Date.now() - startTimeRef.current) / 1000))
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [isTimerRunning])
+
+  const updateSelectedCells = (cells: Cell[]) => {
+    selectionRef.current = cells
+    setSelectedCells(cells)
+  }
 
   const getCellFromPosition = (x: number, y: number) => {
     const column = Math.floor(x / CELL_SIZE)
@@ -73,63 +119,60 @@ export function SopaDeLetras({
     return result
   }
 
-  const checkSelection = (cells: { row: number; column: number }[]) => {
-    if (cells.length < 2) {
-      return
-    }
+  const checkSelection = (cells: Cell[]) => {
+    if (cells.length < 2) return
 
-    const selectedWord = cells
-      .map(({ row, column }) => puzzle.grid[row][column])
-      .join('')
+    const selectedWord = normalizeWord(
+      cells.map(({ row, column }) => puzzle.grid[row][column]).join('')
+    )
 
-    const reversedWord = selectedWord.split('').reverse().join('')
-    const foundWord = words.find(word => {
-      const normalized = word.toUpperCase()
-      return normalized === selectedWord || normalized === reversedWord
+    const foundWord = words.find(
+      word =>
+        normalizeWord(word) === selectedWord ||
+        normalizeWord(word) === selectedWord.split('').reverse().join('')
+    )
+
+    if (!foundWord) return
+
+    setFoundWords(previous => {
+      const alreadyFound = previous.some(
+        word => normalizeWord(word) === normalizeWord(foundWord)
+      )
+
+      return alreadyFound ? previous : [...previous, foundWord]
     })
-
-    if (foundWord && !foundWords.includes(foundWord)) {
-      setFoundWords(previous => [...previous, foundWord])
-    }
-  }
-
-  const updateSelection = (x: number, y: number) => {
-    if (!startCell.current) {
-      return
-    }
-
-    const currentCell = getCellFromPosition(x, y)
-    if (!currentCell) {
-      return
-    }
-
-    const cells = getLineCells(startCell.current, currentCell)
-
-    if (cells.length > 0) {
-      setSelectedCells(cells)
-    }
   }
 
   const startSelection = (x: number, y: number) => {
     const cell = getCellFromPosition(x, y)
 
-    if (!cell) {
-      return
-    }
+    if (!cell) return
 
     startCell.current = cell
-    setSelectedCells([cell])
+    updateSelectedCells([cell])
+  }
+
+  const updateSelection = (x: number, y: number) => {
+    if (!startCell.current) return
+    const currentCell = getCellFromPosition(x, y)
+    if (!currentCell) return
+
+    const cells = getLineCells(startCell.current, currentCell)
+    if (cells.length > 0) {
+      updateSelectedCells(cells)
+    }
   }
 
   const endSelection = () => {
-    if (selectedCells.length > 0) {
-      checkSelection(selectedCells)
-    }
+    const cells = selectionRef.current
 
     startCell.current = null
-    setTimeout(() => {
-      setSelectedCells([])
-    }, 100)
+
+    if (cells.length > 0) {
+      checkSelection(cells)
+    }
+
+    updateSelectedCells([])
   }
 
   const panGesture = Gesture.Pan()
@@ -159,11 +202,51 @@ export function SopaDeLetras({
     })
   }
 
-  useEffect(() => {
-    if (words.length === foundWords.length) {
-      onComplete()
+  async function submitSoupResult() {
+    if (submittedRef.current || isSubmitting) return
+
+    submittedRef.current = true
+    setIsSubmitting(true)
+    const finalElapsedSeconds = Math.floor(
+      (Date.now() - startTimeRef.current) / 1000
+    )
+
+    setElapsedSeconds(finalElapsedSeconds)
+    setIsTimerRunning(false)
+
+    const totalWords = words.length
+    const correctWords = foundWords.length
+
+    const baseScore = correctWords * 100
+    const timePenalty = Math.floor(finalElapsedSeconds / 30) * 5
+    const finalScore = Math.max(0, baseScore - timePenalty)
+
+    const payload = {
+      totalWords,
+      correctWords,
+      incorrectWords: totalWords - correctWords,
+      elapsedSeconds: finalElapsedSeconds,
+      baseScore,
+      timePenalty,
+      finalScore,
+      foundWords
     }
-  }, [onComplete, foundWords, words])
+
+    console.log(payload)
+    const [_, error] = await safePromise(
+      axiosInstance.post('/soup/attempt', payload)
+    )
+
+    if (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'No fue posible guardar el resultado de la sopa'
+      })
+    }
+
+    setIsSubmitting(false)
+    onComplete()
+  }
 
   return (
     <View className='items-center'>
@@ -214,11 +297,12 @@ export function SopaDeLetras({
       </ScrollView>
 
       <View className='mt-6 w-full px-4'>
-        <View className='flex-row justify-between'>
-          <Text className='mb-3 text-lg font-bold'>Palabras</Text>
+        <View className='flex-row justify-between items-center mb-3'>
+          <Text className='text-lg font-bold'>Palabras</Text>
           <Text className='font-bold'>
             {foundWords.length} / {words.length}
           </Text>
+          <Text className='font-bold'>{formatTime(elapsedSeconds)}</Text>
         </View>
 
         <View className='flex-row flex-wrap border border-border rounded bg-card'>
@@ -258,4 +342,11 @@ export function Soup({ soup, onComplete }: Props) {
       />
     </ScrollView>
   )
+}
+
+function formatTime(totalSeconds: number) {
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 }

@@ -1,22 +1,50 @@
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { ArrowLeft, ArrowRight } from 'lucide-react-native'
-import { useState } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { useEffect, useRef, useState } from 'react'
+import { AppState, ScrollView, TouchableOpacity, View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Progress } from '@/components/ui/progress'
 import { Text } from '@/components/ui/text'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { getOptionStyle, QUIZZES } from '@/constants/pages/home/quiz'
 import { useStep } from '@/hooks/useStep'
 
 export default function Quiz() {
   const { quiz } = useLocalSearchParams()
-  const QUESTIONS = QUIZZES[quiz as keyof typeof QUIZZES]
+  const quizId = Array.isArray(quiz) ? quiz[0] : quiz
+  const originalQuestions = QUIZZES[quizId as keyof typeof QUIZZES]
+  const [QUESTIONS] = useState(() => shuffleArray(originalQuestions ?? []))
   const { current, currentIndex, goNext } = useStep(QUESTIONS, 0)
+
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const router = useRouter()
+
+  const [answers, setAnswers] = useState<Record<number, number>>({})
+  const [elapsedSeconds, setElapsedSeconds] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isTimerRunning, setIsTimerRunning] = useState(true)
+  const startTimeRef = useRef(Date.now())
+  const submittedRef = useRef(false)
+
+  useEffect(() => {
+    if (!isTimerRunning) return
+    const interval = setInterval(() => {
+      setElapsedSeconds(Math.floor((Date.now() - startTimeRef.current) / 1000))
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [isTimerRunning])
+
+  function formatTime(totalSeconds: number) {
+    const minutes = Math.floor(totalSeconds / 60)
+    const seconds = totalSeconds % 60
+
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+  }
 
   const progressValue = ((currentIndex + 1) / QUESTIONS.length) * 100
 
@@ -25,21 +53,130 @@ export default function Quiz() {
     setSelectedOption(index)
   }
 
+  function shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array]
+
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+
+    return shuffled
+  }
+
   function handleContinue() {
-    if (selectedOption === null) return
+    if (selectedOption === null || isSubmitting) return
 
     if (!hasSubmitted) {
+      setAnswers(previous => ({
+        ...previous,
+        [currentIndex]: selectedOption
+      }))
+
       setHasSubmitted(true)
+      if (currentIndex === QUESTIONS.length - 1) {
+        const finalElapsedSeconds = Math.floor(
+          (Date.now() - startTimeRef.current) / 1000
+        )
+
+        setElapsedSeconds(finalElapsedSeconds)
+        setIsTimerRunning(false)
+      }
+
       return
     }
 
-    if (currentIndex < QUESTIONS.length - 1) {
-      goNext()
-      setSelectedOption(null)
-      setHasSubmitted(false)
+    if (currentIndex === QUESTIONS.length - 1) {
+      void submitQuizResult()
       return
     }
 
+    goNext()
+    setSelectedOption(null)
+    setHasSubmitted(false)
+  }
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'background') {
+        router.replace('/home')
+      }
+    })
+
+    return () => subscription.remove()
+  }, [router])
+
+  async function submitQuizResult() {
+    if (submittedRef.current || isSubmitting) return
+
+    submittedRef.current = true
+    setIsSubmitting(true)
+    setIsTimerRunning(false)
+
+    const finalElapsedSeconds = Math.floor(
+      (Date.now() - startTimeRef.current) / 1000
+    )
+
+    setElapsedSeconds(finalElapsedSeconds)
+    const finalAnswers = {
+      ...answers,
+      [currentIndex]: selectedOption
+    }
+
+    const answerDetails = QUESTIONS.map((question, index) => {
+      const selected = finalAnswers[index]
+      const isCorrect = selected === question.correctIndex
+
+      return {
+        questionIndex: index,
+        selectedOption: selected,
+        correctOptionIndex: question.correctIndex,
+        isCorrect,
+        points: isCorrect ? 100 : 0
+      }
+    })
+
+    const correctAnswers = answerDetails.filter(
+      answer => answer.isCorrect
+    ).length
+
+    const baseScore = correctAnswers * 100
+    const timePenalty = Math.floor(finalElapsedSeconds / 30) * 5
+    const finalScore = Math.max(0, baseScore - timePenalty)
+
+    const payload = {
+      quizId: Array.isArray(quiz) ? quiz[0] : quiz,
+      answers: answerDetails,
+      totalQuestions: QUESTIONS.length,
+      correctAnswers,
+      incorrectAnswers: QUESTIONS.length - correctAnswers,
+      elapsedSeconds: finalElapsedSeconds,
+      baseScore,
+      timePenalty,
+      finalScore
+    }
+
+    console.log(payload)
+    const [response, error] = await safePromise(
+      axiosInstance.post('/quiz/attempt', payload)
+    )
+
+    if (error || !response?.data) {
+      submittedRef.current = false
+      setIsSubmitting(false)
+      Toast.show({
+        type: 'error',
+        text1: 'No fue posible guardar el resultado del quiz'
+      })
+
+      return
+    }
+
+    Toast.show({
+      type: 'success',
+      text1: '!Quiz completado¡ 🎉'
+    })
     router.replace('/home')
   }
 
@@ -58,6 +195,7 @@ export default function Quiz() {
           <Text variant='muted'>
             {currentIndex + 1}/{QUESTIONS.length}
           </Text>
+          <Text variant='muted'>{formatTime(elapsedSeconds)}</Text>
         </View>
         <Progress value={progressValue} indicatorClassName='bg-primary' />
       </View>
@@ -106,16 +244,21 @@ export default function Quiz() {
       <View className='p-4 pb-8 pt-2'>
         <Button
           onPress={handleContinue}
-          disabled={selectedOption === null}
-          className={selectedOption === null ? 'opacity-50' : ''}
+          disabled={selectedOption === null || isSubmitting}
+          className={
+            selectedOption === null || isSubmitting ? 'opacity-50' : ''
+          }
         >
           <Text>
-            {currentIndex === QUESTIONS.length - 1
-              ? 'Terminar intento'
-              : hasSubmitted
-                ? 'Siguiente Pregunta'
-                : 'Comprobar'}
+            {isSubmitting
+              ? 'Guardando resultado...'
+              : !hasSubmitted
+                ? 'Comprobar'
+                : currentIndex === QUESTIONS.length - 1
+                  ? 'Terminar intento'
+                  : 'Siguiente Pregunta'}
           </Text>
+
           <Icon as={ArrowRight} className='text-primary-foreground' />
         </Button>
       </View>
