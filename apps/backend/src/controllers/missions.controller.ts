@@ -72,22 +72,41 @@ export const missionsController = {
         }
     },
 
-    getRequiredWorkBySection: async (req: Request,res: Response) => {
+
+    getRequiredWorkBySection: async (req: Request, res: Response) => {
         try {
-            const result =await missionsService.getRequiredWorkBySection();
-            return res.status(200).json(result);
+            const result = await missionsService.getRequiredWorkBySection();
+            return res.status(200).json(result.required_work);
         } catch (error) {
-            return res.status(500).json({message: "Error al obtener el trabajo requerido por sección."});
+            console.error("Error al obtener el trabajo requerido por sección:", error);
+
+            return res.status(500).json({
+                message: "Error al obtener el trabajo requerido por sección."
+            });
         }
     },
 
-    getUserProgressBySection: async (req: Request,res: Response) => {
+
+    getUserProgressBySection: async (req: Request, res: Response) => {
         try {
             const user_id = Number(req.params.user_id);
-            const result =await missionsService.getUserProgressBySection(user_id);
-        return res.status(200).json(result);
+
+            if (!Number.isInteger(user_id) || user_id <= 0) {
+                res.status(400).json({
+                    message: "El ID del usuario no es válido."
+                });
+                return;
+            }
+
+            const result = await missionsService.getUserProgressBySection(user_id);
+
+            res.status(200).json(result.user_progress);
         } catch (error) {
-            return res.status(500).json({message: 'Error al obtener el progreso del usuario por sección.'});
+            console.error("Error al obtener el progreso del usuario por sección:", error);
+
+            res.status(500).json({
+                message: "Error al obtener el progreso del usuario por sección."
+            });
         }
     },
 };

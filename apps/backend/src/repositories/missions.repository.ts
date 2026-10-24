@@ -215,54 +215,62 @@ export const missionsRepository = {
         });
     },
 
-   getRequiredWorkBySection: async () => {
-        return await db.one(
-        `
-        SELECT ARRAY(
-            SELECT
-                COUNT(DISTINCT m.mission_id)
-                +
-                COUNT(
-                    DISTINCT CASE
-                        WHEN a.required = TRUE
-                        THEN a.activity_id
-                    END
-                )
-            FROM exploraocanna.sections s
-            LEFT JOIN exploraocanna.missions m
-                ON s.section_id = m.section_id
-            LEFT JOIN exploraocanna.activities a
-                ON s.section_id = a.section_id
-            GROUP BY s.section_id
-            ORDER BY s.section_id
-        ) AS required_work;
-        `
-        );
+
+    getRequiredWorkBySection: async () => {
+        return await db.one(`
+            SELECT ARRAY(
+                SELECT
+                    (
+                        SELECT COUNT(*)
+                        FROM exploraocanna.missions m
+                        WHERE m.section_id = s.section_id
+                    )
+                    +
+                    (
+                        SELECT COUNT(*)
+                        FROM exploraocanna.activities a
+                        WHERE a.section_id = s.section_id
+                          AND a.required = TRUE
+                    )
+                FROM exploraocanna.sections s
+                ORDER BY SUBSTRING(s.section_id FROM 2)::INTEGER
+            ) AS required_work;
+        `);
     },
+
+
 
     getUserProgressBySection: async (user_id: number) => {
         return await db.one(
-        `
-        SELECT ARRAY(
-            SELECT
-                COUNT(DISTINCT up.mission_id)
-                +
-                COUNT(DISTINCT uap.activity_id)
-            FROM exploraocanna.sections s
-
-            LEFT JOIN exploraocanna.user_progress up
-                ON s.section_id = up.section_id
-                AND up.user_id = $1
-
-            LEFT JOIN exploraocanna.user_activity_progress uap
-                ON s.section_id = uap.section_id
-                AND uap.user_id = $1
-
-            GROUP BY s.section_id
-            ORDER BY s.section_id
-        ) AS user_progress;
-        `,
-        [user_id]
+            `
+            SELECT ARRAY(
+                SELECT
+                    (
+                        SELECT COUNT(DISTINCT up.mission_id)
+                        FROM exploraocanna.user_progress up
+                        INNER JOIN exploraocanna.missions m
+                            ON m.mission_id = up.mission_id
+                        WHERE up.user_id = $1
+                          AND up.section_id = s.section_id
+                          AND up.completed = TRUE
+                    )
+                    +
+                    (
+                        SELECT COUNT(DISTINCT uap.activity_id)
+                        FROM exploraocanna.user_activity_progress uap
+                        INNER JOIN exploraocanna.activities a
+                            ON a.activity_id = uap.activity_id
+                        WHERE uap.user_id = $1
+                          AND uap.section_id = s.section_id
+                          AND uap.completed = TRUE
+                          AND a.required = TRUE
+                    )
+                FROM exploraocanna.sections s
+                ORDER BY SUBSTRING(s.section_id FROM 2)::INTEGER
+            ) AS user_progress;
+            `,
+            [user_id]
         );
     },
+
 };
