@@ -6,29 +6,41 @@ import { Text } from '@/components/ui/text'
 import { Textarea } from '@/components/ui/textarea'
 import type { QUESTION_STEP } from '@/constants/games/games'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
+import { useUserStore } from '@/hooks/userStore'
 
 interface Props {
   question: QUESTION_STEP
-  onComplete: () => void
+  onComplete: (xp: number) => void
 }
 export function Question({ question, onComplete }: Props) {
   const [value, setValue] = useState('')
   const isValid = value.trim().length > 0
+  const { user } = useUserStore()
 
   async function onSubmit() {
-    console.log(value)
     const [_, error] = await safePromise(
-      axiosInstance.post('/soup/attempt', {})
+      axiosInstance.post('/activities/save-response', {
+        user_id: user?.id,
+        activity_id: question.id,
+        response: value
+      })
     )
 
     if (error) {
       Toast.show({
         type: 'error',
-        text1: 'No fue posible guardar la respuesta de la pregunta'
+        text1: 'Error',
+        text2: 'No fue posible guardar la respuesta de la pregunta'
       })
     }
 
-    onComplete()
+    Toast.show({
+      type: 'success',
+      text1: 'Éxito',
+      text2: 'Se guardó tu respuesta'
+    })
+
+    onComplete(20)
   }
 
   return (

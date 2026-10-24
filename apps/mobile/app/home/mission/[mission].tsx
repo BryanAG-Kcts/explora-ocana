@@ -12,6 +12,7 @@ import { useStep } from '@/hooks/useStep'
 export default function Mission() {
   const { mission } = useLocalSearchParams<{ mission: string }>()
   const [isCompleted, setIsCompleted] = useState(false)
+  const [experiencePoints, setExperiencePoints] = useState(0)
   const missionSteps = MISSIONS[mission]
 
   const { goBack, current, currentIndex, isFirstStep, isLastStep, goNext } =
@@ -24,14 +25,15 @@ export default function Mission() {
 
   const requiresCompletion = current.requiresCompletion ?? false
   const canGoNext = !requiresCompletion || isCompleted
-  const Component = getGameComponent(current, () => {
+  const Component = getGameComponent(current, xp => {
     setIsCompleted(true)
+    setExperiencePoints(prev => prev + xp)
   })
 
   const handleNext = () => {
     if (!canGoNext) return
     if (isLastStep) {
-      console.log('Finish')
+      console.log(experiencePoints)
       return
     }
 
@@ -45,7 +47,7 @@ export default function Mission() {
           <View className='absolute top-4 right-4 gap-4 z-10 flex-row'>
             <Button
               size='icon'
-              className='rounded-full bg-black/60 '
+              className='rounded-full bg-black/60'
               onPress={goBack}
             >
               <Icon as={ArrowLeft} size={28} className='text-white' />
@@ -54,7 +56,7 @@ export default function Mission() {
             <Button
               size='icon'
               className='rounded-full bg-black/60 '
-              onPress={goNext}
+              onPress={handleNext}
             >
               <Icon as={ArrowRight} size={28} className='text-white' />
             </Button>

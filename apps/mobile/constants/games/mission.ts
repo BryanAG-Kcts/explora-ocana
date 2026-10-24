@@ -20,7 +20,8 @@ export const MISSIONS: GAMES_TREE = {
       data: {
         question:
           'El nombre "Carates" duró más de 200 años en documentos oficiales. ¿Qué dice eso sobre el poder que tienen los que escriben la historia para definir a otros pueblos?',
-        desc: 'Piensa en quién tenía el poder de escribir en esa época y qué pasaba con las versiones de los propios indígenas sobre sí mismos.'
+        desc: 'Piensa en quién tenía el poder de escribir en esa época y qué pasaba con las versiones de los propios indígenas sobre sí mismos.',
+        id: 'info1'
       },
       requiresCompletion: true
     },

@@ -2,11 +2,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Pressable, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import Toast from 'react-native-toast-message'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 import type { CROSSWORD_STEP } from '@/constants/games/games'
-import { axiosInstance, safePromise } from '@/constants/global/axios'
 
 interface CrosswordWord {
   word: string
@@ -391,24 +389,12 @@ export function CrosswordMap({
 
 interface Props {
   crossword: CROSSWORD_STEP
-  onComplete: () => void
+  onComplete: (xp: number) => void
 }
 
 export function Crossword({ crossword, onComplete }: Props) {
   async function onSubmit(result: CrosswordResult) {
-    console.log(result)
-    const [_, error] = await safePromise(
-      axiosInstance.post('/puzzle/attempt', result)
-    )
-
-    if (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'No fue posible guardar el resultado de la sopa'
-      })
-    }
-
-    onComplete()
+    onComplete(result.score)
   }
 
   return (

@@ -15,11 +15,9 @@ import Animated, {
   useSharedValue,
   withSpring
 } from 'react-native-reanimated'
-import Toast from 'react-native-toast-message'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 import type { PUZZLES_STEP } from '@/constants/games/games'
-import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { generarPosicionesIniciales } from '@/constants/pages/home/puzzle'
 
 type RompecabezasProps = {
@@ -384,23 +382,11 @@ const styles = StyleSheet.create({
 
 interface Props {
   puzzle: PUZZLES_STEP
-  onComplete: () => void
+  onComplete: (xp: number) => void
 }
 export function Puzzle({ puzzle, onComplete }: Props) {
   async function onSubmit(result: PuzzleResult) {
-    console.log(result)
-    const [_, error] = await safePromise(
-      axiosInstance.post('/puzzle/attempt', result)
-    )
-
-    if (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'No fue posible guardar el resultado de la sopa'
-      })
-    }
-
-    onComplete()
+    onComplete(result.score)
   }
 
   return (

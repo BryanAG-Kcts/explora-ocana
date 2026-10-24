@@ -25,7 +25,7 @@ export type GAME_STEP = {
 }[GAMES_ENUM]
 
 export type GAMES_TREE = Record<string, GAME_STEP[]>
-export function getGameComponent(step: GAME_STEP, onComplete: () => void) {
+export function getGameComponent(step: GAME_STEP, onComplete: (xp: number) => void) {
   switch (step.type) {
     case 'ar':
       return <Ar ar={step.data} />
@@ -69,6 +69,7 @@ export interface CONCEPT_STEP {
 export interface QUESTION_STEP {
   question: string
   desc: string
+  id: string
 }
 
 export interface PUZZLES_STEP {

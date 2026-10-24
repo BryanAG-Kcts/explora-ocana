@@ -2,10 +2,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import Toast from 'react-native-toast-message'
 import { Text } from '@/components/ui/text'
 import type { SOUP_STEP } from '@/constants/games/games'
-import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { CELL_SIZE, generatePuzzle } from '@/constants/pages/home/soup'
 
 type Cell = {
@@ -24,7 +22,7 @@ interface SopaDeLetrasProps {
   rows?: number
   columns?: number
   words?: string[]
-  onComplete: () => void
+  onComplete: (xp: number) => void
 }
 export function SopaDeLetras({
   rows = 10,
@@ -232,20 +230,8 @@ export function SopaDeLetras({
       foundWords
     }
 
-    console.log(payload)
-    const [_, error] = await safePromise(
-      axiosInstance.post('/soup/attempt', payload)
-    )
-
-    if (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'No fue posible guardar el resultado de la sopa'
-      })
-    }
-
     setIsSubmitting(false)
-    onComplete()
+    onComplete(payload.finalScore)
   }
 
   return (
@@ -329,7 +315,7 @@ export function SopaDeLetras({
 
 interface Props {
   soup: SOUP_STEP
-  onComplete: () => void
+  onComplete: (xp: number) => void
 }
 export function Soup({ soup, onComplete }: Props) {
   return (

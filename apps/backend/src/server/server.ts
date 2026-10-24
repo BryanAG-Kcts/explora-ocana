@@ -8,6 +8,7 @@ import { dataRouter } from '../routes/data.route'
 import { userRouter } from '../routes/user.route'
 import { groupRouter } from '../routes/group.route'
 import { missionsRouter } from '../routes/missions.route'
+import { activitiesRouter } from '../routes/activities.route'
 
 export class Server {
   app: Express
@@ -29,6 +30,7 @@ export class Server {
     this.app.use('/api/assets', assetsRouter)
     this.app.use('/group', groupRouter)
     this.app.use('/missions', missionsRouter) // Importa y utiliza el router de misiones
+    this.app.use('/activities', activitiesRouter)
     this.app.all('/{*splat}', (_, res) => {
       res.json({ msg: 'Hello World!' })
     })
