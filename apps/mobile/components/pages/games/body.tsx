@@ -26,7 +26,6 @@ export function HeadControl({ text = 'Volver' }: HeadControlProps) {
 interface FooterProps {
   goBack: () => void
   goNext: () => void
-  onFinish: () => void
   isFirstStep: boolean
   isLastStep: boolean
   canGoNext: boolean
@@ -37,7 +36,6 @@ interface FooterProps {
 export function FooterControl({
   goBack,
   goNext,
-  onFinish,
   canGoNext,
   isFirstStep,
   isLastStep,
@@ -59,7 +57,7 @@ export function FooterControl({
 
       <Button
         disabled={!canGoNext}
-        onPress={isLastStep ? onFinish : goNext}
+        onPress={goNext}
         className='flex-1'
       >
         <Text>{isLastStep ? finishText : nextText}</Text>

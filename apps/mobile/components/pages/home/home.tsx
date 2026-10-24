@@ -54,6 +54,7 @@ export function Home() {
                 sectionProgress={progress[id]}
                 progress={progress}
                 prevSectionId={learningRoute[index - 1]?.id || null}
+                sectionId={id}
               />
             </View>
           </View>

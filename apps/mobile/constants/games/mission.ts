@@ -31,7 +31,7 @@ export const MISSIONS: GAMES_TREE = {
         columns: 10,
         rows: 10,
         soup: [
-          'REACT',
+          'REACT'
           // 'NATIVE',
           // 'JAVASCRIPT',
           // 'TAILWIND',
@@ -52,7 +52,7 @@ export const MISSIONS: GAMES_TREE = {
             row: 1,
             column: 1,
             direction: 'horizontal'
-          },
+          }
           // {
           //   word: 'TAILWIND',
           //   row: 0,

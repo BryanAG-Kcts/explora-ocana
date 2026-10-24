@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router'
+import { type RelativePathString, useRouter } from 'expo-router'
 import { Fragment, useState } from 'react'
 import type { ImageStyle } from 'react-native'
 import { Image, Pressable, View } from 'react-native'
@@ -24,13 +24,15 @@ interface sProps {
   sectionProgress: NodeProgress
   progress: RouteProgress
   prevSectionId: string | null
+  sectionId: string
 }
 
 export function RouteNodes({
   nodes,
   sectionProgress,
   progress,
-  prevSectionId
+  prevSectionId,
+  sectionId
 }: sProps) {
   const router = useRouter()
   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
@@ -44,7 +46,10 @@ export function RouteNodes({
     if (!selectedNode) return
 
     setSelectedNode(null)
-    router.push(selectedNode.link)
+    router.push({
+      pathname: selectedNode.link as RelativePathString,
+      params: { section: sectionId }
+    })
   }
 
   function getNodeStatus(sectionId: string | null, index: number) {

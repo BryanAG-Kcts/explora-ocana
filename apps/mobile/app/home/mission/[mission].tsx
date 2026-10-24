@@ -1,16 +1,25 @@
-import { useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams, useRouter } from 'expo-router'
 import { ArrowLeft, ArrowRight } from 'lucide-react-native'
 import { useEffect, useState } from 'react'
 import { View } from 'react-native'
+import Toast from 'react-native-toast-message'
 import { FooterControl, HeadControl } from '@/components/pages/games/body'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { getGameComponent } from '@/constants/games/games'
 import { MISSIONS } from '@/constants/games/mission'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
+import { useUserStore } from '@/hooks/userStore'
 import { useStep } from '@/hooks/useStep'
 
 export default function Mission() {
-  const { mission } = useLocalSearchParams<{ mission: string }>()
+  const router = useRouter()
+  const { user } = useUserStore()
+  const { mission, section } = useLocalSearchParams<{
+    mission: string
+    section?: string
+  }>()
+
   const [isCompleted, setIsCompleted] = useState(false)
   const [experiencePoints, setExperiencePoints] = useState(0)
   const missionSteps = MISSIONS[mission]
@@ -30,10 +39,33 @@ export default function Mission() {
     setExperiencePoints(prev => prev + xp)
   })
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!canGoNext) return
     if (isLastStep) {
-      console.log(experiencePoints)
+      const [_, error] = await safePromise(
+        axiosInstance.post('/missions/save-progress', {
+          user_id: user?.id,
+          mission_id: mission,
+          section_id: section,
+          experience_points: experiencePoints
+        })
+      )
+
+      if (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'No fue posible guardar tu progreso'
+        })
+      }
+
+      Toast.show({
+        type: 'success',
+        text1: 'Éxito',
+        text2: 'Se guardó tu progreso'
+      })
+
+      router.replace('/home')
       return
     }
 
@@ -73,7 +105,6 @@ export default function Mission() {
             goNext={handleNext}
             isFirstStep={isFirstStep}
             isLastStep={isLastStep}
-            onFinish={() => console.log('Finish')}
             canGoNext={canGoNext}
           />
         </>

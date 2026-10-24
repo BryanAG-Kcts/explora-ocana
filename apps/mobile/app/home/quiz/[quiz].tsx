@@ -10,10 +10,16 @@ import { Progress } from '@/components/ui/progress'
 import { Text } from '@/components/ui/text'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { getOptionStyle, QUIZZES } from '@/constants/pages/home/quiz'
+import { useUserStore } from '@/hooks/userStore'
 import { useStep } from '@/hooks/useStep'
 
 export default function Quiz() {
-  const { quiz } = useLocalSearchParams()
+  const { user } = useUserStore()
+  const { quiz, section } = useLocalSearchParams<{
+    quiz: string
+    section?: string
+  }>()
+
   const quizId = Array.isArray(quiz) ? quiz[0] : quiz
   const originalQuestions = QUIZZES[quizId as keyof typeof QUIZZES]
   const [QUESTIONS] = useState(() => shuffleArray(originalQuestions ?? []))
@@ -157,9 +163,13 @@ export default function Quiz() {
       finalScore
     }
 
-    console.log(payload)
     const [response, error] = await safePromise(
-      axiosInstance.post('/quiz/attempt', payload)
+      axiosInstance.post('/activities/save-progress', {
+        user_id: user?.id,
+        quest_id: payload.quizId,
+        section_id: section,
+        experience_points: payload.finalScore
+      })
     )
 
     if (error || !response?.data) {
@@ -177,6 +187,7 @@ export default function Quiz() {
       type: 'success',
       text1: '!Quiz completado¡ 🎉'
     })
+
     router.replace('/home')
   }
 
