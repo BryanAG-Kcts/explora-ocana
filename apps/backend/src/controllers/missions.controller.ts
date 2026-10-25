@@ -86,7 +86,6 @@ export const missionsController = {
         }
     },
 
-
     getUserProgressBySection: async (req: Request, res: Response) => {
         try {
             const user_id = Number(req.params.user_id);

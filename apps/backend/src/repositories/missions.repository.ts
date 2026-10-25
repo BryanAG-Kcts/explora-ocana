@@ -218,58 +218,56 @@ export const missionsRepository = {
 
     getRequiredWorkBySection: async () => {
         return await db.one(`
-            SELECT ARRAY(
-                SELECT
-                    (
-                        SELECT COUNT(*)
-                        FROM exploraocanna.missions m
-                        WHERE m.section_id = s.section_id
-                    )
-                    +
-                    (
-                        SELECT COUNT(*)
-                        FROM exploraocanna.activities a
-                        WHERE a.section_id = s.section_id
-                          AND a.required = TRUE
-                    )
-                FROM exploraocanna.sections s
-                ORDER BY SUBSTRING(s.section_id FROM 2)::INTEGER
-            ) AS required_work;
+          SELECT ARRAY(
+            SELECT
+              (
+                SELECT COUNT(*)
+                FROM exploraocanna.missions m
+                WHERE m.section_id = s.section_id
+              )
+              +
+              (
+                SELECT COUNT(*)
+                FROM exploraocanna.activities a
+                WHERE a.section_id = s.section_id
+                  AND a.activity_id LIKE 'quiz%'
+              )
+            FROM exploraocanna.sections s
+            ORDER BY SUBSTRING(s.section_id FROM 2)::INTEGER
+          ) AS required_work;
         `);
     },
 
-
-
     getUserProgressBySection: async (user_id: number) => {
         return await db.one(
-            `
-            SELECT ARRAY(
-                SELECT
-                    (
-                        SELECT COUNT(DISTINCT up.mission_id)
-                        FROM exploraocanna.user_progress up
-                        INNER JOIN exploraocanna.missions m
-                            ON m.mission_id = up.mission_id
-                        WHERE up.user_id = $1
-                          AND up.section_id = s.section_id
-                          AND up.completed = TRUE
-                    )
-                    +
-                    (
-                        SELECT COUNT(DISTINCT uap.activity_id)
-                        FROM exploraocanna.user_activity_progress uap
-                        INNER JOIN exploraocanna.activities a
-                            ON a.activity_id = uap.activity_id
-                        WHERE uap.user_id = $1
-                          AND uap.section_id = s.section_id
-                          AND uap.completed = TRUE
-                          AND a.required = TRUE
-                    )
-                FROM exploraocanna.sections s
-                ORDER BY SUBSTRING(s.section_id FROM 2)::INTEGER
-            ) AS user_progress;
-            `,
-            [user_id]
+          `
+          SELECT ARRAY(
+            SELECT
+              (
+                SELECT COUNT(DISTINCT up.mission_id)
+                FROM exploraocanna.user_progress up
+                INNER JOIN exploraocanna.missions m
+                  ON m.mission_id = up.mission_id
+                WHERE up.user_id = $1
+                  AND up.section_id = s.section_id
+                  AND up.completed = TRUE
+              )
+              +
+              (
+                SELECT COUNT(DISTINCT uap.activity_id)
+                FROM exploraocanna.user_activity_progress uap
+                INNER JOIN exploraocanna.activities a
+                  ON a.activity_id = uap.activity_id
+                WHERE uap.user_id = $1
+                  AND uap.section_id = s.section_id
+                  AND uap.completed = TRUE
+                  AND a.activity_id LIKE 'quiz%'
+              )
+            FROM exploraocanna.sections s
+            ORDER BY SUBSTRING(s.section_id FROM 2)::INTEGER
+          ) AS user_progress;
+          `,
+          [user_id]
         );
     },
 
