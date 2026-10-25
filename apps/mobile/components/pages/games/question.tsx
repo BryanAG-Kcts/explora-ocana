@@ -11,19 +11,28 @@ import { useUserStore } from '@/hooks/userStore'
 interface Props {
   question: QUESTION_STEP
   onComplete: (xp: number) => void
+  sectionId: string
 }
-export function Question({ question, onComplete }: Props) {
+export function Question({ question, onComplete, sectionId }: Props) {
   const [value, setValue] = useState('')
   const isValid = value.trim().length > 0
   const { user } = useUserStore()
 
   async function onSubmit() {
     const [_, error] = await safePromise(
-      axiosInstance.post('/activities/save-response', {
-        user_id: user?.id,
-        activity_id: question.id,
-        response: value
-      })
+      Promise.all([
+        axiosInstance.post('/activities/save-response', {
+          user_id: user?.id,
+          activity_id: question.id,
+          response: value
+        }),
+        axiosInstance.post('/activities/save-progress', {
+          user_id: user?.id,
+          quest_id: question.id,
+          section_id: sectionId,
+          experience_points: 20
+        })
+      ])
     )
 
     if (error) {
@@ -32,6 +41,8 @@ export function Question({ question, onComplete }: Props) {
         text1: 'Error',
         text2: 'No fue posible guardar la respuesta de la pregunta'
       })
+
+      return
     }
 
     Toast.show({

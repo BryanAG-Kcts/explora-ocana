@@ -2,9 +2,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import Toast from 'react-native-toast-message'
 import { Text } from '@/components/ui/text'
 import type { SOUP_STEP } from '@/constants/games/games'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { CELL_SIZE, generatePuzzle } from '@/constants/pages/home/soup'
+import { useUserStore } from '@/hooks/userStore'
 
 type Cell = {
   row: number
@@ -316,15 +319,45 @@ export function SopaDeLetras({
 interface Props {
   soup: SOUP_STEP
   onComplete: (xp: number) => void
+  sectionId: string
 }
-export function Soup({ soup, onComplete }: Props) {
+export function Soup({ soup, onComplete, sectionId }: Props) {
+  const { user } = useUserStore()
+
   return (
     <ScrollView className='flex-1 bg-background'>
       <SopaDeLetras
         rows={soup.rows}
         columns={soup.columns}
         words={soup.soup}
-        onComplete={onComplete}
+        onComplete={async xp => {
+          const [_, error] = await safePromise(
+            axiosInstance.post('/activities/save-progress', {
+              user_id: user?.id,
+              quest_id: soup.id,
+              section_id: sectionId,
+              experience_points: xp
+            })
+          )
+
+          if (error) {
+            Toast.show({
+              type: 'error',
+              text1: 'Error',
+              text2: 'No fue posible guardar tu progreso'
+            })
+
+            return
+          }
+
+          Toast.show({
+            type: 'success',
+            text1: 'Éxito',
+            text2: 'Se guardó tu progreso'
+          })
+
+          onComplete(xp)
+        }}
       />
     </ScrollView>
   )

@@ -30,6 +30,7 @@ export const MISSIONS: GAMES_TREE = {
       data: {
         columns: 10,
         rows: 10,
+        id: 'r',
         soup: [
           'REACT'
           // 'NATIVE',
@@ -46,6 +47,7 @@ export const MISSIONS: GAMES_TREE = {
       data: {
         rows: 10,
         columns: 12,
+        id: 'ra',
         words: [
           {
             word: 'REACT',
@@ -98,6 +100,7 @@ export const MISSIONS: GAMES_TREE = {
     {
       type: 'puzzle',
       data: {
+        id: 'a',
         rows: 3,
         columns: 3,
         image: require('@/assets/images/icons/book.png')

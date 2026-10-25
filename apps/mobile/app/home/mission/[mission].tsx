@@ -17,7 +17,7 @@ export default function Mission() {
   const { user } = useUserStore()
   const { mission, section } = useLocalSearchParams<{
     mission: string
-    section?: string
+    section: string
   }>()
 
   const [isCompleted, setIsCompleted] = useState(false)
@@ -34,10 +34,14 @@ export default function Mission() {
 
   const requiresCompletion = current.requiresCompletion ?? false
   const canGoNext = !requiresCompletion || isCompleted
-  const Component = getGameComponent(current, xp => {
-    setIsCompleted(true)
-    setExperiencePoints(prev => prev + xp)
-  })
+  const Component = getGameComponent(
+    current,
+    xp => {
+      setIsCompleted(true)
+      setExperiencePoints(prev => prev + xp)
+    },
+    section
+  )
 
   const handleNext = async () => {
     if (!canGoNext) return

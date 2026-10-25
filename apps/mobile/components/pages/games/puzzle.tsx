@@ -15,10 +15,13 @@ import Animated, {
   useSharedValue,
   withSpring
 } from 'react-native-reanimated'
+import Toast from 'react-native-toast-message'
 import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 import type { PUZZLES_STEP } from '@/constants/games/games'
+import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { generarPosicionesIniciales } from '@/constants/pages/home/puzzle'
+import { useUserStore } from '@/hooks/userStore'
 
 type RompecabezasProps = {
   image: ImageSourcePropType
@@ -383,9 +386,37 @@ const styles = StyleSheet.create({
 interface Props {
   puzzle: PUZZLES_STEP
   onComplete: (xp: number) => void
+  sectionId: string
 }
-export function Puzzle({ puzzle, onComplete }: Props) {
+export function Puzzle({ puzzle, onComplete, sectionId }: Props) {
+  const { user } = useUserStore()
+
   async function onSubmit(result: PuzzleResult) {
+    const [_, error] = await safePromise(
+      axiosInstance.post('/activities/save-progress', {
+        user_id: user?.id,
+        quest_id: puzzle.id,
+        section_id: sectionId,
+        experience_points: result.score
+      })
+    )
+
+    if (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'No fue posible guardar tu progreso'
+      })
+
+      return
+    }
+
+    Toast.show({
+      type: 'success',
+      text1: 'Éxito',
+      text2: 'Se guardó tu progreso'
+    })
+
     onComplete(result.score)
   }
 

@@ -88,6 +88,11 @@ export function StudentCourses() {
 
       <View className='p-4 gap-4 flex-1'>
         <Text>Escoge un grupo para unirte:</Text>
+        {courses?.length === 0 && (
+          <Text variant='muted' className='text-center'>
+            No se han creado grupos todavía
+          </Text>
+        )}
 
         <FlatList
           data={courses}

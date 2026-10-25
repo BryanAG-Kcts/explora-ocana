@@ -25,7 +25,11 @@ export type GAME_STEP = {
 }[GAMES_ENUM]
 
 export type GAMES_TREE = Record<string, GAME_STEP[]>
-export function getGameComponent(step: GAME_STEP, onComplete: (xp: number) => void) {
+export function getGameComponent(
+  step: GAME_STEP,
+  onComplete: (xp: number) => void,
+  sectionId: string
+) {
   switch (step.type) {
     case 'ar':
       return <Ar ar={step.data} />
@@ -34,16 +38,36 @@ export function getGameComponent(step: GAME_STEP, onComplete: (xp: number) => vo
       return <Concept concept={step.data} />
 
     case 'crossword':
-      return <Crossword crossword={step.data} onComplete={onComplete} />
+      return (
+        <Crossword
+          crossword={step.data}
+          onComplete={onComplete}
+          sectionId={sectionId}
+        />
+      )
 
     case 'puzzle':
-      return <Puzzle puzzle={step.data} onComplete={onComplete} />
+      return (
+        <Puzzle
+          puzzle={step.data}
+          onComplete={onComplete}
+          sectionId={sectionId}
+        />
+      )
 
     case 'question':
-      return <Question question={step.data} onComplete={onComplete} />
+      return (
+        <Question
+          question={step.data}
+          onComplete={onComplete}
+          sectionId={sectionId}
+        />
+      )
 
     case 'soup':
-      return <Soup soup={step.data} onComplete={onComplete} />
+      return (
+        <Soup soup={step.data} onComplete={onComplete} sectionId={sectionId} />
+      )
 
     default:
       return null
@@ -76,9 +100,11 @@ export interface PUZZLES_STEP {
   rows: number
   columns: number
   image: ImageSourcePropType
+  id: string
 }
 
 export interface CROSSWORD_STEP {
+  id: string
   rows: number
   columns: number
   hints: string[]
@@ -91,6 +117,7 @@ export interface CROSSWORD_STEP {
 }
 
 export interface SOUP_STEP {
+  id: string
   columns: number
   rows: number
   soup: string[]
