@@ -20,7 +20,7 @@ export function LeaderboardCards({ users }: Props) {
           key={user.id}
           className='flex-row items-center p-4 rounded-2xl border border-border gap-4'
         >
-          <Text className='text-gray-400 font-black text-base'>
+          <Text className='text-gray-400 font-black'>
             {index + 4}
           </Text>
 

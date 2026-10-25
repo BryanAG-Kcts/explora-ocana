@@ -40,7 +40,7 @@ export function Notifications() {
           </View>
 
           <View className='flex-1 mr-4'>
-            <Text className='text-base font-medium'>
+            <Text className='font-medium'>
               Recibir notificaciones
             </Text>
 

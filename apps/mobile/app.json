@@ -25,7 +25,8 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.cactuswow.explora_ocana",
-      "permissions": ["CAMERA"]
+      "permissions": ["CAMERA"],
+      "softwareKeyboardLayoutMode": "resize"
     },
     "web": {
       "bundler": "metro",

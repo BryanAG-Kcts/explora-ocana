@@ -1,6 +1,7 @@
 import { Play, X } from 'lucide-react-native'
-import { Modal, Pressable, Text, View } from 'react-native'
+import { Modal, Pressable, View } from 'react-native'
 import { Icon } from '@/components/ui/icon'
+import { Text } from '@/components/ui/text'
 import type { Node } from '@/constants/pages/home/routeEntities'
 
 interface Props {
@@ -29,11 +30,11 @@ export function MissionPopup({ node, visible, onClose, onStart }: Props) {
                 {node.title}
               </Text>
 
-              {node.isOptional && (
+              {/* {node.isOptional && (
                 <Text className='mt-1 text-sm font-semibold text-muted-foreground'>
                   Misión opcional
                 </Text>
-              )}
+              )} */}
             </View>
 
             <Pressable
@@ -56,12 +57,12 @@ export function MissionPopup({ node, visible, onClose, onStart }: Props) {
           </View>
 
           {/* Descripción */}
-          <Text className='mb-6 text-center text-base leading-6 text-muted-foreground'>
+          <Text className='mb-6 text-center leading-6 text-muted-foreground'>
             {node.description}
           </Text>
 
           {/* Pregunta */}
-          <Text className='mb-4 text-center text-lg font-bold text-foreground'>
+          <Text variant='large' className='mb-4 text-center font-bold text-foreground'>
             ¿Quieres comenzar esta misión?
           </Text>
 

@@ -75,7 +75,7 @@ export function Profile() {
           <Text variant='muted'>Miembro desde {user?.createdAt}</Text>
         </View>
 
-        <Text className='text-lg font-semibold mb-3'>Tus Estadísticas</Text>
+        <Text variant='large' className='font-semibold mb-3'>Tus Estadísticas</Text>
         <View className='flex-row flex-wrap justify-between mb-5'>
           <StatCard
             title='Racha'
@@ -110,7 +110,7 @@ export function Profile() {
           >
             <View className='flex-row items-center gap-3'>
               <Icon as={UserRound} size={18} />
-              <Text className='text-base font-medium'>
+              <Text className='font-medium'>
                 Información de cuenta
               </Text>
             </View>
@@ -124,7 +124,7 @@ export function Profile() {
           >
             <View className='flex-row items-center gap-3'>
               <Icon as={Bolt} size={18} />
-              <Text className='text-base font-medium'>Configuración</Text>
+              <Text className='font-medium'>Configuración</Text>
             </View>
 
             <Icon as={ChevronRight} size={12} />
@@ -138,7 +138,7 @@ export function Profile() {
             <TouchableOpacity>
               <View className='flex-row items-center p-4 border-b border-muted gap-3'>
                 <Icon as={LogOut} size={18} className='text-destructive' />
-                <Text className='text-base font-medium text-destructive'>
+                <Text className='font-medium text-destructive'>
                   Cerrar sesión
                 </Text>
               </View>

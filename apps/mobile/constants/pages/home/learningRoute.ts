@@ -1,6 +1,6 @@
 import { Node, RouteSection } from './routeEntities'
 export const learningRoute = [
-  new RouteSection('1a', 'Sección A', [
+  new RouteSection('S1', 'Sección A', [
     new Node(
       'mission-1',
       'mission',

@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'expo-router'
 import { Lock, Mail } from 'lucide-react-native'
-import { useState } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { View } from 'react-native'
 import Toast from 'react-native-toast-message'
@@ -18,7 +17,6 @@ import {
 } from '@/constants/pages/auth/login'
 import { useUserStore } from '@/hooks/userStore'
 import { i18n } from '@/locales/i18n'
-import { ForgotPassword } from './forgotPassword'
 
 export function LoginForm() {
   const { setUser } = useUserStore()
@@ -27,11 +25,10 @@ export function LoginForm() {
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       password: 'Password',
-      email: '@g.com'
+      email: '@g.co'
     }
   })
 
-  const [isForgotModalVisible, setIsForgotModalVisible] = useState(false)
   const onSubmit: SubmitHandler<LoginSchemaType> = async data => {
     const res = axiosInstance.post<LoginResponse>('/auth/login', data)
     const [response, error] = await safePromise(res)
@@ -83,22 +80,11 @@ export function LoginForm() {
             />
           )}
         />
-
-        <View className='flex-row justify-end'>
-          <Button variant='link' onPress={() => setIsForgotModalVisible(true)}>
-            <Text>{i18n.t('LOGIN.PASSWORD_FORGOT')}</Text>
-          </Button>
-        </View>
       </View>
 
       <Button onPress={handleSubmit(onSubmit)}>
         <Text>{i18n.t('LOGIN.LOGIN_BUTTON')}</Text>
       </Button>
-
-      <ForgotPassword
-        handleCloseModal={() => setIsForgotModalVisible(false)}
-        isForgotModalVisible={isForgotModalVisible}
-      />
     </View>
   )
 }

@@ -339,26 +339,28 @@ export function CrosswordMap({
       <View className='w-full flex-row flex-wrap justify-around gap-3 px-4'>
         <View className='items-center'>
           <Text className='text-sm text-muted-foreground'>Tiempo</Text>
-          <Text className='text-lg font-bold'>
+          <Text variant='large' className='font-bold'>
             {formatTime(elapsedSeconds)}
           </Text>
         </View>
 
         <View className='items-center'>
           <Text className='text-sm text-muted-foreground'>Movimientos</Text>
-          <Text className='text-lg font-bold'>{moves}</Text>
+          <Text variant='large' className='font-bold'>
+            {moves}
+          </Text>
         </View>
 
         <View className='items-center'>
           <Text className='text-sm text-muted-foreground'>Palabras</Text>
-          <Text className='text-lg font-bold'>
+          <Text variant='large' className='font-bold'>
             {correctWords}/{words.length}
           </Text>
         </View>
 
         <View className='items-center'>
           <Text className='text-sm text-muted-foreground'>Puntos</Text>
-          <Text className='text-lg font-bold'>
+          <Text variant='large' className='font-bold'>
             {calculateCrosswordScore(correctWords, moves, elapsedSeconds)}
           </Text>
         </View>
@@ -367,11 +369,11 @@ export function CrosswordMap({
       {checked && configurationErrors.length === 0 && (
         <View className='mt-2 items-center'>
           {isComplete ? (
-            <Text className='text-lg font-bold text-green-600'>
+            <Text variant='large' className='font-bold text-green-600'>
               ¡Crucigrama correcto! 🎉
             </Text>
           ) : (
-            <Text className='text-lg font-bold text-red-600'>
+            <Text variant='large' className='font-bold text-red-600'>
               Hay respuestas incorrectas o incompletas.
             </Text>
           )}
@@ -403,7 +405,7 @@ export function Crossword({ crossword, onComplete, sectionId }: Props) {
     const [_, error] = await safePromise(
       axiosInstance.post('/activities/save-progress', {
         user_id: user?.id,
-        quest_id: crossword.id,
+        activity_id: crossword.id,
         section_id: sectionId,
         experience_points: result.score
       })
@@ -453,7 +455,7 @@ export function Crossword({ crossword, onComplete, sectionId }: Props) {
 
           return (
             <View key={`${index}-${hint}`} className='w-1/2 px-1 py-2'>
-              <Text className='text-base'>
+              <Text>
                 {number}. {hint}
               </Text>
             </View>

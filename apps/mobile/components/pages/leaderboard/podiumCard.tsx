@@ -60,7 +60,7 @@ export function PodiumCards({ users, podiumUsers }: Props) {
                   'h-24 from-yellow-500/30 to-yellow-600/10 border-yellow-400'
               )}
             >
-              <Text className='font-black text-lg'>
+              <Text variant='large' className='font-black'>
                 {isFirst ? '1' : isSecond ? '2' : '3'}
               </Text>
             </View>

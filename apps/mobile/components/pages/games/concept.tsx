@@ -15,7 +15,7 @@ interface Props {
 export function Concept({ concept }: Props) {
   const markdownContainerStyle = useResolveClassNames('flex-1')
   const markdownStyle = useResolveClassNames(
-    'text-base text-foreground bg-card border-border'
+    'text-foreground bg-card border-border'
   )
 
   return (

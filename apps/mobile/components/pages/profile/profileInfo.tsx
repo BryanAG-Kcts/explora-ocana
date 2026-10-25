@@ -8,7 +8,7 @@ const InfoItem = ({ label, value }: { label: string; value: string }) => (
     <Text className='text-sm font-medium text-muted-foreground mb-1'>
       {label}
     </Text>
-    <Text className='text-base font-semibold'>{value}</Text>
+    <Text className='font-semibold'>{value}</Text>
   </View>
 )
 
@@ -20,7 +20,7 @@ const SectionCard = ({
   children: React.ReactNode
 }) => (
   <View className='bg-background p-5 rounded-2xl border border-border shadow-sm mb-5'>
-    <Text className='text-lg font-bold mb-4 pb-2 border-b border-border'>
+    <Text variant='large' className='font-bold mb-4 pb-2 border-b border-border'>
       {title}
     </Text>
     {children}

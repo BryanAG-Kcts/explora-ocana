@@ -15,14 +15,14 @@ export function About() {
                 <Text className='text-2xl font-bold text-background'>OH</Text>
               </View>
 
-              <Text className='text-lg font-bold'>OcañaApp Historia</Text>
+              <Text variant='large' className='font-bold'>OcañaApp Historia</Text>
 
               <Text variant='muted' className='text-sm'>
                 Aprende, explora y descubre nuestra historia.
               </Text>
             </View>
 
-            <Text className='text-base leading-6 text-center'>
+            <Text className='leading-6 text-center'>
               OcañaAPP es una aplicación educativa diseñada para aprender
               sobre la historia, cultura y patrimonio de Ocaña mediante
               actividades interactivas y experiencias gamificadas.

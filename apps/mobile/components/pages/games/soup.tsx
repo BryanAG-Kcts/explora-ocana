@@ -269,7 +269,7 @@ export function SopaDeLetras({
                             : 'bg-background'
                       }`}
                     >
-                      <Text className='text-base font-bold'>
+                      <Text className='font-bold'>
                         {puzzle.grid[row][column]}
                       </Text>
                     </View>
@@ -300,7 +300,7 @@ export function SopaDeLetras({
             return (
               <View key={word} className='w-1/2 py-1'>
                 <Text
-                  className={`text-base text-center ${
+                  className={`text-center ${
                     found ? 'text-primary line-through' : ''
                   }`}
                 >
@@ -334,7 +334,7 @@ export function Soup({ soup, onComplete, sectionId }: Props) {
           const [_, error] = await safePromise(
             axiosInstance.post('/activities/save-progress', {
               user_id: user?.id,
-              quest_id: soup.id,
+              activity_id: soup.id,
               section_id: sectionId,
               experience_points: xp
             })

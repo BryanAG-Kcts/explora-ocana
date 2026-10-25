@@ -83,9 +83,9 @@ export default function Settings() {
               </View>
 
               <View className='flex-1'>
-                <Text className='text-base font-medium'>{option.title}</Text>
+                <Text className='font-medium'>{option.title}</Text>
 
-                <Text variant='muted' className='text-sm mt-1'>
+                <Text variant='muted' className='mt-1'>
                   {option.description}
                 </Text>
               </View>
@@ -94,7 +94,7 @@ export default function Settings() {
         })}
       </View>
 
-      <Text variant='muted' className='text-center text-xs mt-3'>
+      <Text variant='muted' className='text-center mt-3'>
         Versión 1.0.0
       </Text>
 

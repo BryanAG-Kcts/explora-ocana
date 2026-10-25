@@ -77,7 +77,7 @@ export function ProfessorCourses() {
               className='p-4 rounded-xl border border-border mb-3 shadow-sm flex-row justify-between items-center'
             >
               <View>
-                <Text className='text-lg font-semibold'>{item.name}</Text>
+                <Text variant='large' className='font-semibold'>{item.name}</Text>
                 <Text variant='muted'>{item.studentsCount} estudiantes</Text>
               </View>
 

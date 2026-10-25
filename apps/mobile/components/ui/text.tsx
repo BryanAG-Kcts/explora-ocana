@@ -2,6 +2,7 @@ import { Slot } from '@rn-primitives/slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 import * as React from 'react'
 import { Platform, Text as RNText, type Role } from 'react-native'
+import { useAccessibilityStore } from '@/hooks/useAccesible'
 import { cn } from '@/lib/utils'
 
 const textVariants = cva(
@@ -81,15 +82,38 @@ function Text({
     asChild?: boolean
   }) {
   const textClass = React.useContext(TextClassContext)
+
+  const largeText = useAccessibilityStore(state => state.largeText)
+
   const Component = asChild ? Slot : RNText
+
+  const largeTextVariants: Record<TextVariant, string> = {
+    default: 'text-lg',
+    h1: 'text-5xl',
+    h2: 'text-4xl',
+    h3: 'text-3xl',
+    h4: 'text-2xl',
+    p: 'text-lg',
+    blockquote: 'text-lg',
+    code: 'text-base',
+    lead: 'text-2xl',
+    large: 'text-xl',
+    small: 'text-base',
+    muted: 'text-base'
+  }
+
   return (
     <Component
-      className={cn(textVariants({ variant }), textClass, className)}
+      className={cn(
+        textVariants({ variant }),
+        largeText && largeTextVariants[variant as TextVariant],
+        textClass,
+        className
+      )}
       role={variant ? ROLE[variant] : undefined}
       aria-level={variant ? ARIA_LEVEL[variant] : undefined}
       {...props}
     />
   )
 }
-
 export { Text, TextClassContext }

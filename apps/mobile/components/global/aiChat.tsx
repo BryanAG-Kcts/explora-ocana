@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -9,7 +9,6 @@ import {
 } from 'react-native'
 import { axiosInstance } from '@/constants/global/axios'
 import { Text } from '../ui/text'
-import axios from 'axios'
 
 export default function AIChat() {
   const [inputText, setInputText] = useState('')
@@ -71,7 +70,7 @@ export default function AIChat() {
               Bot 🤖
             </Text>
           )}
-          <Text className={`${isUser ? '' : ''} text-base`}>{item.text}</Text>
+          <Text className={`${isUser ? '' : ''}`}>{item.text}</Text>
         </View>
       </View>
     )
@@ -89,8 +88,13 @@ export default function AIChat() {
           <Text className='text-xl'>👾</Text>
         </View>
         <View>
-          <Text className='font-bold text-lg'>Asistente IA</Text>
-          <Text className='text-primary text-xs font-medium flex-row items-center'>
+          <Text variant='large' className='font-bold'>
+            Asistente IA
+          </Text>
+          <Text
+            variant='small'
+            className='text-primary font-medium flex-row items-center'
+          >
             ● En línea
           </Text>
         </View>
@@ -114,7 +118,7 @@ export default function AIChat() {
       <View className='px-4 py-3'>
         <View className='flex-row items-center rounded-full border border-gray-700/50 pl-4 pr-1 py-1'>
           <TextInput
-            className='flex-1 text-base py-2 h-12 text-foreground'
+            className='flex-1 py-2 h-12 text-foreground'
             placeholder='Escribe un mensaje...'
             placeholderTextColor='#6B7280'
             value={inputText}
@@ -129,7 +133,7 @@ export default function AIChat() {
             }`}
             disabled={!inputText.trim()}
           >
-            <Text className='text-white font-black text-lg'>↑</Text>
+            <Text className='text-white font-black'>↑</Text>
           </TouchableOpacity>
         </View>
       </View>

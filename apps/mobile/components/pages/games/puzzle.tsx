@@ -358,11 +358,11 @@ export function Rompecabezas({
       </View>
 
       <View className='mt-4 w-full flex-row items-center justify-between p-2 px-4'>
-        <Text className='text-base font-semibold'>Movimientos: {moves}</Text>
-        <Text className='text-base font-semibold'>
+        <Text className='font-semibold'>Movimientos: {moves}</Text>
+        <Text className='font-semibold'>
           {lockedPieces.size}/{totalPieces}
         </Text>
-        <Text className='text-base font-semibold'>
+        <Text className='font-semibold'>
           {formatTime(elapsedSeconds)}
         </Text>
       </View>
@@ -395,7 +395,7 @@ export function Puzzle({ puzzle, onComplete, sectionId }: Props) {
     const [_, error] = await safePromise(
       axiosInstance.post('/activities/save-progress', {
         user_id: user?.id,
-        quest_id: puzzle.id,
+        activity_id: puzzle.id,
         section_id: sectionId,
         experience_points: result.score
       })

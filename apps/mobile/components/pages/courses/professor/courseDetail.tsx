@@ -58,7 +58,7 @@ export function CourseDetail({ activeGroup, setActiveGroup }: Props) {
           </Text>
         </View>
 
-        <Text className='text-lg font-semibold mb-2'>
+        <Text variant='large' className='font-semibold mb-2'>
           Progreso de Estudiantes
         </Text>
 
@@ -77,7 +77,7 @@ export function CourseDetail({ activeGroup, setActiveGroup }: Props) {
           renderItem={({ item }) => (
             <View className='bg-card p-4 rounded-xl border border-border mb-3 shadow-sm'>
               <View className='flex-row justify-between mb-2'>
-                <Text className='text-base font-medium'>{item.name}</Text>
+                <Text className='font-medium'>{item.name}</Text>
                 <Text className='text-sm font-semibold text-secondary-foreground'>
                   {item.progress ?? 0}%
                 </Text>

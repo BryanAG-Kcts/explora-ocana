@@ -63,7 +63,7 @@ export function StudentCourses() {
       disabled={existeEnCurso}
     >
       <View>
-        <Text className='text-lg font-semibold'>{item.name}</Text>
+        <Text variant='large' className='font-semibold'>{item.name}</Text>
         <Text variant='muted'>Prof: {item.teacherName}</Text>
       </View>
 

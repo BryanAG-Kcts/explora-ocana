@@ -8,5 +8,9 @@ module.exports = withUniwindConfig(config, {
   cssEntryFile: './global.css',
   // (optional) path where we gonna auto-generate typings
   // defaults to project's root
-  dtsFile: './uniwind-types.d.ts'
+  dtsFile: './uniwind-types.d.ts',
+  extraThemes: [
+    'high-contrast-light',
+    'high-contrast-dark'
+  ]
 })
