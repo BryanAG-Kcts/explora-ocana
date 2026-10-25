@@ -7,6 +7,7 @@ import {
   type Node,
   ROUTE_NODE_SIZE
 } from '@/constants/pages/home/routeEntities'
+import { useGameSounds } from '@/hooks/useGameSounds'
 import { NodeBlobs } from './nodeBlobs'
 import { MissionPopup } from './nodeModal'
 import { NodePath } from './nodePath'
@@ -28,16 +29,19 @@ export function RouteNodes({
   indexSection,
   sectionId
 }: sProps) {
+  const { play } = useGameSounds()
   const router = useRouter()
   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
   const nodeMap = new Map(nodes.map(node => [node.id, node]))
   const sectionProgress = progress[indexSection]
 
   const handleNodePress = (node: Node) => {
+    play('click')
     setSelectedNode(node)
   }
 
   const handleStartMission = () => {
+    play('click')
     if (!selectedNode) return
 
     setSelectedNode(null)

@@ -6,17 +6,21 @@ import { Badge } from '@/components/ui/badge'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 
-export function StatsBar() {
+interface Props {
+  streak: number
+  xp: number
+}
+export function StatsBar({ streak, xp }: Props) {
   return (
     <BorderHeader>
       <View className='flex-row gap-2 items-center'>
         <Icon as={Flame} className='text-destructive' />
-        <Text className='font-semibold'>12</Text>
+        <Text className='font-semibold'>{streak} días</Text>
       </View>
 
       <View className='flex-row gap-2 items-center flex-1'>
         <Icon as={Star} className='text-primary' />
-        <Text className='font-semibold'>14.000</Text>
+        <Text className='font-semibold'>{xp} xp</Text>
       </View>
 
       <Badge>

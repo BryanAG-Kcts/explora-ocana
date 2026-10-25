@@ -7,6 +7,7 @@ import { Text } from '@/components/ui/text'
 import type { SOUP_STEP } from '@/constants/games/games'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { CELL_SIZE, generatePuzzle } from '@/constants/pages/home/soup'
+import { useGameSounds } from '@/hooks/useGameSounds'
 import { useUserStore } from '@/hooks/userStore'
 
 type Cell = {
@@ -33,6 +34,7 @@ export function SopaDeLetras({
   words = [],
   onComplete
 }: SopaDeLetrasProps) {
+  const { play } = useGameSounds()
   const [selectedCells, setSelectedCells] = useState<Cell[]>([])
   const [foundWords, setFoundWords] = useState<string[]>([])
 
@@ -133,8 +135,12 @@ export function SopaDeLetras({
         normalizeWord(word) === selectedWord.split('').reverse().join('')
     )
 
-    if (!foundWord) return
+    if (!foundWord) {
+      play('wrong')
+      return
+    }
 
+    play('complete')
     setFoundWords(previous => {
       const alreadyFound = previous.some(
         word => normalizeWord(word) === normalizeWord(foundWord)

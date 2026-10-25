@@ -2,7 +2,7 @@ import { Node, RouteSection } from './routeEntities'
 export const learningRoute = [
   new RouteSection('S1', 'Sección A', [
     new Node(
-      'mission-1',
+      'M1',
       'mission',
       'Descubriendo Ocaña',
       'Explora los acontecimientos y personajes que dieron forma a la historia de Ocaña.',

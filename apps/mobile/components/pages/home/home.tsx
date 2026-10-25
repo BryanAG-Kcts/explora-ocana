@@ -10,7 +10,7 @@ import { SectionTitle } from './sectionTitle'
 import { StatsBar } from './statsBar'
 
 export function Home() {
-  const { progress, setProgress } = useGlobalState()
+  const { progress, setProgress, setUserStats, userStats } = useGlobalState()
   const { user } = useUserStore()
 
   useEffect(() => {
@@ -20,7 +20,8 @@ export function Home() {
       const [response, error] = await safePromise(
         Promise.all([
           axiosInstance.get(`/missions/required-work`),
-          axiosInstance.get(`/missions/user-progress/${user?.id}`)
+          axiosInstance.get(`/missions/user-progress/${user?.id}`),
+          axiosInstance.get(`/user/${user?.id}/profile`)
         ])
       )
 
@@ -36,6 +37,8 @@ export function Home() {
 
       const r1 = response[0].data as string[]
       const r2 = response[1].data as string[]
+      const r3 = response[2].data
+      setUserStats(r3)
       setProgress(
         r1.map((r, index) => ({
           completed: Number(r2[index]),
@@ -44,9 +47,9 @@ export function Home() {
         }))
       )
     })()
-  }, [setProgress, progress, user])
+  }, [setProgress, progress, user, setUserStats])
 
-  if (!progress) {
+  if (!progress || !userStats) {
     return (
       <View className='justify-center items-center flex-1'>
         <ActivityIndicator size='large' />
@@ -56,7 +59,7 @@ export function Home() {
 
   return (
     <ScrollView className='flex-1'>
-      <StatsBar />
+      <StatsBar streak={userStats?.streak} xp={userStats?.xp} />
       <View>
         {learningRoute.map(({ id, height, nodes, title }, index) => (
           <View key={id}>

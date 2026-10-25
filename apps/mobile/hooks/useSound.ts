@@ -4,10 +4,7 @@ import { secureStorage } from '@/constants/global/secureStorage'
 
 interface SoundState {
   soundsEnabled: boolean
-  effectsEnabled: boolean
-
   setSoundsEnabled: (enabled: boolean) => void
-  setEffectsEnabled: (enabled: boolean) => void
 }
 
 export const useSoundStore = create<SoundState>()(
@@ -15,19 +12,13 @@ export const useSoundStore = create<SoundState>()(
     set => ({
       soundsEnabled: true,
       effectsEnabled: true,
-      setSoundsEnabled: enabled =>
-        set(state => ({
-          soundsEnabled: enabled,
-          effectsEnabled: enabled ? state.effectsEnabled : false
-        })),
-      setEffectsEnabled: enabled => set({ effectsEnabled: enabled })
+      setSoundsEnabled: enabled => set(() => ({ soundsEnabled: enabled }))
     }),
     {
       name: 'sound-settings',
       storage: createJSONStorage(() => secureStorage),
       partialize: state => ({
-        soundsEnabled: state.soundsEnabled,
-        effectsEnabled: state.effectsEnabled
+        soundsEnabled: state.soundsEnabled
       })
     }
   )

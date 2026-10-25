@@ -4,7 +4,7 @@ import { Text } from '@/components/ui/text'
 import { useSoundStore } from '@/hooks/useSound'
 
 export function Sounds() {
-  const { soundsEnabled, effectsEnabled, setSoundsEnabled, setEffectsEnabled } =
+  const { soundsEnabled, setSoundsEnabled } =
     useSoundStore()
 
   return (
@@ -24,22 +24,6 @@ export function Sounds() {
               </View>
 
               <Switch value={soundsEnabled} onValueChange={setSoundsEnabled} />
-            </View>
-
-            <View className='border-t border-muted flex-row items-center p-4'>
-              <View className='flex-1 mr-4'>
-                <Text className='font-medium'>Efectos de sonido</Text>
-
-                <Text variant='muted' className='text-sm mt-1'>
-                  Reproduce sonidos durante las actividades.
-                </Text>
-              </View>
-
-              <Switch
-                value={effectsEnabled}
-                onValueChange={setEffectsEnabled}
-                disabled={!soundsEnabled}
-              />
             </View>
           </View>
         </SafeAreaView>

@@ -21,6 +21,7 @@ import { Text } from '@/components/ui/text'
 import type { PUZZLES_STEP } from '@/constants/games/games'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { generarPosicionesIniciales } from '@/constants/pages/home/puzzle'
+import { useGameSounds } from '@/hooks/useGameSounds'
 import { useUserStore } from '@/hooks/userStore'
 
 type RompecabezasProps = {
@@ -164,6 +165,7 @@ export function Rompecabezas({
   imageResizeMode = 'cover',
   onComplete
 }: RompecabezasProps) {
+  const { play } = useGameSounds()
   const safeRows = Math.max(1, Math.floor(rows))
   const safeColumns = Math.max(1, Math.floor(columns))
   const boardWidth = Math.max(1, width)
@@ -243,6 +245,7 @@ export function Rompecabezas({
     setMoves(movesRef.current)
 
     if (!correct || completedRef.current) {
+      play('wrong')
       return
     }
 
@@ -273,8 +276,12 @@ export function Rompecabezas({
         timeSeconds: finalTime
       }
 
+      play('complete')
       onComplete(result)
+      return
     }
+
+    play('click')
   }
 
   const reiniciar = () => {
@@ -362,9 +369,7 @@ export function Rompecabezas({
         <Text className='font-semibold'>
           {lockedPieces.size}/{totalPieces}
         </Text>
-        <Text className='font-semibold'>
-          {formatTime(elapsedSeconds)}
-        </Text>
+        <Text className='font-semibold'>{formatTime(elapsedSeconds)}</Text>
       </View>
 
       <Button onPress={reiniciar}>

@@ -7,7 +7,7 @@ import {
   TestTubeDiagonal,
   UserRound
 } from 'lucide-react-native'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { CustomAlertDialog } from '@/components/global/alertDialog'
 import { BorderHeader } from '@/components/global/borderHeader'
@@ -17,7 +17,6 @@ import { UserAvatar } from '@/components/global/userAvatar'
 import { Avatar } from '@/components/ui/avatar'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
-import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { getInitials } from '@/constants/pages/profile/profile'
 import { useGlobalState } from '@/hooks/useGlobalState'
 import { useUserStore } from '@/hooks/userStore'
@@ -28,24 +27,10 @@ export function Profile() {
   const { logOut, user } = useUserStore()
   const { clean } = useGlobalState()
   const router = useRouter()
-  const { userStats, setUserStats } = useGlobalState()
+  const { userStats } = useGlobalState()
   const [modalSelect, setModalSelect] = useState<'account' | 'settings' | ''>(
     ''
   )
-
-  useEffect(() => {
-    if (userStats) return
-
-    ;(async () => {
-      const res = axiosInstance.get(`/user/${user?.id}/profile`)
-      const [response, error] = await safePromise(res)
-      if (error || !response?.data) {
-        return
-      }
-
-      setUserStats(response.data)
-    })()
-  }, [user, setUserStats, userStats])
 
   async function handleLogout() {
     await logOut()
@@ -75,7 +60,9 @@ export function Profile() {
           <Text variant='muted'>Miembro desde {user?.createdAt}</Text>
         </View>
 
-        <Text variant='large' className='font-semibold mb-3'>Tus Estadísticas</Text>
+        <Text variant='large' className='font-semibold mb-3'>
+          Tus Estadísticas
+        </Text>
         <View className='flex-row flex-wrap justify-between mb-5'>
           <StatCard
             title='Racha'
@@ -110,9 +97,7 @@ export function Profile() {
           >
             <View className='flex-row items-center gap-3'>
               <Icon as={UserRound} size={18} />
-              <Text className='font-medium'>
-                Información de cuenta
-              </Text>
+              <Text className='font-medium'>Información de cuenta</Text>
             </View>
 
             <Icon as={ChevronRight} size={12} />

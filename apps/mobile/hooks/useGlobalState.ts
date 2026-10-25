@@ -7,7 +7,7 @@ import type { UserStats } from '@/constants/pages/profile/profile'
 interface Store {
   progress: RouteProgress | null
   getProgress: () => RouteProgress | null
-  setProgress: (progress: RouteProgress) => void
+  setProgress: (progress: RouteProgress | null) => void
   groups: TeacherCourse[] | null
   getGroups: () => TeacherCourse[] | null
   setGroups: (groups: TeacherCourse[]) => void

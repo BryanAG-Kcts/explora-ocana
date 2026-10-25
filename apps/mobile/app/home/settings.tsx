@@ -55,12 +55,14 @@ export default function Settings() {
     <View>
       <BorderHeader>
         <View className='flex-row items-center gap-2 justify-between flex-1'>
-          <View className='flex-row gap-4 items-center'>
-            <TouchableOpacity onPress={() => router.back()}>
-              <Icon as={ArrowLeft} />
-            </TouchableOpacity>
+          <TouchableOpacity
+            className='flex-row gap-4 items-center'
+            onPress={() => router.back()}
+          >
+            <Icon as={ArrowLeft} />
             <Text variant='h4'>configuración</Text>
-          </View>
+          </TouchableOpacity>
+
           <ThemeToggle />
         </View>
       </BorderHeader>

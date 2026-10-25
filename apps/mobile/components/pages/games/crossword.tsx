@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Text } from '@/components/ui/text'
 import type { CROSSWORD_STEP } from '@/constants/games/games'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
+import { useGameSounds } from '@/hooks/useGameSounds'
 import { useUserStore } from '@/hooks/userStore'
 
 interface CrosswordWord {
@@ -38,6 +39,7 @@ export function CrosswordMap({
   const [letters, setLetters] = useState<Record<string, string>>({})
   const [checked, setChecked] = useState(false)
   const [completed, setCompleted] = useState(false)
+  const { play } = useGameSounds()
 
   // Evita ejecutar onComplete más de una vez.
   const completedRef = useRef(false)
@@ -238,6 +240,7 @@ export function CrosswordMap({
     setChecked(true)
 
     if (!isComplete || completedRef.current || configurationErrors.length > 0) {
+      play('wrong')
       return
     }
 
@@ -252,6 +255,7 @@ export function CrosswordMap({
     setElapsedSeconds(finalTime)
     setCompleted(true)
 
+    play('complete')
     const result: CrosswordResult = {
       score: calculateCrosswordScore(correctWords, movesRef.current, finalTime),
       correctWords,

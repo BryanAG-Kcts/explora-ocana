@@ -7,7 +7,9 @@
     "icon": "./assets/images/icon.png",
     "scheme": "explora_ocana",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -15,7 +17,12 @@
         "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos",
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to use your camera",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to use your microphone",
-        "CFBundleLocalizations": ["en", "es", "en", "es"]
+        "CFBundleLocalizations": [
+          "en",
+          "es",
+          "en",
+          "es"
+        ]
       },
       "bundleIdentifier": "com.kcts.explora-ocana"
     },
@@ -25,7 +32,9 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.cactuswow.explora_ocana",
-      "permissions": ["CAMERA"],
+      "permissions": [
+        "CAMERA"
+      ],
       "softwareKeyboardLayoutMode": "resize"
     },
     "web": {
@@ -48,8 +57,14 @@
         "expo-localization",
         {
           "supportedLocales": {
-            "ios": ["en", "es"],
-            "android": ["en", "es"]
+            "ios": [
+              "en",
+              "es"
+            ],
+            "android": [
+              "en",
+              "es"
+            ]
           }
         }
       ],
@@ -66,10 +81,15 @@
           "ios": {
             "cameraUsagePermission": "$(PRODUCT_NAME) uses your camera for AR."
           },
-          "android": { "xRMode": ["AR"] }
+          "android": {
+            "xRMode": [
+              "AR"
+            ]
+          }
         }
       ],
-      "expo-build-properties"
+      "expo-build-properties",
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true

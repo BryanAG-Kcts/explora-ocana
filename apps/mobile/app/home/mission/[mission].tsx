@@ -9,10 +9,14 @@ import { Icon } from '@/components/ui/icon'
 import { getGameComponent } from '@/constants/games/games'
 import { MISSIONS } from '@/constants/games/mission'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
+import { useGameSounds } from '@/hooks/useGameSounds'
+import { useGlobalState } from '@/hooks/useGlobalState'
 import { useUserStore } from '@/hooks/userStore'
 import { useStep } from '@/hooks/useStep'
 
 export default function Mission() {
+  const { setProgress } = useGlobalState()
+  const { play } = useGameSounds()
   const router = useRouter()
   const { user } = useUserStore()
   const { mission, section } = useLocalSearchParams<{
@@ -22,7 +26,7 @@ export default function Mission() {
 
   const [isCompleted, setIsCompleted] = useState(false)
   const [experiencePoints, setExperiencePoints] = useState(0)
-  const missionSteps = MISSIONS[mission]
+  const missionSteps = MISSIONS[section][mission]
 
   const { goBack, current, currentIndex, isFirstStep, isLastStep, goNext } =
     useStep(missionSteps)
@@ -61,6 +65,8 @@ export default function Mission() {
           text1: 'Error',
           text2: 'No fue posible guardar tu progreso'
         })
+
+        return
       }
 
       Toast.show({
@@ -69,6 +75,7 @@ export default function Mission() {
         text2: 'Se guardó tu progreso'
       })
 
+      setProgress(null)
       router.replace('/home')
       return
     }
@@ -105,8 +112,14 @@ export default function Mission() {
           <HeadControl />
           <View className='flex-1'>{Component}</View>
           <FooterControl
-            goBack={goBack}
-            goNext={handleNext}
+            goBack={() => {
+              play('click')
+              goBack()
+            }}
+            goNext={() => {
+              play('click')
+              handleNext()
+            }}
             isFirstStep={isFirstStep}
             isLastStep={isLastStep}
             canGoNext={canGoNext}

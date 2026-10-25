@@ -7,6 +7,7 @@ import { Text } from '@/components/ui/text'
 import { Textarea } from '@/components/ui/textarea'
 import type { QUESTION_STEP } from '@/constants/games/games'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
+import { useGameSounds } from '@/hooks/useGameSounds'
 import { useUserStore } from '@/hooks/userStore'
 
 interface Props {
@@ -15,11 +16,13 @@ interface Props {
   sectionId: string
 }
 export function Question({ question, onComplete, sectionId }: Props) {
+  const { play } = useGameSounds()
   const [value, setValue] = useState('')
   const isValid = value.trim().length > 0
   const { user } = useUserStore()
 
   async function onSubmit() {
+    play('click')
     const [_, error] = await safePromise(
       Promise.all([
         axiosInstance.post('/activities/save-response', {
