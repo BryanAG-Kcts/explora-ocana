@@ -17,8 +17,13 @@ export function Home() {
     if (progress) return
 
     ;(async () => {
-      const res = axiosInstance.get(`/missions/user-progress/${user?.id}`)
-      const [response, error] = await safePromise(res)
+      const [response, error] = await safePromise(
+        Promise.all([
+          axiosInstance.get(`/missions/required-work`),
+          axiosInstance.get(`/missions/user-progress/${user?.id}`)
+        ])
+      )
+
       if (error || !response) {
         Toast.show({
           type: 'error',
@@ -29,7 +34,15 @@ export function Home() {
         return
       }
 
-      setProgress(PROGRESS)
+      const r1 = response[0].data as string[]
+      const r2 = response[1].data as string[]
+      setProgress(
+        r1.map((r, index) => ({
+          completed: Number(r2[index]),
+          required: Number(r),
+          percent: (Number(r2[index]) / Number(r)) * 100
+        }))
+      )
     })()
   }, [setProgress, progress, user])
 
@@ -47,13 +60,16 @@ export function Home() {
       <View>
         {learningRoute.map(({ id, height, nodes, title }, index) => (
           <View key={id}>
-            <SectionTitle title={title} sectionNumber={index + 1} />
+            <SectionTitle
+              title={title}
+              sectionNumber={index + 1}
+              percent={progress[index].percent}
+            />
             <View style={{ height, gap: 70 }}>
               <RouteNodes
                 nodes={nodes}
-                sectionProgress={progress[id]}
                 progress={progress}
-                prevSectionId={learningRoute[index - 1]?.id || null}
+                indexSection={index}
                 sectionId={id}
               />
             </View>
@@ -62,17 +78,4 @@ export function Home() {
       </View>
     </ScrollView>
   )
-}
-
-const PROGRESS = {
-  '1a': {
-    completed: 4,
-    required: 6,
-    requiredCompleted: 4
-  },
-  '1b': {
-    completed: 0,
-    required: 5,
-    requiredCompleted: 0
-  }
 }

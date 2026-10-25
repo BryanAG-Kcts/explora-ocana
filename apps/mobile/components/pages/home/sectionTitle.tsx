@@ -3,9 +3,10 @@ import { Text } from '@/components/ui/text'
 
 interface Props {
   title: string
-  sectionNumber: number
+  sectionNumber: number,
+  percent: number
 }
-export function SectionTitle({ title, sectionNumber }: Props) {
+export function SectionTitle({ title, sectionNumber, percent }: Props) {
   return (
     <View className='m-2 bg-primary p-4 rounded flex-row items-center justify-between'>
       <View>
@@ -16,7 +17,7 @@ export function SectionTitle({ title, sectionNumber }: Props) {
       </View>
 
       <Text variant='h2' className='text-primary-foreground'>
-        100%
+        {percent}%
       </Text>
     </View>
   )

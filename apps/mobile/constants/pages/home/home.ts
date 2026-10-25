@@ -5,10 +5,10 @@ export type NodeStatus = 'locked' | 'available' | 'completed'
 export type NodeProgress = {
   completed: number
   required: number
-  requiredCompleted: number
+  percent: number
 }
 
-export type RouteProgress = Record<string, NodeProgress>
+export type RouteProgress = NodeProgress[]
 export const NODE_COLORS: Record<
   NodeIcon,
   [ColorValue, ColorValue, ColorValue]

@@ -2,11 +2,7 @@ import { type RelativePathString, useRouter } from 'expo-router'
 import { Fragment, useState } from 'react'
 import type { ImageStyle } from 'react-native'
 import { Image, Pressable, View } from 'react-native'
-import type {
-  NodeProgress,
-  NodeStatus,
-  RouteProgress
-} from '@/constants/pages/home/home'
+import type { NodeStatus, RouteProgress } from '@/constants/pages/home/home'
 import {
   type Node,
   ROUTE_NODE_SIZE
@@ -21,22 +17,21 @@ type ImageStyleWithFilter = ImageStyle & {
 
 interface sProps {
   nodes: Node[]
-  sectionProgress: NodeProgress
   progress: RouteProgress
-  prevSectionId: string | null
+  indexSection: number
   sectionId: string
 }
 
 export function RouteNodes({
   nodes,
-  sectionProgress,
   progress,
-  prevSectionId,
+  indexSection,
   sectionId
 }: sProps) {
   const router = useRouter()
   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
   const nodeMap = new Map(nodes.map(node => [node.id, node]))
+  const sectionProgress = progress[indexSection]
 
   const handleNodePress = (node: Node) => {
     setSelectedNode(node)
@@ -52,11 +47,11 @@ export function RouteNodes({
     })
   }
 
-  function getNodeStatus(sectionId: string | null, index: number) {
-    if (sectionId) {
-      const prevSectionProgress = progress[sectionId]
+  function getNodeStatus(indexSection: number, index: number) {
+    if (indexSection >= 0) {
+      const prevSectionProgress = progress[indexSection]
       const isSectionCompleted =
-        prevSectionProgress.requiredCompleted >= prevSectionProgress.required
+        prevSectionProgress.completed >= prevSectionProgress.required
       if (!isSectionCompleted) {
         return 'locked'
       }
@@ -76,8 +71,8 @@ export function RouteNodes({
     <>
       {nodes.map((node, index) => {
         const nextNode = nodeMap.get(node.nextNodeId)
-        const status = getNodeStatus(prevSectionId, index)
-        const pathStatus = getNodeStatus(prevSectionId, 1 + index)
+        const status = getNodeStatus(indexSection - 1, index)
+        const pathStatus = getNodeStatus(indexSection - 1, 1 + index)
 
         return (
           <Fragment key={node.id}>
