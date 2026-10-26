@@ -29,11 +29,16 @@ export const groupRepository = {
 
     getGroupStudents: async (group_id: number): Promise<InfoStudentsGroup[]> =>
         db.manyOrNone(
-            `select cs.*, us."name" || ' '|| us.last_name "name"
+            `select 
+             	st.student_id "id",  
+             	us."name" || ' '|| us.last_name "name",
+             	count(pg.*) "count"
              from exploraocanna.course_students cs
              inner join exploraocanna.student st on cs.student_id = st.student_id
              inner join exploraocanna.users us on us.user_id = st.user_id
-             WHERE course_id = $1
+             left join exploraocanna.user_progress pg on pg.user_id = us.user_id 
+             where cs.course_id = $1
+             group by st.student_id, us."name" || ' '|| us.last_name
             `, [group_id]
         ),
 

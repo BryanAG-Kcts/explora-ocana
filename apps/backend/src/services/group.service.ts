@@ -23,24 +23,16 @@ export const groupService = {
   },
 
   inforGroup: async ( group_id: number) => {
-    const [group, students, total_missions] = await Promise.all([
-      groupRepository.getGroupInfo(group_id),
+    const [students, total_missions] = await Promise.all([
       groupRepository.getGroupStudents(group_id),
       groupRepository.getTotalMissions(),
     ]);
-
-    for (const student of students) {
-        student.progress =
-            total_missions === 0
-                ? null
-                : Math.round(
-                    (student.completed_missions / total_missions) * 100
-                  );
-    }
-    return {
-      ...group,
-      students: [...students]
-    }  
+   
+    console.log(total_missions.total_missions)
+    return students.map(s => ( {
+      ...s,
+      progress: ((Number(s.count) / Number(total_missions.total_missions)) * 100).toFixed(3)
+    }))
   },
 
   getTeacherGroups: async (teacher_id: number) => {

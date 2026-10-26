@@ -37,7 +37,7 @@ export function CourseDetail({ activeGroup, setActiveGroup }: Props) {
         return
       }
 
-      setStudents(response.data.data.students)
+      setStudents(response.data.data)
     })()
   }, [activeGroup])
 

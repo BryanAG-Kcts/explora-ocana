@@ -36,7 +36,7 @@ export default function AIChat() {
     setMessages(prevMessages => [...prevMessages, newUserMessage])
     setInputText('')
 
-    console.log(await fetch('http://localhost:3000/api/assets/pdfs/a.pdf'))
+    // console.log(await fetch('http://localhost:3000/api/assets/pdfs/a.pdf'))
     // 2. Simular que la IA está "pensando" y responde "hola" después de 1 segundo
     const response = await axiosInstance.post('/api/rag/ask', {
       question: inputText

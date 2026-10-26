@@ -14,7 +14,7 @@ export function Home() {
   const { user } = useUserStore()
 
   useEffect(() => {
-    if (progress) return
+    if (progress || !user) return
 
     ;(async () => {
       const [response, error] = await safePromise(
@@ -29,7 +29,7 @@ export function Home() {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: 'Ocurrió un error al obtener la información requerida'
+          text2: 'Ocurrió un error al obtener la información del usuario'
         })
 
         return

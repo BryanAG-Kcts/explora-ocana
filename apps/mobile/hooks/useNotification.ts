@@ -1,6 +1,8 @@
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
 
+const DAILY_NOTIFICATION_ID = 'daily-learning-reminder'
+
 export const notificationService = {
   async getPermissionStatus() {
     const { status } = await Notifications.getPermissionsAsync()
@@ -39,6 +41,34 @@ export const notificationService = {
       content,
       trigger
     })
+  },
+
+  async scheduleDailyReminder() {
+    // Evita duplicar el recordatorio diario.
+    await this.cancelNotification(DAILY_NOTIFICATION_ID)
+
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.DEFAULT
+      })
+    }
+
+    return this.scheduleNotification(
+      {
+        title: '¡Tu aventura te espera! 🏛️',
+        body: 'Continúa explorando y descubre más sobre la historia de Ocaña.',
+        sound: 'default'
+      },
+      {
+        type: Notifications.SchedulableTriggerInputTypes.DAILY,
+        hour: 15,
+        minute: 0,
+        ...(Platform.OS === 'android' && {
+          channelId: 'default'
+        })
+      }
+    )
   },
 
   async cancelNotification(notificationId: string) {

@@ -34,9 +34,8 @@ export interface InfoBasicGroup {
 
 export interface InfoStudentsGroup {
   name: string,
-  last_name: string,
-  completed_missions : number,
-  progress: number | null
+  studentId: string
+  count: string
 }
 
 export interface InfoCompletedGroup {
