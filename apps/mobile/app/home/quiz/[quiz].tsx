@@ -10,6 +10,7 @@ import { Progress } from '@/components/ui/progress'
 import { Text } from '@/components/ui/text'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { getOptionStyle, QUIZZES } from '@/constants/pages/home/quiz'
+import { useGlobalState } from '@/hooks/useGlobalState'
 import { useUserStore } from '@/hooks/userStore'
 import { useStep } from '@/hooks/useStep'
 
@@ -20,6 +21,7 @@ export default function Quiz() {
     section?: string
   }>()
 
+  const { setProgress } = useGlobalState()
   const quizId = Array.isArray(quiz) ? quiz[0] : quiz
   const originalQuestions = QUIZZES[quizId as keyof typeof QUIZZES]
   const [QUESTIONS] = useState(() => shuffleArray(originalQuestions ?? []))
@@ -185,9 +187,11 @@ export default function Quiz() {
 
     Toast.show({
       type: 'success',
-      text1: '!Quiz completado¡ 🎉'
+      text1: '!Quiz completado¡ 🎉',
+      text2: `Has ganado ${payload.finalScore} puntos`
     })
 
+    setProgress(null)
     router.replace('/home')
   }
 

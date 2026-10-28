@@ -1,6 +1,11 @@
 import { type ColorValue, View } from 'react-native'
 import Svg, { Path } from 'react-native-svg'
-import { NODE_COLORS } from '@/constants/pages/home/home'
+import {
+  AVAILABLE_COLORS,
+  LOCKED_COLORS,
+  NODE_COLORS,
+  type NodeStatus
+} from '@/constants/pages/home/home'
 import {
   type NodeIcon,
   ROUTE_NODE_SIZE
@@ -9,9 +14,15 @@ import {
 interface Props {
   type: NodeIcon
   id: string
+  status: NodeStatus
 }
-export function NodeBlobs({ type, id }: Props) {
-  const blobs = NODE_COLORS[type]
+export function NodeBlobs({ type, id, status }: Props) {
+  const blobs =
+    status === 'locked'
+      ? LOCKED_COLORS
+      : status === 'available'
+        ? AVAILABLE_COLORS
+        : NODE_COLORS[type]
 
   return (
     <View

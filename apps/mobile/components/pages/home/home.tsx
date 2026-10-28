@@ -1,5 +1,10 @@
 import { useEffect } from 'react'
-import { ActivityIndicator, ScrollView, View } from 'react-native'
+import {
+  ActivityIndicator,
+  ImageBackground,
+  ScrollView,
+  View
+} from 'react-native'
 import Toast from 'react-native-toast-message'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { learningRoute } from '@/constants/pages/home/learningRoute'
@@ -60,13 +65,20 @@ export function Home() {
   return (
     <ScrollView className='flex-1'>
       <StatsBar streak={userStats?.streak} xp={userStats?.xp} />
-      <View>
-        {learningRoute.map(({ id, height, nodes, title }, index) => (
-          <View key={id}>
+
+      {learningRoute.map(({ id, height, nodes, title }, index) => (
+        <ImageBackground
+          key={id}
+          source={SECTIONS_BG[Math.min(index, SECTIONS_BG.length - 1)]}
+          resizeMode='cover'
+        >
+          <View>
             <SectionTitle
               title={title}
               sectionNumber={index + 1}
-              percent={progress[index].percent}
+              percent={progress[index]?.percent ?? ''}
+              completed={progress[index]?.completed ?? ''}
+              total={progress[index]?.required ?? ''}
             />
             <View style={{ height, gap: 70 }}>
               <RouteNodes
@@ -77,8 +89,13 @@ export function Home() {
               />
             </View>
           </View>
-        ))}
-      </View>
+        </ImageBackground>
+      ))}
     </ScrollView>
   )
 }
+
+const SECTIONS_BG = [
+  require('@/assets/images/fondo.jpg'),
+  require('@/assets/images/fondo2.jpg')
+]

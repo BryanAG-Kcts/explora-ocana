@@ -15,6 +15,7 @@ interface Props {
   finishY: number
   nodeIcon: NodeIcon
 }
+
 export function NodePath({
   originX,
   originY,
@@ -30,9 +31,17 @@ export function NodePath({
     finishY + ROUTE_NODE_SIZE.height / 2
   )
 
+
   const isOptional = nextNode.isOptional
   const isLocked = sectionProgress === 'locked'
+  const isCompleted = sectionProgress === 'completed'
+
   const opacity = isOptional ? 0.2 : 1
+  const outerColor = NODE_COLORS[nodeIcon][0]
+  const middleColor = isLocked ? '#888888' : isCompleted ? '#997344' : '#B99565'
+  const innerColor = isLocked ? '#A3A3A3' : isCompleted ? '#D6B77D' : '#E7CCA0'
+  const detailColor = isLocked ? '#888888' : isCompleted ? '#FFF8E7' : '#FFF3D6'
+
   return (
     <View
       key={`${nextNode.id}-path`}
@@ -47,36 +56,40 @@ export function NodePath({
       }}
     >
       <Svg width='100%' height='100%'>
+        {/* Borde exterior */}
         <Path
           d={path}
-          stroke={NODE_COLORS[nodeIcon][0]}
+          stroke={outerColor}
           strokeWidth={23}
           fill='none'
           strokeLinecap='round'
           opacity={opacity}
         />
 
+        {/* Capa intermedia */}
         <Path
           d={path}
-          stroke={isLocked ? '#888888' : '#B99565'}
+          stroke={middleColor}
           strokeWidth={19}
           fill='none'
           strokeLinecap='round'
           opacity={opacity}
         />
 
+        {/* Superficie del camino */}
         <Path
           d={path}
-          stroke={isLocked ? '#a3a3a3' : '#E7CCA0'}
+          stroke={innerColor}
           strokeWidth={14}
           fill='none'
           strokeLinecap='round'
           opacity={opacity}
         />
 
+        {/* Detalles decorativos */}
         <Path
           d={path}
-          stroke={isLocked ? '#888888' : '#FFF3D6'}
+          stroke={detailColor}
           strokeWidth={4}
           fill='none'
           strokeLinecap='round'

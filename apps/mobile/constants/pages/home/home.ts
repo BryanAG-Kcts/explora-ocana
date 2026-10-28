@@ -23,3 +23,6 @@ export const NODE_COLORS: Record<
   gear: ['#B07A48', '#9AA4B5', '#78645C'],
   crystal: ['#A57DF0', '#62D9D9', '#2A447A']
 }
+
+export const LOCKED_COLORS = ['#34353d', '#26272b', '#17181c']
+export const AVAILABLE_COLORS = ['#22C55E', '#16a34a', '#15803d']

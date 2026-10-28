@@ -72,7 +72,7 @@ export default function Mission() {
       Toast.show({
         type: 'success',
         text1: 'Éxito',
-        text2: 'Se guardó tu progreso'
+        text2: `¡Has ganado ${experiencePoints} puntos!`
       })
 
       setProgress(null)
