@@ -1,5 +1,6 @@
 import * as Speech from 'expo-speech'
-import { Clock, Volume2 } from 'lucide-react-native'
+import { Clock, Volume2, VolumeOff } from 'lucide-react-native'
+import { useState } from 'react'
 import { View } from 'react-native'
 import { EnrichedMarkdownText } from 'react-native-enriched-markdown'
 import { useResolveClassNames } from 'uniwind'
@@ -13,10 +14,26 @@ interface Props {
   concept: CONCEPT_STEP
 }
 export function Concept({ concept }: Props) {
+  const [isSpeaking, setIsSpeaking] = useState(false)
   const markdownContainerStyle = useResolveClassNames('flex-1')
   const markdownStyle = useResolveClassNames(
     'text-foreground bg-card border-border'
   )
+
+  const handleSpeech = async () => {
+    if (isSpeaking) {
+      await Speech.stop()
+      setIsSpeaking(false)
+    } else {
+      setIsSpeaking(true)
+
+      Speech.speak(concept.speech, {
+        onDone: () => setIsSpeaking(false),
+        onStopped: () => setIsSpeaking(false),
+        onError: () => setIsSpeaking(false)
+      })
+    }
+  }
 
   return (
     <View className='flex-1'>
@@ -38,12 +55,12 @@ export function Concept({ concept }: Props) {
             {concept.subtitle}
           </Text>
 
-          <Button
-            size='icon'
-            className='rounded-full'
-            onPress={() => Speech.speak(concept.speech)}
-          >
-            <Icon as={Volume2} size={28} className='text-white' />
+          <Button size='icon' className='rounded-full' onPress={handleSpeech}>
+            <Icon
+              as={isSpeaking ? VolumeOff : Volume2}
+              size={28}
+              className='text-white'
+            />
           </Button>
         </View>
 

@@ -15,7 +15,7 @@ import type { ImageSourcePropType } from 'react-native'
 import { Dimensions } from 'react-native'
 
 const windowWidth = Dimensions.get('window').width
-export type NodeType = 'quest' | 'mission' | 'quiz'
+export type NodeType = 'mission' | 'quiz'
 export type NodeIcon =
   | 'book'
   | 'castle'

@@ -6,7 +6,7 @@ import {
   ViroTrackingStateConstants
 } from '@reactvision/react-viro'
 import * as Speech from 'expo-speech'
-import { Volume2 } from 'lucide-react-native'
+import { Volume2, VolumeOff } from 'lucide-react-native'
 import { useState } from 'react'
 import { ActivityIndicator, type ImageSourcePropType, View } from 'react-native'
 import { Button } from '@/components/ui/button'
@@ -91,6 +91,23 @@ interface Props {
 }
 export function Ar({ ar }: Props) {
   const [state, setState] = useState('LOADING-AR')
+  const [isSpeaking, setIsSpeaking] = useState(false)
+
+  const handleSpeech = async () => {
+    if (isSpeaking) {
+      await Speech.stop()
+      setIsSpeaking(false)
+    } else {
+      setIsSpeaking(true)
+
+      Speech.speak(ar.speech, {
+        onDone: () => setIsSpeaking(false),
+        onStopped: () => setIsSpeaking(false),
+        onError: () => setIsSpeaking(false)
+      })
+    }
+  }
+
   return (
     <View className='flex-1 bg-black relative'>
       <ViroARSceneNavigator
@@ -131,9 +148,13 @@ export function Ar({ ar }: Props) {
         <Button
           size='icon'
           className='rounded-full bg-black/60 '
-          onPress={() => Speech.speak(ar.speech)}
+          onPress={handleSpeech}
         >
-          <Icon as={Volume2} size={28} className='text-white' />
+          <Icon
+            as={isSpeaking ? VolumeOff : Volume2}
+            size={28}
+            className='text-white'
+          />
         </Button>
       </View>
     </View>
