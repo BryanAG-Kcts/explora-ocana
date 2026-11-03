@@ -3,6 +3,7 @@ import { ScrollText } from 'lucide-react-native'
 import { useEffect, useState } from 'react'
 import {
   ActivityIndicator,
+  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -95,7 +96,12 @@ export default function Login() {
 
           <Text className='text-center'>{I18N.t('LOGIN.DESC')}</Text>
 
-          <View className='w-full h-30 bg-primary/30 rounded' />
+          <View className='w-full h-42 bg-primary/30 rounded overflow-hidden'>
+            <Image
+              source={require('@/assets/images/login.jpg')}
+              className='w-full h-full object-cover'
+            />
+          </View>
 
           {loading ? (
             <View className='flex-1 justify-center items-center'>

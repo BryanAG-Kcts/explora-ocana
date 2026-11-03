@@ -1,7 +1,7 @@
 import * as Speech from 'expo-speech'
 import { Clock, Volume2, VolumeOff } from 'lucide-react-native'
 import { useState } from 'react'
-import { View } from 'react-native'
+import { ImageBackground, ScrollView, View } from 'react-native'
 import { EnrichedMarkdownText } from 'react-native-enriched-markdown'
 import { useResolveClassNames } from 'uniwind'
 import { Badge } from '@/components/ui/badge'
@@ -10,6 +10,7 @@ import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import type { CONCEPT_STEP } from '@/constants/games/games'
 
+const IMAGES_BASE_URL = `${process.env.EXPO_PUBLIC_AXIOS_BASE_URL}api/assets/images/global/missions/`
 interface Props {
   concept: CONCEPT_STEP
 }
@@ -36,18 +37,20 @@ export function Concept({ concept }: Props) {
   }
 
   return (
-    <View className='flex-1'>
-      <View className='bg-blue-600 h-52 justify-end'>
-        <View className='items-start gap-2 p-4'>
+    <ScrollView className='flex-1'>
+      <ImageBackground
+        className='h-52 justify-end'
+        source={{ uri: `${IMAGES_BASE_URL}${concept.img}` }}
+        resizeMode='cover'
+      >
+        <View className='items-start gap-2 p-4 bg-background/30'>
           <Badge>
             <Text>{concept.cap}</Text>
           </Badge>
 
-          <Text variant='h2' className='text-white'>
-            {concept.title}
-          </Text>
+          <Text variant='h2'>{concept.title}</Text>
         </View>
-      </View>
+      </ImageBackground>
 
       <View className='p-4 gap-2 flex-1'>
         <View className='flex-row justify-between items-center'>
@@ -87,6 +90,6 @@ export function Concept({ concept }: Props) {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   )
 }

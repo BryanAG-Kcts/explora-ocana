@@ -8,15 +8,16 @@ import {
 import * as Speech from 'expo-speech'
 import { Volume2, VolumeOff } from 'lucide-react-native'
 import { useState } from 'react'
-import { ActivityIndicator, type ImageSourcePropType, View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
 import type { AR_STEP } from '@/constants/games/games'
 
+const MODEL_BASE_URL = `${process.env.EXPO_PUBLIC_AXIOS_BASE_URL}api/assets/models/`
 interface SceneProps {
   updateSceneNavigator: (state: string) => void
-  model: ImageSourcePropType
+  model: string
 }
 const Scene = ({ updateSceneNavigator, model }: SceneProps) => {
   const [scale, setScale] = useState<[number, number, number]>([0.2, 0.2, 0.2])
@@ -71,7 +72,7 @@ const Scene = ({ updateSceneNavigator, model }: SceneProps) => {
     >
       <ViroAmbientLight color='#ffffff' intensity={200} />
       <Viro3DObject
-        source={model}
+        source={{ uri: `${MODEL_BASE_URL}${model}` }}
         position={[0, 0, -1]}
         type='GLB'
         dragType='FixedToWorld'

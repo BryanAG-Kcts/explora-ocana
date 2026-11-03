@@ -1,7 +1,13 @@
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { ArrowLeft, ArrowRight } from 'lucide-react-native'
 import { useEffect, useRef, useState } from 'react'
-import { AppState, ScrollView, TouchableOpacity, View } from 'react-native'
+import {
+  AppState,
+  ImageBackground,
+  ScrollView,
+  TouchableOpacity,
+  View
+} from 'react-native'
 import Toast from 'react-native-toast-message'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -10,10 +16,12 @@ import { Progress } from '@/components/ui/progress'
 import { Text } from '@/components/ui/text'
 import { axiosInstance, safePromise } from '@/constants/global/axios'
 import { getOptionStyle, QUIZZES } from '@/constants/pages/home/quiz'
+import { useGameSounds } from '@/hooks/useGameSounds'
 import { useGlobalState } from '@/hooks/useGlobalState'
 import { useUserStore } from '@/hooks/userStore'
 import { useStep } from '@/hooks/useStep'
 
+const IMAGES_BASE_URL = `${process.env.EXPO_PUBLIC_AXIOS_BASE_URL}api/assets/images/global/quiz/`
 export default function Quiz() {
   const { user } = useUserStore()
   const { quiz, section } = useLocalSearchParams<{
@@ -21,10 +29,11 @@ export default function Quiz() {
     section?: string
   }>()
 
+  const { play } = useGameSounds()
   const { setProgress } = useGlobalState()
   const quizId = Array.isArray(quiz) ? quiz[0] : quiz
   const originalQuestions = QUIZZES[quizId as keyof typeof QUIZZES]
-  const [QUESTIONS] = useState(() => shuffleArray(originalQuestions ?? []))
+  const [QUESTIONS] = useState(() => shuffleArray(originalQuestions.data ?? []))
   const { current, currentIndex, goNext } = useStep(QUESTIONS, 0)
 
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
@@ -81,6 +90,13 @@ export default function Quiz() {
         ...previous,
         [currentIndex]: selectedOption
       }))
+
+      const isCorrect = selectedOption === current.correctIndex
+      if (isCorrect) {
+        play('correct')
+      } else {
+        play('wrong')
+      }
 
       setHasSubmitted(true)
       if (currentIndex === QUESTIONS.length - 1) {
@@ -168,7 +184,7 @@ export default function Quiz() {
     const [response, error] = await safePromise(
       axiosInstance.post('/activities/save-progress', {
         user_id: user?.id,
-        quest_id: payload.quizId,
+        activity_id: payload.quizId,
         section_id: section,
         experience_points: payload.finalScore
       })
@@ -179,7 +195,8 @@ export default function Quiz() {
       setIsSubmitting(false)
       Toast.show({
         type: 'error',
-        text1: 'No fue posible guardar el resultado del quiz'
+        text1: 'Error',
+        text2: 'No fue posible guardar el resultado del quiz'
       })
 
       return
@@ -197,11 +214,14 @@ export default function Quiz() {
 
   return (
     <View className='flex-1 bg-background'>
-      <View className='flex-row p-4 gap-4 items-center'>
-        <TouchableOpacity onPress={() => router.back()}>
+      <View className='flex-row'>
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className='flex-row p-4 gap-4 items-center'
+        >
           <Icon as={ArrowLeft} />
+          <Text variant='h4'>Volver</Text>
         </TouchableOpacity>
-        <Text variant='h4'>Lección 1</Text>
       </View>
 
       <View className='p-4'>
@@ -216,13 +236,16 @@ export default function Quiz() {
       </View>
 
       <View className='p-4'>
-        <View className='bg-blue-600 h-40 justify-end rounded-xl'>
+        <ImageBackground
+          className='bg-blue-600 h-40 justify-end rounded-xl overflow-hidden'
+          source={{ uri: `${IMAGES_BASE_URL}${originalQuestions.img}` }}
+        >
           <View className='items-start gap-2 p-4'>
             <Badge>
-              <Text>{current.chapter}</Text>
+              <Text>{originalQuestions.chapter}</Text>
             </Badge>
           </View>
-        </View>
+        </ImageBackground>
 
         <Text variant='h3' className='mt-6'>
           {current.text}

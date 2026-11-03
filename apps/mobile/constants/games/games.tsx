@@ -77,7 +77,7 @@ export function getGameComponent(
 // Games interfaces
 
 export interface AR_STEP {
-  model: ImageSourcePropType
+  model: string
   speech: string
 }
 
@@ -88,12 +88,15 @@ export interface CONCEPT_STEP {
   speech: string
   readTimeMinutes: string
   body: string
+  img: string
+  isVertical?: boolean
 }
 
 export interface QUESTION_STEP {
   question: string
   desc: string
   id: string
+  img: string
 }
 
 export interface PUZZLES_STEP {
