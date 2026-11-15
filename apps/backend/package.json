@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch main.ts",
     "check": "npx @biomejs/biome check --write .",
-    "build": "tsc",
+    "build": "tsc && node src/scripts/copyAssets.js",
     "start": "node ./dist/index.js"
   },
   "keywords": [],

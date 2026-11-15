@@ -73,7 +73,7 @@ export const missionsController = {
     },
 
 
-    getRequiredWorkBySection: async (req: Request, res: Response) => {
+    getRequiredWorkBySection: async (_req: Request, res: Response) => {
         try {
             const result = await missionsService.getRequiredWorkBySection();
             return res.status(200).json(result.required_work);

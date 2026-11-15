@@ -34,8 +34,10 @@ import {
   ROLES
 } from '@/constants/pages/auth/register'
 import { i18n } from '@/locales/i18n'
+import { useRouter } from 'expo-router'
 
 export function RegisterForm() {
+  const router = useRouter()
   const [formValues, setFormValues] = useState<FormValues | null>(null)
   const [filteredCities, setFilteredCities] = useState<Municipalities[]>([])
   const [filteredNeigh, setFilteredNeigh] = useState<Neighborhoods[]>([])
@@ -128,6 +130,8 @@ export function RegisterForm() {
       text1: 'Felicidades 🎉',
       text2: 'Te has registrado exitosamente'
     })
+
+    router.replace('/auth/login')
   }
 
   const isCountryColombia = watch('country')?.value === COLOMBIA_COUNTRY_VALUE

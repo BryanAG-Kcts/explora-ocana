@@ -23,9 +23,9 @@ export function LoginForm() {
   const router = useRouter()
   const { control, handleSubmit } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      password: 'Password',
-      email: '@g.co'
+     defaultValues: {
+      password: 'doe.doe@',
+      email: 'doe@doe.co'
     }
   })
 
