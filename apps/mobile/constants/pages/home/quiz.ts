@@ -1,7 +1,7 @@
 import { Check, Scan, Slash, X } from 'lucide-react-native'
 
 export const QUIZZES = {
-  'quiz-1': {
+  'quiz1': {
     img: 'mission_1.jpg',
     chapter: 'Los pueblos originarios de Ocaña (Parte 1)',
     data: [
@@ -93,7 +93,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-2': {
+  'quiz2': {
     img: 'mission_4.jpg',
     chapter: 'Los pueblos originarios de Ocaña (Parte 2)',
     data: [
@@ -205,7 +205,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-3': {
+  'quiz3': {
     img: 'mission_6.jpg',
     chapter: 'La fundación y la ciudad colonial',
     data: [
@@ -307,7 +307,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-4': {
+  'quiz4': {
     img: 'mission_8.jpg',
     chapter: 'Leonelda y las yerbateras',
     data: [
@@ -424,7 +424,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-5': {
+  'quiz5': {
     img: 'mission_9.jpg',
     chapter: 'La Virgen de Torcoroma',
     data: [
@@ -531,7 +531,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-6': {
+  'quiz6': {
     img: 'mission_10.jpg',
     chapter: 'Ocaña en la independencia',
     data: [
@@ -628,7 +628,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-7': {
+  'quiz7': {
     img: 'mission_11.jpg',
     chapter: 'Terror, amor y poder',
     data: [
@@ -757,7 +757,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-8': {
+  'quiz8': {
     img: 'mission_13.jpg',
     chapter: 'La Gran Colombia y la Convención de Ocaña',
     data: [
@@ -849,7 +849,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-9': {
+  'quiz9': {
     img: 'mission_14.jpg',
     chapter: 'La Provincia de Ocaña',
     data: [
@@ -956,7 +956,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-10': {
+  'quiz10': {
     img: 'mission_15.jpg',
     chapter: 'Letras, colegio y modernidad',
     data: [
@@ -1068,7 +1068,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-11': {
+  'quiz11': {
     img: 'mission_16.jpg',
     chapter: 'Ocaña entre guerras y fiestas',
     data: [
@@ -1165,7 +1165,7 @@ export const QUIZZES = {
     ]
   },
 
-  'quiz-12': {
+  'quiz12': {
     img: 'mission_17.jpg',
     chapter: 'Ocaña contemporánea',
     data: [

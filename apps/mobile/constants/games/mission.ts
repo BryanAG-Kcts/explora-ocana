@@ -13,9 +13,30 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🕵️‍♂️ Un error de diagnóstico histórico\n\n¡Imagínate llegar a un lugar nuevo y nombrar a todo el mundo por una enfermedad que **ni siquiera tienen**! Eso fue exactamente lo que hicieron los conquistadores españoles en el siglo XVI al explorar el río Catatumbo.\n\n### 🗺️ El inmenso territorio\nEn el año 1578, el gobierno español en Ocaña elaboró un informe detallando un territorio gigante que iba desde Ábrego hasta Ocaña, incluyendo Otare, Brotaré y Teorama. A toda esta zona la llamaron la **"Provincia de los Carates"**. Pero, ¿de dónde salió ese nombre?\n\n### 🩺 Médicos improvisados\nCuando los españoles vieron a los indígenas, notaron que tenían llamativas manchas en la piel: rojizas, blancuzcas y azules oscuras. Asustados y con los limitados conocimientos médicos de la época, pensaron que era *sarna* (una enfermedad súper contagiosa y temida en Europa que causa picazón extrema).\n\n¡Pero estaban totalmente equivocados! Lo que realmente tenían los nativos era **Pinta** (o "carate"), una simple infección de clima tropical causada por una bacteria. Afectaba el color de la piel, pero **no era mortal**.\n\n### 📜 Una mancha en la historia\nEn el español de esa época, la palabra "carate" se usaba para hablar de la gente con manchas. Así que, por más de 200 años, los mapas y documentos oficiales usaron el nombre "Carates" (que para ellos significaba "los sarnosos") basándose en un diagnóstico equivocado. ¡Un nombre ofensivo nacido de la ignorancia!',
           speech:
             'Un error de diagnóstico histórico. Imagínate llegar a un lugar nuevo y nombrar a todo el mundo por una enfermedad que ni siquiera tienen. Eso fue exactamente lo que hicieron los conquistadores españoles en el siglo dieciséis al explorar el río Catatumbo. En el año 1578, el gobierno español en Ocaña elaboró un informe detallando un territorio gigante que iba desde Ábrego hasta Ocaña, incluyendo Otare, Brotaré y Teorama. A toda esta zona la llamaron la Provincia de los Carates. Cuando los españoles vieron a los indígenas, notaron que tenían llamativas manchas en la piel, rojizas, blancuzcas y azules oscuras. Asustados, pensaron que era sarna, una enfermedad contagiosa muy temida en Europa. Pero estaban totalmente equivocados. Lo que realmente tenían los nativos era Pinta, también conocida como carate, una infección de clima tropical que afectaba el color de la piel, pero no era mortal. Por más de 200 años, los mapas oficiales usaron el nombre Carates, que para ellos significaba "los sarnosos", basándose en un diagnóstico equivocado. Un nombre ofensivo nacido de la ignorancia.',
-          cap: 'Antepasados I',
           img: 'mission_1.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m1',
+          questions: [
+            {
+              id: 'info1',
+              question:
+                '¿Por qué crees que los españoles los llamaron "Carates"?',
+              kind: 'choice',
+              options: [
+                'Les pusieron ese nombre por el río donde vivían.',
+                'Era el nombre que ellos mismos usaban para identificarse.',
+                'Los españoles los nombraron por su apariencia física.',
+                'Era el nombre de un líder indígena famoso.'
+              ],
+              correctIndex: 2
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'crossword',
@@ -27,25 +48,25 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
             {
               word: 'CARATES',
               row: 3,
-              column: 1,
+              column: 0,
               direction: 'horizontal'
             },
             {
               word: 'OTARE',
               row: 1,
-              column: 2,
+              column: 1,
               direction: 'vertical'
             },
             {
               word: 'PINTA',
               row: 0,
-              column: 5,
+              column: 4,
               direction: 'vertical'
             },
             {
               word: 'ABREGO',
               row: 4,
-              column: 5,
+              column: 4,
               direction: 'horizontal'
             }
           ],
@@ -77,9 +98,51 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🏙️ Un pueblo bajo el asfalto\n\n¿Sabías que mientras caminas por Ocaña, podrías estar pisando el mismo suelo donde existió una antigua aldea indígena? Ese pueblo secreto se llamaba **Argutacaca**, ¡y estaba ubicado justo en lo que hoy es el centro y varios barrios de la ciudad!\n\n### 🧩 Un nombre inventado\n"Argutacaca" en realidad no era su verdadero nombre. Los conquistadores españoles tenían la mala costumbre de mezclar palabras nativas que no entendían bien. En este caso, unieron dos cosas distintas:\n1. **Arcuta**: El nombre de una hermosa quebrada de agua cristalina (que hoy conocemos como el Río Chiquito).\n2. **Socotegaga**: El verdadero nombre con el que esta comunidad se identificaba a sí misma.\n\n¡Al mezclar Arcuta y Socotegaga, los españoles se inventaron el nombre "Argutacaca"!\n\n### 📍 Tu barrio es territorio indígena\nToda la vida de los Socotegaga giraba en torno a la quebrada Arcuta. Hoy en día, esa misma corriente de agua recorre la ciudad. Si vives o pasas por barrios como **La Carbonera, Cuesta Blanca, El Palomar, Hacaritama, Betania, El Martinete o Caracolí**, ¡estás caminando sobre el antiguo territorio de esta tribu!\n\n### 👻 El misterio de su desaparición\nEntre los años 1578 y 1700, este pueblo desapareció sin dejar rastro claro. Los historiadores tienen tres teorías:\n- **Desplazamiento forzado:** Los españoles los echaron para robarles sus tierras.\n- **Mestizaje:** Se casaron con españoles, adoptaron su idioma y perdieron su identidad indígena.\n- **Migración:** Huyeron hacia el Catatumbo o la Sierra Nevada para ser libres.\n\n### 🌊 El río de los tres nombres\nPara complicar más la historia, el río donde desemboca el Río Chiquito ha tenido tres nombres distintos según la época:\n1. **Ahirar (o Hcari)**: En la época indígena.\n2. **Río Grande**: Como lo llamaron los españoles por más de 200 años.\n3. **Río Tejo**: Su nombre desde la independencia hasta hoy.',
           speech:
             'Un pueblo bajo el asfalto. ¿Sabías que mientras caminas por Ocaña, podrías estar pisando el mismo suelo donde existió una antigua aldea indígena? Ese pueblo secreto se llamaba Argutacaca. Pero en realidad ese no era su verdadero nombre. Los españoles mezclaron dos palabras nativas: Arcuta, que era una quebrada de agua cristalina, y Socotegaga, que era el verdadero nombre de la comunidad. Al unirlas, inventaron el nombre Argutacaca. Toda la aldea estaba construida a orillas de la quebrada Arcuta, que hoy conocemos como el Río Chiquito. Esto significa que si vives en barrios como La Carbonera, Cuesta Blanca, El Palomar o Hacaritama, estás sobre el territorio de esta tribu. Misteriosamente, entre 1578 y 1700 el pueblo desapareció. Se cree que los españoles los expulsaron, o que se mezclaron con ellos perdiendo su cultura, o que huyeron hacia el Catatumbo. Además, el río que cruzaba cerca de ellos cambió de nombre tres veces: los indígenas lo llamaban Ahirar, luego los españoles le pusieron Río Grande, y hoy todos lo conocemos como Río Tejo.',
-          cap: 'Antepasados II',
           img: 'mission_2.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m2',
+          questions: [
+            {
+              id: 'info2',
+              question:
+                'Según los documentos históricos, ¿cuál era el verdadero nombre con el que se identificaba la comunidad indígena que los españoles terminaron llamando "Argutacaca"?',
+              kind: 'choice',
+              options: ['Arcuta', 'Ahirar', 'Socotegaga', 'Carates'],
+              correctIndex: 2
+            },
+            {
+              id: 'info3',
+              question:
+                'Los Argutacaca se establecieron alrededor de una quebrada de agua cristalina que llamaban "Arcuta". ¿Con qué nombre se conoce hoy esta quebrada en Ocaña?',
+              kind: 'choice',
+              options: [
+                'Río Grande',
+                'Río Chiquito',
+                'Río Tejo',
+                'Río Catatumbo'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info4',
+              question:
+                'El río que pasaba por el suroccidente del poblado indígena tuvo tres nombres: el indígena "Ahirar" o "Hcari" y el actual "Río Tejo". ¿Qué nombre le dieron los españoles durante la época colonial (entre 1550 y 1800)?',
+              kind: 'choice',
+              options: [
+                'Río Grande',
+                'Río Chiquito',
+                'Río Sagrado',
+                'Río de los Españoles'
+              ],
+              correctIndex: 0
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'soup',
@@ -97,14 +160,6 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           ]
         },
         requiresCompletion: true
-      },
-      {
-        type: 'ar',
-        data: {
-          model: 'esqueleto.glb',
-          speech:
-            'Frente a ti tienes el modelo de la quebrada Arcuta. Imagina por un momento que estás de pie hace quinientos años a la orilla de estas aguas cristalinas. Puedes ver a los indígenas Socotegaga bebiendo, cultivando y pescando; el río les da la vida. Ahora, cierra los ojos y escucha: el sonido de la naturaleza es reemplazado por el ruido de los carros y el cemento. La quebrada Arcuta se acaba de transformar en el Río Chiquito, y sobre las chozas indígenas ahora se levantan las casas de los barrios Cuesta Blanca, El Palomar y Hacaritama. El agua que sigue corriendo debajo de esos puentes de concreto es el único testigo silencioso de que, justo donde hoy caminan los ocañeros, antes latía el corazón de toda una civilización.'
-        }
       }
     ],
     M3: [
@@ -117,9 +172,46 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🌽 Una dieta mejor que la nuestra\n\nLos Argutacaca comían súper bien. Su alimentación se basaba en cuatro pilares: **maíz, yuca, ahuyama y fríjol**. Pero no sembraban cuando querían, ¡eran expertos astrónomos! Sabían que en luna creciente debían sembrar lo que crece hacia arriba (como el maíz) y en luna menguante lo que crece hacia abajo (como la yuca). Además, disfrutaban frutas raras hoy en día, como el caimito morado y la dulce chiticoma.\n\n### 🏹 Cazadores expertos\nEran unos duros para cazar. Su presa favorita era el venado (difícil por lo rápido), pero también cazaban saínos, pumas, y aves como paujiles y guacamayas (cuyas plumas usaban para decorar). Sus arcos los hacían con **madera de qricua**, un árbol local que daba una madera liviana y tan flexible que podían lanzar flechas a más de 50 metros.\n\n### 🥁 Tecnología y arte\nFabricaban tambores con piel de venado que no solo servían para música, sino como "teléfonos" para comunicarse a larga distancia durante la caza. También eran artistas del barro (alfarería), creando ollas y vasijas, y tejedores pacientes, usando algodón y fique para hacer mantas y hamacas en procesos que tardaban semanas.\n\n### 👕 La moda indígena\nCon el calor de Ocaña, la ropa era fresca. Los hombres usaban un simple **taparrabos de algodón**, que les daba total libertad de movimiento. Las mujeres llevaban **"el sayo"**, una especie de túnica rectangular hasta la rodilla, abierta a los lados y amarrada con un cordón en la cintura.\n\n### 🤝 Negocios y comercio\nNo estaban aislados. Hacían negocios con otros pueblos ofreciendo maíz, arcos y hermosas plumas. ¿Qué compraban a cambio? Principalmente **sal** (que no había en Ocaña), mejores herramientas de piedra y productos de otros climas. ¡Tenían toda una red de comercio viva y dinámica!',
           speech:
             'Vive un día como Argutacaca. ¿Cómo era la vida antes de los españoles? Los Argutacaca comían súper bien. Su alimentación se basaba en maíz, yuca, ahuyama y fríjol. Pero no sembraban al azar, eran expertos astrónomos. Sabían que en luna creciente se siembra lo que crece hacia arriba, como el maíz, y en luna menguante lo que crece hacia abajo, como la yuca. Eran unos duros para cazar usando arcos hechos con madera de qricua, muy flexible, para atrapar venados, pumas y guacamayas. Fabricaban tambores con piel de venado que funcionaban como teléfonos para comunicarse a larga distancia. En cuanto a la ropa, era muy fresca por el clima. Los hombres usaban un sencillo taparrabos de algodón y las mujeres llevaban "el sayo", una túnica hasta la rodilla. Además, eran grandes comerciantes, vendían maíz, cerámicas y plumas para comprar principalmente sal, ya que en Ocaña no se producía. Tenían toda una red económica dinámica mucho antes de la conquista.',
-          cap: 'Antepasados III',
           img: 'mission_3.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m3',
+          questions: [
+            {
+              id: 'info5',
+              question:
+                '¿Qué pasó con la fauna nativa (venados, puercos monteses, paujiles) cuando llegaron los animales que trajeron los españoles?',
+              desc: 'Piensa en las yeguas, vacas, ovejas, puercos, perros y gallinas que llegaron con la conquista.'
+            },
+            {
+              id: 'info6',
+              question:
+                'De estas opciones, ¿cuál crees que describe mejor lo que pasó con la fauna nativa?',
+              kind: 'choice',
+              options: [
+                'Los animales nativos desaparecieron completamente.',
+                'Los animales nativos y europeos coexistieron sin problemas.',
+                'Los animales nativos disminuyeron, pero algunos sobrevivieron.',
+                'Los animales europeos no afectaron a los nativos.'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info7',
+              question:
+                '¿Cuáles de los animales nativos que cazaban los Argutacaca (venados, saínos, pumas, paujiles, guacamayas) todavía existen en la región de Ocaña?'
+            },
+            {
+              id: 'info8',
+              question:
+                '¿Cuáles de esos animales crees que están en peligro de extinción?'
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'crossword',
@@ -182,9 +274,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🏕️ Los reyes del "camping" ecológico\n\nCuando los españoles vieron las casas de los Argutacaca, pensaron que eran pobres porque vivían en "ramadas" (chozas de palmas y ramas). ¡Estaban muy equivocados! Era una elección genial y ecológica. Eran semi-nómadas: vivían en un lugar un par de años y, cuando la tierra se cansaba, empacaban y se mudaban para dejar que la naturaleza se recuperara sola. ¡Cero basura y pura sostenibilidad!\n\n## 🚫 Una sociedad sin jefes\nImagínate un pueblo sin alcaldes, reyes ni presidentes. Para ellos, **"Cada quien era señor de su casa"**. Las familias eran autónomas y nadie podía obligar a otro a hacer algo que no quería. Aunque no tenían guerras con otras tribus, sí tenían conflictos internos: venganzas entre familias que podían durar generaciones y peleas que se encendían cuando tomaban demasiada *chicha* en las fiestas.\n\n## 🗣️ Lenguas de la naturaleza\nHablaban dos idiomas muy distintos: el **carate** y el **palenque**. ¿Sabías que el palenque se llamaba así por los inmensos troncos puntiagudos (palenques) que usaban para defender sus casas? Como los idiomas eran tan diferentes, tenían "intérpretes" expertos que vivían en las fronteras para ayudar a traducir.\n\n## 🤝 Vecinos buena onda\nNo estaban solos en la región. Mantenían contacto y hacían negocios pacíficos con la cultura **Mosquito** (indígenas del bajo Magdalena), quienes tenían asentamientos en lo que hoy conocemos como Pueblo Nuevo y Agua de la Virgen. ¡Una verdadera red de amigos comerciales!',
           speech:
             'Los reyes del camping ecológico. Cuando los españoles vieron las casas de los Argutacaca, pensaron que eran pobres porque vivían en chozas temporales llamadas ramadas. Pero era una elección ecológica. Al ser semi-nómadas, vivían en un lugar un par de años y luego se mudaban para dejar que la tierra se recuperara. ¡Pura sostenibilidad! Además, era una sociedad sin jefes ni alcaldes. Su regla era: "Cada quien es señor de su casa". Nadie obligaba a nadie, aunque sí tenían conflictos internos, como venganzas entre familias y peleas que empeoraban al tomar demasiada chicha en las fiestas. En la región hablaban dos idiomas distintos: el carate y el palenque, este último llamado así por los troncos puntiagudos con los que defendían sus casas. Como eran lenguas diferentes, usaban intérpretes para poder comunicarse. También eran muy sociables y hacían negocios pacíficos con los Mosquito, otra cultura indígena que vivía cerca, en lo que hoy conocemos como Pueblo Nuevo.',
-          cap: 'Antepasados IV',
           img: 'mission_4.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m4',
+          questions: [
+            {
+              id: 'info9',
+              question:
+                'Según el texto, ¿cuál era la verdadera razón por la que los Argutacaca construían "ramadas" temporales y se mudaban cada 2 o 3 años?',
+              kind: 'choice',
+              options: [
+                'Porque los españoles los obligaban a desplazarse y abandonar sus tierras.',
+                'Para permitir la recuperación de los suelos, seguir los recursos naturales y prevenir enfermedades.',
+                'Porque no tenían los materiales suficientes para construir viviendas fijas.',
+                'Para huir de las guerras con pueblos vecinos como los Mosquito.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info10',
+              question:
+                '¿Qué característica definía la organización política de los Argutacaca cuando llegaron los españoles?',
+              kind: 'choice',
+              options: [
+                'Tenían un cacique supremo que cobraba impuestos y organizaba ejércitos.',
+                'Se organizaban mediante un consejo de ancianos que dictaba las leyes.',
+                'No tenían líderes, caciques ni gobierno: "cada quien era señor de su casa".',
+                'Estaban gobernados por sacerdotes que tomaban las decisiones en los rituales.'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info11',
+              question:
+                'Según los documentos históricos, ¿cuáles eran las dos lenguas indígenas que se hablaban en la región?',
+              kind: 'choice',
+              options: [
+                'Carate y palenque',
+                'Mosquito y gucua',
+                'Cucuriama y argutacaca',
+                'Arcuta y tejo'
+              ],
+              correctIndex: 0
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'soup',
@@ -193,6 +332,16 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           rows: 10,
           id: 'soup2',
           soup: ['RAMADA', 'CHICHA', 'PALENQUE', 'CARATE', 'MOSQUITO']
+        },
+        requiresCompletion: true
+      },
+      {
+        type: 'puzzle',
+        data: {
+          rows: 3,
+          columns: 3,
+          image: 'mission_4.jpg',
+          id: 'jigs1'
         },
         requiresCompletion: true
       },
@@ -215,39 +364,86 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🏺 El misterio de los muertos en vasijas\n\nImagínate estar excavando unas pequeñas colinas de tierra en 1932 y de repente toparte con unos "huevos" gigantes de cerámica. ¡Eso les pasó a los sacerdotes Debilly y Escobar en Ocaña! Lo que encontraron fueron **urnas funerarias**, vasijas de barro cocido que los indígenas usaban para guardar los restos de sus seres queridos.\n\n### 🔥 Un ritual de paciencia extrema\nLos Argutacaca no enterraban a sus muertos y ya. Tenían un ritual de **seis pasos** (enterramiento secundario): \n1. Enterraban el cuerpo.\n2. Esperaban meses o años.\n3. Desenterraban los huesos limpios.\n4. Los quemaban hasta hacerlos cenizas (calcinación).\n5. Metían esos restos en la urna.\n6. Enterraban la urna en una colina artificial.\n¿Por qué los quemaban? Los expertos creen que era para purificar el alma, ahorrar espacio, por higiene o para poder trastearlos más fácil si la tribu se mudaba.\n\n### 🗽 Nuestros tesoros en Nueva York\nEntre 1934 y 1938 se encontraron más de estas urnas en la región de Los Ángeles (Ocaña). Lo triste es que muchas de ellas fueron donadas al **Museo Americano de Historia Natural en Nueva York**. ¡Una parte de nuestra historia está fuera del país!\n\n### 🪨 La Piedra Gorda: El "Google Maps" indígena\nEn el barrio El Hatillo, los Argutacaca nos dejaron un mensaje gigante: un **petroglifo** de más de 3 metros de ancho conocido como la Piedra Gorda. Es una roca tallada con figuras geométricas. ¿Para qué servía? Hay tres teorías:\n- Un letrero de frontera (marcador territorial).\n- Un mapa de ríos y montañas.\n- Una señal de rutas comerciales hacia lugares como González.',
           speech:
             'El misterio de los muertos en vasijas. Imagínate estar excavando en unas pequeñas colinas en el año mil novecientos treinta y dos y encontrar unos huevos gigantes de cerámica. Eso les pasó a dos sacerdotes en Ocaña. Lo que descubrieron fueron urnas funerarias, unas vasijas de barro llenas de huesos humanos quemados. Los Argutacaca tenían un ritual de seis pasos muy complejo para sus muertos: primero los enterraban, esperaban varios meses, los desenterraban, quemaban los huesos hasta hacerlos polvo, los metían en estas urnas y finalmente las enterraban en colinas artificiales. Algunos creen que los quemaban por religión o para poder llevarlos más fácil si el pueblo se mudaba. Tristemente, algunas de estas urnas encontradas años después fueron enviadas a un museo en Nueva York. Además de las vasijas, en el barrio El Hatillo nos dejaron la Piedra Gorda, una roca gigante tallada con figuras que los expertos creen que funcionaba como un mapa de navegación, una señal de frontera o una guía para comerciantes.',
-          cap: 'Antepasados V',
           img: 'mission_5.jpg'
         }
       },
       {
+        type: 'question',
+        data: {
+          id: 'questions_m5',
+          questions: [
+            {
+              id: 'info12',
+              question:
+                'Según los hallazgos de los sacerdotes Debilly y Escobar entre 1932 y 1933, ¿qué contenían las urnas funerarias encontradas en los montículos artificiales?',
+              kind: 'choice',
+              options: [
+                'Cuerpos completos embalsamados.',
+                'Restos de huesos calcinados (cenizas y fragmentos), producto de enterramientos secundarios.',
+                'Ofrendas de maíz, yuca y armas de caza.',
+                'Herramientas de oro y joyas religiosas.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info13',
+              question:
+                'Entre 1934 y 1938 se encontraron nuevas urnas funerarias en la región de Los Ángeles, y algunas fueron donadas a una institución internacional. ¿Dónde se encuentran actualmente?',
+              kind: 'choice',
+              options: [
+                'En el Museo del Oro, en Bogotá.',
+                'En el Museo Británico, en Londres.',
+                'En el Museo Americano de Historia Natural, en Nueva York.',
+                'En el Museo del Louvre, en París.'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info14',
+              question:
+                'En el barrio El Hatillo está la "Piedra Gorda", una roca de más de 3 metros con grabados indígenas en bajo relieve. Según el historiador Justiniano J. Páez y las teorías sobre ella, ¿cuál era su función principal?',
+              kind: 'choice',
+              options: [
+                'Servía como altar de sacrificios humanos.',
+                'Era un punto de referencia para comunicarse con otros lugares, como González, y delimitar territorios.',
+                'Funcionaba como un horno ceremonial para calcinar huesos.',
+                'Era una piedra de molienda comunitaria para procesar el maíz.'
+              ],
+              correctIndex: 1
+            }
+          ]
+        },
+        requiresCompletion: true
+      },
+      {
         type: 'crossword',
         data: {
-          rows: 8,
-          columns: 12,
+          rows: 7,
+          columns: 8,
           id: 'cros3',
           words: [
             {
               word: 'URNA',
               row: 1,
-              column: 5,
+              column: 0,
               direction: 'horizontal'
             },
             {
               word: 'HATILLO',
               row: 0,
-              column: 8,
+              column: 3,
               direction: 'vertical'
             },
             {
               word: 'CENIZAS',
               row: 3,
-              column: 5,
+              column: 0,
               direction: 'horizontal'
             },
             {
               word: 'MAPA',
               row: 2,
-              column: 10,
+              column: 5,
               direction: 'vertical'
             }
           ],
@@ -281,9 +477,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## ⚔️ El capitán temerario y la ruta secreta\n\nEn 1570, el capitán **Francisco Fernández de Contreras**, un soldado español famoso por sus rudos combates, llegó al valle de los Hacaritamas con 32 hombres armados. ¿Qué buscaban? ¡Un atajo! Querían transportar mercancías desde Pamplona hasta la costa Caribe de forma rápida y barata, evitando el camino que bloqueaban los indígenas Quiriquíes, quienes resistían la presencia española.\n\n### 🎂 El año de los tres cumpleaños\nLa ciudad de Ocaña no se fundó en un solo día; de hecho, ¡tiene tres fechas clave en 1570!\n- **26 de julio:** Llegan los españoles y la llaman "Santa Ana".\n- **7 de noviembre:** El gobierno español oficializa el asentamiento.\n- **14 de diciembre:** ¡La gran fiesta! Se hace el acto oficial de fundación con misa, trazado de calles y plaza mayor.\n*(Dato curioso: el nombre "Ocaña" fue un homenaje al gobernador de Santa Marta, que había nacido en una ciudad de España llamada exactamente igual).* \n\n### 🏙️ Del "camping" a la cuadrícula\nAntes, los indígenas Argutacaca vivían en ramadas dispersas donde les provocaba, pura libertad. Pero los españoles trajeron el **damero**: un diseño urbano de cuadrícula perfecta, como un tablero de ajedrez, ordenado por el mismísimo rey de España. En el centro estaba la Plaza Mayor, rodeada por las casas de los ricos (los encomenderos), y de allí nacían la **Calle Real** (comercial) y la **Calle de la Amargura** (para Semana Santa).\n\n### 🤔 ¿Fundación o Invasión?\nLos libros de historia españoles usaban palabras bonitas: decían que hicieron una "reducción" o una "pacificación". Pero si lo piensas bien, "pacificar" significaba usar la violencia para apagar la resistencia nativa, y "fundar" fue ocupar a la fuerza un territorio que ya tenía dueños. ¡La historia siempre tiene dos caras!',
           speech:
             'El capitán temerario y la ruta secreta. En 1570, el capitán español Francisco Fernández de Contreras llegó al valle con 32 hombres armados. Buscaban una nueva ruta comercial rápida y barata desde Pamplona hasta la costa Caribe. Ocaña no se fundó en un solo día, tuvo tres fechas importantes en 1570: el 26 de julio llegaron y la llamaron Santa Ana; el 7 de noviembre se hizo oficial; y el 14 de diciembre se realizó el gran acto de fundación trazando la plaza y las calles. El nombre Ocaña fue un homenaje al gobernador, que había nacido en una ciudad de España con ese mismo nombre. Los españoles cambiaron por completo el paisaje: eliminaron las chozas dispersas de los indígenas y construyeron la ciudad en forma de damero, es decir, una cuadrícula perfecta como un tablero de ajedrez, con una Plaza Mayor en el centro y calles importantes como la Calle Real y la Calle de la Amargura. Aunque los documentos españoles llaman a esto "fundación" o "pacificación", en la práctica fue la invasión violenta de un territorio que ya estaba habitado por los Argutacaca.',
-          cap: 'Antepasados VI',
           img: 'mission_6.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m6',
+          questions: [
+            {
+              id: 'info15',
+              question:
+                '¿En qué fecha realizó el capitán Francisco Fernández de Contreras el acto oficial de fundación de la villa, con misa, trazado de la plaza, la iglesia y las calles?',
+              kind: 'choice',
+              options: [
+                '26 de julio de 1570',
+                '7 de noviembre de 1570',
+                '14 de diciembre de 1570',
+                '29 de mayo de 1850'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info16',
+              question:
+                '¿Cuál fue el principal motivo económico que impulsó a Francisco Fernández a fundar una ciudad en el valle de los Hacaritamas?',
+              kind: 'choice',
+              options: [
+                'Descubrir minas de oro ocultas por los indígenas Argutacaca.',
+                'Crear un puerto terrestre que abaratara y acortara la ruta comercial entre Pamplona y la costa Caribe, evitando a los Quiriquíes.',
+                'Construir una fortaleza para proteger a Santa Marta de ataques piratas.',
+                'Cumplir una promesa religiosa hecha al obispo de Ocaña en España.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info17',
+              question:
+                'Según el modelo de damero que impusieron los españoles, ¿quiénes vivían alrededor de la Plaza Mayor?',
+              kind: 'choice',
+              options: [
+                'Los líderes indígenas de la comunidad Argutacaca.',
+                'Los grandes encomenderos, como Juan Quintero Príncipe, Antón García de Bonilla y Gaspar Barbosa de Marís.',
+                'Únicamente los sacerdotes y misioneros que oficiaron la primera misa.',
+                'Los artesanos y comerciantes recién llegados de España.'
+              ],
+              correctIndex: 1
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'soup',
@@ -292,6 +535,16 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           rows: 10,
           id: 'soup3',
           soup: ['DAMERO', 'PAMPLONA', 'AMARGURA', 'INVASION', 'CAPITAN']
+        },
+        requiresCompletion: true
+      },
+      {
+        type: 'puzzle',
+        data: {
+          rows: 3,
+          columns: 3,
+          image: 'mission_6.jpg',
+          id: 'jigs2'
         },
         requiresCompletion: true
       },
@@ -314,9 +567,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 💰 La primera "Startup" de Ocaña\n\nApenas siete años después de la fundación (1577), nació la primera gran empresa de la ciudad. Once hombres ricos y poderosos, conocidos como *encomenderos*, armaron un negocio de transporte de mercancías usando **acémilas** (burros y mulas) para llevar cargas hasta el puerto del Río Magdalena. ¡Los mismos españoles que controlaban la tierra y a los indígenas, ahora controlaban el comercio!\n\n### ⛪ Iglesias, temblores y conventos\nLa iglesia principal que ves hoy en Ocaña es en realidad la ¡versión 3.0! La primera (1576) era casi una choza con techo de paja. La segunda (1600) ya era de piedra con torre, pero fue destruida por el gran **terremoto de los Andes en 1875**. \n\nAdemás de iglesias, fundaron conventos. Aunque decían que eran para enseñar a leer y escribir, tenían un lado oscuro: buscaban convencer a los indígenas de que obedecer a los españoles y trabajar en sus haciendas era "la voluntad de Dios". ¡Una estrategia de control total!\n\n### 📉 Una ironía de la historia\nPor culpa de la explotación y las enfermedades, los indígenas casi desaparecen. Se calcula que en la región había cerca de 2.000 nativos, y en el censo de 1627 solo se contaron unos 600 indígenas tributarios. Como ya casi no había a quién "evangelizar", los conventos estuvieron a punto de quebrar en 1776. ¿Y adivina quiénes los salvaron? ¡Los mismos ricos encomenderos que causaron la tragedia! Donaron dinero para evitar el cierre, a cambio de que los dejaran enterrar como VIPs dentro de la iglesia.\n\n### 👻 El terror de la noche: Antón García\nLos documentos muestran que hubo al menos cuatro hombres reales llamados Antón García de Bonilla, pero la leyenda los convirtió en el fantasma más famoso de Ocaña. Dicen que un día su familia enfermó de una peste mortal y él le prometió grandes ofrendas a Santa Rita si los curaba. El milagro ocurrió, pero a Antón se le olvidó pagar la promesa. Como castigo, fue condenado a vagar por las noches para siempre. Si trasnochas en Ocaña, dicen que puedes verlo cabalgando en una mula negra, asustando a los serenateros, luciendo un rostro de calavera y... ¡fumando un cigarrillo!',
           speech:
             'La ciudad colonial. Negocios, terremotos y el jinete fantasma. Apenas siete años después de su fundación, en mil quinientos setenta y siete, Ocaña tuvo su primera empresa. Once hombres ricos crearon un negocio de transporte usando mulas y burros para llevar mercancías al Río Magdalena. Además del comercio, la religión fue clave. La iglesia principal tuvo tres versiones: la primera era de paja, la segunda de piedra, pero se cayó por un terrible terremoto en mil ochocientos setenta y cinco, y la tercera es la actual. También construyeron conventos, que aunque enseñaban a leer, en el fondo buscaban convencer a los indígenas de que trabajar para los españoles era la voluntad de Dios. Por culpa de los maltratos, los indígenas casi desaparecen, y en el censo de mil seiscientos veintisiete solo se contaron unos seiscientos indígenas tributarios. Como casi no quedaban nativos, los conventos iban a quebrar, y los mismos españoles ricos que explotaron a los indígenas donaron plata para salvarlos, comprando así entierros lujosos. Finalmente, de esta época nace la leyenda de Antón García, un rico que no le cumplió una promesa a Santa Rita y fue condenado a vagar como un fantasma con cara de calavera montado en una mula negra, asustando por las noches.',
-          cap: 'Antepasados VII',
           img: 'mission_7.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m7',
+          questions: [
+            {
+              id: 'info18',
+              question:
+                '¿Quiénes conformaron la primera empresa de transporte de Ocaña, creada en 1577?',
+              kind: 'choice',
+              options: [
+                'Los nativos Argutacaca, para vender su chicha y su maíz a los españoles.',
+                'Once socios, entre ellos encomenderos como Gaspar Barbosa y Antonio García de Bonilla, que usaban acémilas para llevar mercancías al Río Magdalena.',
+                'Un grupo de frailes franciscanos que creó un sistema de correo con Europa.',
+                'Soldados enviados por el rey para transportar oro hacia Santa Marta.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info19',
+              question:
+                'Los conventos tenían propósitos que iban más allá de evangelizar. ¿Cuál de estos era uno de ellos, según el texto?',
+              kind: 'choice',
+              options: [
+                'Enseñar tácticas de guerra a los indígenas para enlistarlos en el ejército español.',
+                'Garantizar mano de obra para las haciendas y proteger a la población blanca fortaleciendo los núcleos urbanos.',
+                'Construir hospitales para aislar a los indígenas enfermos de viruela.',
+                'Asegurar que los indígenas heredaran las tierras de los españoles fallecidos.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info20',
+              question:
+                'Hubo al menos cuatro hombres llamados Antón García de Bonilla. ¿A cuál se le atribuye ser el Antón de la leyenda, condenado a cabalgar hasta el santuario de Santa Rita por una promesa incumplida?',
+              kind: 'choice',
+              options: [
+                'Al cuarto, que estuvo casado con María Téllez Blanco.',
+                'Al tercero, del cual no hay información documental cierta.',
+                'Al segundo, hijo mestizo de una indígena de Paipa, que testó en Tunja en 1617.',
+                'Al primero, el conquistador y alcalde que participó en las fundaciones de Pamplona y Ocaña y se casó con Isabel Rodríguez.'
+              ],
+              correctIndex: 3
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'crossword',
@@ -381,9 +681,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🌿 Curanderas bajo la luz de la luna\n\nEn el siglo XVII, en las montañas de los indígenas Búrburas, vivían cinco mujeres increíbles. Estaban lideradas por la maestra María Antonia Mandona y su aprendiz de 26 años, la mestiza **Leonelda Hernández**. Salían de noche a recolectar plantas, raíces y flores. ¿Era brujería? ¡No, era ciencia! De noche las plantas concentran mejor sus aceites esenciales medicinales.\n\n### 🦇 El chisme que las condenó\nAl principio, la gente las amaba. Con sus brebajes curaban enfermos, calmaban dolores y daban valor a los tímidos. Pero la Inquisición española (la policía religiosa de la época) se sintió amenazada. Unas mujeres libres, sabias y con poder sobre la comunidad eran un peligro para ellos. Así que cambiaron la historia y empezaron a llamarlas "brujas malvadas" que tenían pactos con el diablo.\n\n### ⚖️ Terror en la celda\nEn septiembre de 1663, los españoles las capturaron y torturaron. En su choza encontraron hierbas y huesos de sapo, y lo usaron como "prueba" de hechicería. El alcalde, muerto de miedo, no quiso esperar a los jueces superiores y mandó a ahorcar a la maestra Mandona sin esperar ningún juicio. Las otras cuatro fueron liberadas, pero el rencor ya estaba sembrado.\n\n### 🪶 El grito de la resistencia\nDiez años después, Leonelda fue capturada y acusada de terribles crímenes. Mientras la llevaban presa hacia Ocaña, los guardias decidieron ahorcarla en el **Alto del Hatillo** para evitar que un obispo la perdonara. \n\nCon la soga al cuello, Leonelda vio movimiento en los matorrales y gritó con todas sus fuerzas: *"¡Aquí de los búrburas!"*. En segundos, decenas de guerreros indígenas saltaron de la maleza, derrotaron a los españoles y la liberaron. Leonelda bajó la montaña como una princesa guerrera, y la leyenda dice que jamás pudieron atraparla, porque cuando la perseguían... ¡se convertía en ave!',
           speech:
             'Curanderas bajo la luz de la luna. En el siglo diecisiete, en las montañas de la región, vivían cinco mujeres lideradas por María Antonia Mandona y su aprendiz Leonelda Hernández. Salían de noche a recolectar plantas porque a esa hora concentraban mejores propiedades medicinales. Al principio, la gente las amaba porque curaban enfermos. Pero la Inquisición española se sintió amenazada por el poder e independencia de estas mujeres, así que las acusaron de ser brujas malvadas. En mil seiscientos sesenta y tres las capturaron, y el alcalde, lleno de miedo, mandó ahorcar ilegalmente a la maestra Mandona. Las demás fueron liberadas. Diez años después, Leonelda fue apresada nuevamente. Los guardias decidieron ahorcarla en el Alto del Hatillo antes de llegar a la ciudad para evitar que un obispo la perdonara. Con la soga al cuello, Leonelda dio un grito de guerra: "¡Aquí de los búrburas!". Inmediatamente, guerreros indígenas salieron de la maleza, vencieron a los españoles y la rescataron. Leonelda escapó como una heroína, y la leyenda cuenta que nunca más fue capturada porque tenía el poder de transformarse en ave.',
-          cap: 'Antepasados VIII',
           img: 'mission_8.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m8',
+          questions: [
+            {
+              id: 'info21',
+              question:
+                'Según la historia de las mujeres acusadas de hechicería en Burgama en el siglo XVII, ¿quién era la maestra de Leonelda Hernández y de las demás aprendices?',
+              kind: 'choice',
+              options: [
+                'María Pérez',
+                'María del Carmen',
+                'María Antonia Mandona',
+                'María de Mora'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info22',
+              question:
+                '¿Quién ordenó ahorcar a María Antonia Mandona a medianoche, sin esperar la decisión de las autoridades virreinales de Santafé?',
+              kind: 'choice',
+              options: [
+                'El obispo de Santa Marta, Liñán de Cisneros.',
+                'El alcalde del lugar.',
+                'Los sacerdotes del Seminario de Ocaña.',
+                'El jefe de la escolta española.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info23',
+              question:
+                'Cuando llevaban a Leonelda Hernández al Alto del Hatillo para ejecutarla, un grupo indígena la rescató. ¿A qué pueblo pertenecían sus rescatadores?',
+              kind: 'choice',
+              options: [
+                'A los Mosquito',
+                'A los Argutacaca',
+                'A los Quiriquíes',
+                'A los Búrburas'
+              ],
+              correctIndex: 3
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'soup',
@@ -399,6 +746,16 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
             'BRUJA',
             'HORCA'
           ]
+        },
+        requiresCompletion: true
+      },
+      {
+        type: 'puzzle',
+        data: {
+          rows: 3,
+          columns: 3,
+          image: 'mission_8.jpg',
+          id: 'jigs3'
         },
         requiresCompletion: true
       },
@@ -424,9 +781,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🌳 El árbol fuera de lo normal\n\nEn 1711, la familia Melo Rodríguez vivía de cultivar caña y producir miel. El **15 de agosto**, los hermanos Felipe y José salieron a la montaña de Torcoroma buscando madera para hacer un "dornajo" (un recipiente para los dulces de miel). De repente, vieron un árbol rarísimo: ¡estaba lleno de hermosas y olorosas flores rojas aunque no era época de florecer! Lo cortaron, pero se cayó por un barranco, así que tuvieron que volver al día siguiente con su papá.\n\n### ✨ El milagro del hachazo\nEl **16 de agosto de 1711**, Cristóbal (el papá) y sus hijos lograron sacar el árbol. Pero al darle los primeros hachazos para limpiarlo, ¡boom! Una luz brilló desde la madera. Adentro no había savia, sino la imagen de la Virgen María en relieve, del mismo color de la madera. ¡Todos cayeron de rodillas!\n\n### 🕵️‍♂️ Un robo de película\nCon los años, el santuario fue declarado monumento nacional. Pero en **1981**, Ocaña vivió el peor susto de su historia. Un ladrón argentino llamado Carlos Alberto Delvechio se robó la sagrada imagen y otros objetos de oro. La ciudad entera lloró, ¡pero la alegría volvió rápido! En solo dos días, la policía recuperó a la Virgen en Barranquilla.\n\n### 🙏 Los milagros colgados\nSi vas hoy al Santuario, verás cientos de **exvotos**. Son pequeñas placas, figuras u objetos que la gente deja colgados en las paredes para decir "¡Gracias!" por un milagro: una enfermedad curada, un accidente que no pasó a mayores o un problema resuelto. ¡Son el Instagram de los milagros de la época!',
           speech:
             'Un árbol mágico, un robo de película y el orgullo de Ocaña. En el año mil setecientos once, los hermanos Felipe y José Melo salieron a la montaña de Torcoroma a buscar madera para un recipiente de miel. Encontraron un árbol extraño que tenía flores rojas y olorosas, aunque no era época de florecer. Al día siguiente, el dieciséis de agosto, volvieron con su papá Cristóbal. Cuando comenzaron a darle hachazos al tronco, salió una luz brillante y descubrieron la imagen de la Virgen en relieve sobre la misma madera. Con los años, se construyó un Santuario que hasta los Papas reconocieron. Pero en mil novecientos ochenta y uno, un ladrón argentino se robó la imagen, causando una tristeza inmensa en toda Ocaña. Afortunadamente, la recuperaron dos días después en Barranquilla. Hoy en día, si visitas el Santuario, está lleno de "exvotos", que son objetos y placas que las personas dejan colgados en las paredes para agradecerle a la Virgen por los milagros que les ha concedido.',
-          cap: 'Antepasados IX',
           img: 'mission_9.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m9',
+          questions: [
+            {
+              id: 'info24',
+              question:
+                '¿A qué se dedicaba la familia de Cristóbal Melo y Pascuala Rodríguez antes de encontrar la imagen el 16 de agosto de 1711?',
+              kind: 'choice',
+              options: [
+                'Eran encomenderos y comerciantes de telas importadas de España.',
+                'Eran agricultores que cultivaban caña de azúcar y producían miel.',
+                'Eran alfareros que fabricaban urnas funerarias.',
+                'Eran soldados españoles que protegían el puerto terrestre.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info25',
+              question:
+                '¿En qué año y por cuál papa se le concedió a la Virgen de Torcoroma la Corona Pontificia y una misa propia renovada?',
+              kind: 'choice',
+              options: [
+                'En 1906, por el papa Pío X.',
+                'En 1963, por el papa Pablo VI.',
+                'En 1972, por decreto del presidente Misael Pastrana Borrero.',
+                'En 2010, por el papa Benedicto XVI.'
+              ],
+              correctIndex: 3
+            },
+            {
+              id: 'info26',
+              question:
+                '¿Quién viajó a Ocaña en 1716 para investigar personalmente los milagros atribuidos a la Virgen de Torcoroma?',
+              kind: 'choice',
+              options: [
+                'Fray Fermín de los Reyes.',
+                'El sacerdote Ambrosio Mederos.',
+                'Monseñor Don Fray Antonio de Monroy Meneses.',
+                'Monseñor Manuel Benjamín Pacheco Aicardi.'
+              ],
+              correctIndex: 2
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'soup',
@@ -459,9 +863,51 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🐌 El "lag" de las noticias en 1810\n\nImagínate vivir en una época sin WhatsApp ni redes sociales. Cuando el **10 de julio de 1810** estalló el grito de independencia en Santafé, en Ocaña ¡nadie se enteró ese día! Las noticias tardaban semanas en llegar a través del correo a caballo o viajeros. El encargado de traer el "chisme" revolucionario fue **Antonio Quintero Copete**, un joven estudiante ocañero que llegó desde Pamplona y contagió a sus amigos con el espíritu de libertad.\n\n### ⚔️ Un joven Bolívar llega a la ciudad\nEn enero de 1813 llegó a Ocaña un muchacho apasionado de 29 años. Aún no lo llamaban "El Libertador", era simplemente Simón Bolívar. Fue recibido con gran emoción, y el discurso de bienvenida estuvo a cargo de una mujer: **Bárbara Vicenta Lemus**, quien lideró el recibimiento junto a otras cuatro mujeres de la ciudad. Tras un gran banquete, las familias despidieron al ejército patriota entre lágrimas.\n\n### 📜 La ruptura oficial y el Batallón Ocañero\nEl **7 de abril de 1813**, Ocaña rompió oficialmente con España: destruyeron los símbolos del rey en público y familias poderosas firmaron el acta de independencia. \n\nPero Ocaña no fue solo un testigo que firmó papeles. ¡Fueron a la guerra! Se creó el **Batallón Libertador de Ocaña** con 180 ocañeros (apoyados por hombres de Río de Oro y Mompox), quienes lucharon valientemente en batallas como las de Jagual y Cúcuta. Por eso Bolívar los llamó "ciudadanos iguales a vuestros hermanos".',
           speech:
             'El lag de las noticias en 1810. Imagínate vivir en una época sin redes sociales. Cuando el diez de julio de mil ochocientos diez estalló el grito de independencia en Santafé, en Ocaña nadie se enteró. Las noticias tardaban semanas en llegar a caballo. El encargado de traer la revolución fue Antonio Quintero Copete, un joven ocañero que estudiaba en Pamplona y contagió a todos con el espíritu de libertad. En enero de mil ochocientos trece, llegó a la ciudad un apasionado Simón Bolívar de apenas veintinueve años, que aún no tenía el título de Libertador. Fue recibido por una multitud, y el discurso principal lo dio una mujer, Bárbara Vicenta Lemus. Meses después, el siete de abril, la ciudad rompió los símbolos del rey y firmó su independencia. Pero los ocañeros no se quedaron mirando: formaron el Batallón Libertador con ciento ochenta hombres y se fueron a combatir junto al ejército patriota. Ocaña no fue un simple testigo, fue un verdadero héroe de la independencia.',
-          cap: 'Antepasados X',
           img: 'mission_10.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m10',
+          questions: [
+            {
+              id: 'info27',
+              question:
+                'Un joven ocañero participó en la rebelión contra el corregidor Bastús en Pamplona y regresó a Ocaña a difundir las noticias del levantamiento. ¿Cuál era su nombre?',
+              kind: 'choice',
+              options: [
+                'Juan Pino',
+                'Sebastián Álvarez Llaín',
+                'Miguel M. Troncoso',
+                'Antonio Quintero Copete'
+              ],
+              correctIndex: 3
+            },
+            {
+              id: 'info28',
+              question:
+                'Cinco mujeres recibieron a Simón Bolívar cuando llegó a Ocaña en enero de 1813. ¿Quién pronunció el discurso de bienvenida?',
+              kind: 'choice',
+              options: [
+                'Bárbara Vicenta Lemus',
+                'María de Jesús Patiño',
+                'Nicolasa Ibáñez',
+                'Eusebia Sarabia'
+              ],
+              correctIndex: 0
+            },
+            {
+              id: 'info29',
+              question:
+                '¿Cuántos ocañeros integraron el Batallón Libertador de Ocaña, apoyados por una compañía de hombres de Río de Oro?',
+              kind: 'choice',
+              options: ['32', '70', '180', '600'],
+              correctIndex: 2
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'crossword',
@@ -505,6 +951,16 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
         requiresCompletion: true
       },
       {
+        type: 'puzzle',
+        data: {
+          rows: 4,
+          columns: 4,
+          image: 'mission_10.jpg',
+          id: 'jigs4'
+        },
+        requiresCompletion: true
+      },
+      {
         type: 'ar',
         data: {
           model: 'francisco_caballo.glb',
@@ -525,10 +981,57 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 💀 "El Pacificador" que trajo la muerte\n\nEntre 1815 y 1819, Ocaña vivió sus años más oscuros. El rey de España mandó a **Pablo Morillo**, un brillante y despiadado general, a reconquistar América. Él se llamaba a sí mismo "El Pacificador", pero su idea de paz era el terror. El 1 de abril de 1816 entró a Ocaña y su primer acto no fue hablar, sino ejecutar patriotas, como el venezolano Miguel Carabaño, cuya cabeza fue exhibida en la plaza pública para mandar un mensaje de miedo a todos los habitantes.\n\n### 🔴 Los Colorados: La guerrilla del Rey\nCuando Morillo se fue, el control militar quedó en manos de Rafael de Aragón, y en ese ambiente surgió un grupo aún más temido: **Los Colorados**. Eran más de 1.500 hombres armados que usaban pantalones y pañoletas rojas. Defendían a la corona española castigando brutalmente a los patriotas en eventos públicos que llamaban "la fiesta de las carreras", donde amarraban a sus víctimas a caballos desbocados. Querían que Ocaña viviera con un trauma eterno.\n\n### 🕊️ La mujer que no cerró los ojos\nEn enero de 1820, el coronel patriota Fernando Figueredo intentó recuperar Ocaña, pero perdió. Buscando dónde esconderse, llegó a la casa de **Agustina Ferro**. Ella sabía que ayudarlo era una sentencia de muerte, pero aun así lo ayudó a escapar. Los Colorados la descubrieron y la condenaron a ser fusilada en la plaza. Antes de morir, le ofrecieron vendarle los ojos, pero ella lo rechazó. Quería mirar a la muerte (y a sus asesinos) de frente.\n\n### ⚔️ El general que ordenó el caos\nMientras todo este terror pasaba, un militar llamado **Francisco de Paula Santander** (que había estado organizando tropas en Ocaña años antes) estaba en Casanare unificando a un ejército patriota que estaba en la ruina, sin armas y peleado entre sí. Gracias a su disciplina, ese mismo ejército, ya junto a Bolívar, ganó meses después la Batalla de Boyacá y selló nuestra independencia.',
           speech:
             'La época del terror. Cuando el miedo gobernó Ocaña y la valentía lo desafió. Entre mil ochocientos quince y mil ochocientos diecinueve, la ciudad vivió sus peores años. El general español Pablo Morillo, enviado por el rey, entró a Ocaña el primero de abril de mil ochocientos dieciséis. Aunque se hacía llamar "El Pacificador", su método era ejecutar personas. Cuando él se fue, el terror quedó a cargo de Los Colorados, un grupo armado a favor del rey de España que usaba ropa roja y aterrorizaba a la gente con castigos públicos contra los patriotas. A pesar de esto, hubo mucho valor. Agustina Ferro fue una mujer que ayudó a escapar a un coronel patriota, sabiendo que arriesgaba su vida. Fue descubierta y condenada a ser fusilada en la plaza, pero rechazó que le vendaran los ojos para mirar a sus verdugos de frente. Mientras tanto, el general Francisco de Paula Santander estaba en Casanare armando y organizando un ejército patriota que estaba en la ruina. Ese fue el ejército que logró la victoria final en la batalla de Boyacá.',
-          cap: 'Antepasados XI',
           img: 'mission_11.jpg',
           isVertical: true
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m11',
+          questions: [
+            {
+              id: 'info30',
+              question:
+                '¿Qué patriota venezolano fue ejecutado y su cabeza exhibida en la plaza pública tras la entrada de Pablo Morillo a Ocaña el 1 de abril de 1816?',
+              kind: 'choice',
+              options: [
+                'El padre Alejo María Buceta',
+                'El coronel Fernando Figueredo',
+                'Miguel Carabaño',
+                'Pascual Enrile'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info31',
+              question:
+                'El 20 de enero de 1820, Agustina Ferro fue fusilada en la plaza principal de Ocaña por orden del líder de Los Colorados. ¿Qué hizo para que la condenaran a muerte?',
+              kind: 'choice',
+              options: [
+                'Liderar un batallón de mujeres contra Pablo Morillo.',
+                'Darle refugio en su casa al coronel patriota Fernando Figueredo y ayudarlo a escapar.',
+                'Robar dinero de la Corona española para financiar a Santander.',
+                'Negarse a pagar impuestos a las tropas realistas.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info32',
+              question:
+                '¿Cuál fue el logro más decisivo de Francisco de Paula Santander en Casanare, entre 1818 y 1819, antes de la Batalla de Boyacá?',
+              kind: 'choice',
+              options: [
+                'Negociar un tratado de paz definitivo con Pablo Morillo.',
+                'Unificar a los caudillos, reorganizar un ejército en colapso, imponer disciplina y levantar la moral de los soldados.',
+                'Ejecutar al líder de Los Colorados en la plaza de Bucaramanga.',
+                'Abandonar las tropas del norte para huir hacia Cumaná.'
+              ],
+              correctIndex: 1
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'crossword',
@@ -590,9 +1093,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 💔 El precio de apoyar la libertad\n\nLa familia Ibáñez-Arias era una de las más ricas y prestigiosas de Ocaña. Lo tenían todo, hasta que en 1813 decidieron financiar al ejército de Simón Bolívar. Por esa lealtad, los españoles los castigaron sin piedad: les quitaron todas sus riquezas, desterraron a las mujeres y el papá, Miguel Ibáñez, murió solo y en la miseria huyendo por la selva. ¡Pero la familia renació! Los hijos crecieron, se casaron con familias poderosas y recuperaron el control político.\n\n### 🔥 Escándalos en las altas esferas\nLas hijas de esta familia, Nicolasa y Bernardina, protagonizaron los dramas amorosos más grandes de la Gran Colombia:\n- **Nicolasa y el Vicepresidente:** Aunque estaba casada con Antonio José Caro, Nicolasa tuvo un famosísimo romance público con Francisco de Paula Santander. El vicepresidente estaba tan enamorado que mandó al esposo a Londres con la excusa de "imprimir leyes" solo para quitárselo de encima. El esposo volvió ciego dos años después.\n- **Bernardina, la mujer de hierro:** Simón Bolívar se obsesionó con la hermana menor. ¡Usó su poder para negarle la licencia militar al novio de Bernardina y así evitar que se casaran! Hasta le regaló una casa del Estado a la mamá para ganar puntos. Pero Bernardina fue inquebrantable y rechazó al Libertador una y otra vez.\n\n### ⚖️ El origen del Partido Conservador\n¿Qué pasa cuando creces viendo cómo destruyen a tu familia? **José Eusebio Caro** (hijo de Nicolasa) creció como el lazarillo de su padre ciego, viendo a su madre como la amante del Vicepresidente. Ese dolor, sumado al abandono que sufrió después, marcó su rechazo hacia Santander. A sus 32 años fundó, junto a Mariano Ospina Rodríguez, el **Partido Conservador Colombiano**. Según algunos historiadores, su temperamento le impedía unirse al liberalismo porque ese era el partido de Santander, el hombre que había destruido a su familia.\n\n### ⚔️ El sangriento final de Los Colorados\nMientras la élite vivía sus novelas de amor en Bogotá, en el campo ocañero seguía la guerra. La guerrilla realista **Los Colorados** continuó matando y vengándose de civiles patriotas. Su reinado de terror terminó definitivamente en 1822, cuando sus líderes fueron capturados y fusilados en lo que hoy conocemos como el barrio El Carretero.',
           speech:
             'El precio de apoyar la libertad. La familia Ibáñez-Arias era muy rica, pero lo perdieron todo por financiar a Simón Bolívar en mil ochocientos trece. Los españoles los desterraron y el padre murió en la selva. Sin embargo, los hijos recuperaron el poder haciendo matrimonios estratégicos. Las hermanas de esta familia fueron protagonistas de enormes escándalos. Nicolasa tuvo un romance público con el vicepresidente Francisco de Paula Santander. Él estaba tan obsesionado que mandó al esposo de Nicolasa exiliado a Londres solo para que no estorbara. Por su parte, Simón Bolívar enloqueció por la hermana menor, Bernardina. Usó su poder para bloquear la boda de ella con otro militar y hasta le cedió una casa a su madre, pero Bernardina lo rechazó de frente. Toda esta novela tuvo consecuencias reales en la política. El hijo de Nicolasa, José Eusebio Caro, creció marcado por el dolor de ver a su padre ciego y humillado. Años después fundó el Partido Conservador Colombiano y, según algunos historiadores, su rechazo hacia Santander influyó en que nunca se uniera al liberalismo. Y mientras todo esto pasaba, a las afueras de Ocaña, el terror continuaba hasta mil ochocientos veintidós, cuando los líderes de la violenta guerrilla Los Colorados por fin fueron fusilados en el actual barrio El Carretero.',
-          cap: 'Antepasados XII',
           img: 'mission_12.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m12',
+          questions: [
+            {
+              id: 'info33',
+              question:
+                'Miguel Ibáñez fue condenado a muerte tras la llegada de Pablo Morillo en 1816. ¿Qué ocurrió el 8 de septiembre de 1816, la noche anterior a su ejecución?',
+              kind: 'choice',
+              options: [
+                'Fue perdonado por Morillo tras pagar un soborno millonario.',
+                'Escapó de la prisión y, según las versiones históricas, terminó muriendo solo en las selvas del Magdalena.',
+                'Fue liberado por el ejército de Santander en una toma sorpresa.',
+                'Se alió con Los Colorados para salvar su vida y la de sus hijas.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info34',
+              question:
+                'De los 11 hijos de Miguel Ibáñez y Manuela Jacoba Arias, ¿quién fue nombrado en 1849 primer gobernador de la Provincia de Ocaña?',
+              kind: 'choice',
+              options: [
+                'José Miguel Ibáñez Arias',
+                'Manuel Ibáñez Arias',
+                'Pedro Alcántara Ibáñez Arias',
+                'Antonio Ibáñez Arias'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info35',
+              question:
+                'En 1813, Nicolasa Ibáñez se casó con Antonio José Caro. ¿Qué hizo en 1849 su hijo, José Eusebio Caro, junto a Mariano Ospina Rodríguez?',
+              kind: 'choice',
+              options: [
+                'Publicaron el primer diario político impreso de la Gran Colombia.',
+                'Fundaron el Partido Conservador Colombiano.',
+                'Fundaron la Universidad de Pamplona.',
+                'Redactaron la constitución definitiva de la República.'
+              ],
+              correctIndex: 1
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'soup',
@@ -632,9 +1182,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🌎 El gran sueño de América\n\nLa Gran Colombia fue un proyecto monumental que existió poco más de una década (1819-1831). Pero la idea nació mucho antes. El precursor fue **Francisco de Miranda**, quien soñó con crear un solo país hispanoamericano con capital en Panamá (llamada "Colombo"). Más tarde, Simón Bolívar adaptó esta visión para formar una poderosa alianza de repúblicas.\n\n### 🏗️ La construcción de un gigante\nEl país nació oficialmente en el **Congreso de Angostura (1819)**, uniendo a Venezuela y la Nueva Granada. Con el tiempo se le sumaron Panamá y Ecuador. ¡Era un proyecto tan increíble que incluso República Dominicana, Cuba y Puerto Rico intentaron unirse! Sin embargo, invasiones extranjeras y los intereses de Estados Unidos en el Caribe lo impidieron.\n\n### 💔 Ocaña: Donde el sueño se rompió\nEl momento más crítico de esta enorme nación se vivió en nuestra ciudad. El 9 de abril de 1828 se realizó la **Convención de Ocaña** para intentar salvar al país de la división. Pero chocaron dos bandos irreconciliables:\n- **Santanderistas:** Defendían el federalismo y querían ponerle límites estrictos al presidente.\n- **Bolivarianos:** Querían una "Constitución Vitalicia" (que Bolívar fuera presidente de por vida y eligiera a su sucesor).\n\nAl ver que iban a perder la votación, los bolivarianos abandonaron la Convención. Al romperse el quórum, la reunión fracasó. Como consecuencia, Bolívar asumió la dictadura, intentaron asesinarlo y desterró a Santander.\n\n### 🥀 Un final sin gloria\nPor las peleas entre el centralismo y el federalismo, los caudillos regionales y la guerra, la Gran Colombia colapsó en 1831. Los héroes que construyeron esta nación tuvieron finales trágicos: Miranda murió preso en España, Sucre fue asesinado a traición a los 35 años, y Bolívar murió enfermo en Santa Marta, tras renunciar al poder, viendo cómo su inmenso sueño se desmoronaba.',
           speech:
             'El gran sueño de América. La Gran Colombia fue un proyecto monumental que existió poco más de una década. La idea original fue de Francisco de Miranda, quien soñó con crear un solo país hispanoamericano con capital en Panamá. Más tarde, Simón Bolívar adaptó la visión para formar una alianza de repúblicas. El gigante nació en el Congreso de Angostura en mil ochocientos diecinueve, uniendo a Venezuela y la Nueva Granada, y luego se sumaron Panamá y Ecuador. Era tan imponente que República Dominicana, Cuba y Puerto Rico intentaron unirse, pero fuerzas extranjeras lo impidieron. En mil ochocientos veintiocho, Ocaña fue el escenario donde el sueño se rompió. Se realizó la Convención de Ocaña para reformar la constitución, pero chocaron los santanderistas, que querían autonomía, y los bolivarianos, que querían que Bolívar fuera presidente de por vida. Como iban a perder, los bolivarianos abandonaron la reunión y la convención fracasó. Bolívar se declaró dictador y el país terminó desintegrándose por las peleas de poder. Los grandes héroes tuvieron finales tristes: Miranda murió en prisión, Sucre fue asesinado a traición, y Bolívar murió enfermo en Santa Marta, presenciando el colapso de su nación.',
-          cap: 'Antepasados XIII',
           img: 'mission_13.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m13',
+          questions: [
+            {
+              id: 'info36',
+              question:
+                '¿Qué decisión territorial se tomó en el Congreso de Angostura en 1819?',
+              kind: 'choice',
+              options: [
+                'Nombrar a Francisco de Miranda presidente vitalicio de la nueva república.',
+                'Dividir la República de Colombia en tres departamentos: Venezuela, Quito y Cundinamarca.',
+                'Expulsar a Antonio Nariño del territorio y enviarlo a España.',
+                'Firmar un tratado de paz inmediato con Pablo Morillo.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info37',
+              question:
+                'En la Convención de Ocaña, instalada el 9 de abril de 1828, se enfrentaron dos proyectos de país. ¿Qué proponían los santanderistas?',
+              kind: 'choice',
+              options: [
+                'Una Constitución Vitalicia con un presidente de por vida.',
+                'Abolir el Congreso para darles el poder total a los militares.',
+                'Un sistema federal con autonomía regional y límites al poder presidencial.',
+                'Entregar la administración de Ocaña a la Corona británica.'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info38',
+              question:
+                '¿Qué caudillo, que controlaba virtualmente Venezuela, encabezó en 1826 el movimiento separatista conocido como "La Cosiata"?',
+              kind: 'choice',
+              options: [
+                'Antonio José de Sucre',
+                'José Antonio Páez',
+                'Francisco de Miranda',
+                'Pascual Enrile'
+              ],
+              correctIndex: 1
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'crossword',
@@ -678,6 +1275,16 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
         requiresCompletion: true
       },
       {
+        type: 'puzzle',
+        data: {
+          rows: 4,
+          columns: 4,
+          image: 'mission_13.jpg',
+          id: 'jigs5'
+        },
+        requiresCompletion: true
+      },
+      {
         type: 'ar',
         data: {
           model: 'mapa_colombia.glb',
@@ -699,9 +1306,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🏛️ ¡Por fin una Provincia independiente!\n\nTras años de guerras sangrientas, el 29 de mayo de 1849 el Congreso creó oficialmente la **Provincia de Ocaña**, dándole autonomía y presupuesto propio. El primer gobernador fue Pedro Alcántara Ibáñez Arias. ¡Una ironía del destino! Su familia había sido expulsada y arruinada por los españoles en 1816, y ahora él regresaba a gobernar la ciudad. En agradecimiento, el cabildo bautizó la plaza principal como la **Plaza del 29 de Mayo**.\n\n## 🗽 El único monumento a la libertad de esclavos\nEn esa misma plaza se levanta una obra histórica única en toda Colombia: la **Columna de los Esclavos**, construida en 1852. Posee cinco anillos que representan los países liberados por Bolívar, y en su base guarda la ley que abolió la esclavitud. \n\nEl 6 de enero de 1853, durante su inauguración, el gobernador Agustín Núñez hizo algo revolucionario para la época: **bailó en público con Nicanora Rincón**, la mujer negra liberta más anciana de Ocaña, rompiendo de un manotazo siglos de barreras raciales.\n\n## 🕵️‍♂️ Científicos analizando a los ocañeros\nEn 1850 llegó la famosa *Comisión Corográfica*, liderada por Agustín Codazzi y Manuel Ancízar. Ellos notaron que los hombres ocañeros ya no usaban ruana, sino pantalón, camisa y sombrero tejido; mientras que las mujeres destacaban por su increíble equilibrio, cargando tinajas de agua y canastos pesados sobre sus cabezas.\n\n## 🌍 Lujos europeos a lomo de mula\nEntre 1860 y 1890, Ocaña se convirtió en la capital comercial del oriente colombiano. Exportaba maderas, fiques y cueros hacia Europa y EE. UU., e importaba lujos increíbles: paños ingleses, cristales de Bohemia, vinos franceses e ¡hasta pianos de cola que llegaban a lomo de mula desde el Río Magdalena! Familias de Alemania, Irlanda, Italia, Siria y otros países se mudaron a la ciudad y, junto a la élite local, fundaron en 1894 el célebre **Club Ocaña**.',
           speech:
             'Provincia, la Columna de la Libertad y el comercio del mundo. En mil ochocientos cuarenta y nueve se creó oficialmente la Provincia de Ocaña, dándole a la región su propio gobierno y senadores. Como agradecimiento, la plaza principal fue rebautizada como la Plaza del veintinueve de mayo. En esa misma plaza se construyó en mil ochocientos cincuenta y dos la Columna de los Esclavos, el único monumento en Colombia dedicado a celebrar la abolición total de la esclavitud. Durante su fiesta de inauguración, el gobernador bailó públicamente con Nicanora Rincón, la liberta más anciana de la ciudad, rompiendo barreras raciales de la época. Por esos mismos años, la expedición científica de Agustín Codazzi visitó la ciudad y describió las costumbres de los ocañeros. Hacia mil ochocientos sesenta, Ocaña vivió un gran auge económico, exportando productos locales e importando lujos europeos a lomo de mula como vinos y pianos. Este comercio atrajo a inmigrantes alemanes, ingleses e italianos que, junto a la élite local, fundaron el prestigioso Club Ocaña en mil ochocientos noventa y cuatro.',
-          cap: 'Antepasados XIV',
           img: 'mission_14.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m14',
+          questions: [
+            {
+              id: 'info39',
+              question:
+                'La Guerra de los Supremos, también llamada Guerra de los Conventos, terminó el 19 de enero de 1842 en Ocaña. ¿Qué la desató?',
+              kind: 'choice',
+              options: [
+                'La invasión de tropas ecuatorianas al sur del país.',
+                'Una ley que ordenaba cerrar los conventos pequeños para venderlos y usar ese dinero en escuelas públicas.',
+                'Un decreto que ordenaba fusilar a los sacerdotes que apoyaban a la Corona española.',
+                'La prohibición de cultivar caña de azúcar y producir miel.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info40',
+              question:
+                '¿Cómo se llamó la ley de 1821 que estableció que los hijos de esclavos nacían libres, aunque con condiciones?',
+              kind: 'choice',
+              options: [
+                'Ley de Concierto y Aprendizaje',
+                'Ley de Manumisión o Libertad de partos',
+                'Ordenanza No. 5 de 1888',
+                'Ley de Conventos Menores'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info41',
+              question:
+                '¿Qué ingeniero italiano dirigió la Comisión Corográfica, la misión científica que hizo un inventario completo del país y llegó a Ocaña en 1850?',
+              kind: 'choice',
+              options: [
+                'Agustín Núñez Baena',
+                'Agustín Codazzi',
+                'Manuel Ancízar',
+                'Pedro Cerruti'
+              ],
+              correctIndex: 1
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'crossword',
@@ -765,9 +1419,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🖋️ Los rebeldes de la literatura\n\nEn 1904, escribir en contra del gobierno conservador era un deporte extremo. Por eso, el grupo literario **"Los Felibres"** (conformado por siete intelectuales liberales) tuvo que usar "seudónimos" (nombres falsos) para protegerse de la persecución y publicar sus revolucionarias ideas, las cuales se nutrían de los libros extranjeros que llegaban navegando por el río Magdalena.\n\n### 🏫 La fábrica de genios\nEn 1911 se fundó oficialmente el icónico **Colegio José Eusebio Caro**. Entre 1919 y 1933 vivió su "época de oro" bajo la disciplina de los padres Jesuitas. ¡Fue una verdadera fábrica de líderes! De sus salones salieron ministros, historiadores y hasta un expresidente de la república.\n\n### 🚗 ¿Un carro a lomo de mula?\nLas primeras décadas del siglo XX trajeron una modernidad increíble a Ocaña:\n- **El Cine:** En 1915, el monumental "Cine Pacheco" ofrecía funciones para 1.000 personas.\n- **El primer carro:** Como no había carreteras, un italiano trajo un Ford T14 en 1915... ¡totalmente desarmado a lomo de mula cruzando la cordillera para ensamblarlo en Ocaña!\n- **La Luz Eléctrica:** En 1920 se inauguró la planta eléctrica del río Algodonal con una gran fiesta.\n\n### 🚡 Tocando las nubes\nEn 1929 se inauguró una maravilla de la ingeniería mundial: **El Cable Aéreo Gamarra-Ocaña**. Era el primer monocable del mundo para pasajeros en largas distancias. Financiado en parte con la plata que EE. UU. pagó a Colombia por la pérdida de Panamá, tenía 47 km de largo y torres altísimas. Viajabas en góndolas abiertas rozando la neblina, en un trayecto que también tuvo sus tragedias: caídas al abismo, incendios y robos de "piratas" en las estaciones. Tristemente, cuando hicieron la carretera en 1948, el Congreso ordenó destruirlo. Hoy muchos lo consideran un gran error, porque se perdió un tesoro turístico único en el planeta.',
           speech:
             'Poetas rebeldes, carros en mula y un viaje por las nubes. En mil novecientos cuatro, escribir contra el gobierno era peligroso. Por eso, el grupo literario Los Felibres tuvo que usar nombres falsos para publicar sus ideas. Años después, en mil novecientos once, se fundó el icónico Colegio José Eusebio Caro. Dirigido en su época de oro por los padres Jesuitas, de sus aulas salieron ministros, gobernadores y un presidente. A principios del siglo veinte, Ocaña dio un salto a la modernidad. Tuvieron un cine para mil personas, luz eléctrica, y una anécdota increíble: al no haber carreteras, el primer carro Ford llegó en mil novecientos quince completamente desarmado a lomo de mula. Pero la obra más espectacular fue el Cable Aéreo Gamarra-Ocaña inaugurado en mil novecientos veintinueve. Era el primer monocable del mundo para pasajeros. Financiado con la indemnización que Estados Unidos pagó por Panamá, permitía viajar en góndolas abiertas entre las nubes durante cuarenta y siete kilómetros. Lamentablemente, en mil novecientos cuarenta y ocho el gobierno ordenó desarmarlo al terminar la carretera, cometiendo uno de los peores errores contra el patrimonio histórico y turístico de la región.',
-          cap: 'Antepasados XV',
           img: 'mission_15.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m15',
+          questions: [
+            {
+              id: 'info42',
+              question:
+                '¿Cómo se llamaba el periódico literario fundado en 1904 que fue la primera voz del grupo de escritores conocido como Los Felibres?',
+              kind: 'choice',
+              options: [
+                'Ideas',
+                'Espigas',
+                'Revista Mercantil',
+                'La Gendarmería'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info43',
+              question:
+                '¿Cómo logró Juan Toscano llevar a Ocaña el primer automóvil, un Ford, en 1915?',
+              kind: 'choice',
+              options: [
+                'Manejándolo desde Bogotá por la carretera nacional.',
+                'En las vagonetas de carga del Cable Aéreo desde Río de Oro.',
+                'En un guacal por el río Magdalena hasta Gamarra, y luego por partes a lomo de mula atravesando la cordillera.',
+                'En un vuelo comercial desde Europa hasta el aeropuerto de Ocaña.'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info44',
+              question:
+                'El 7 de agosto de 1929 se inauguró el Cable Aéreo Gamarra-Ocaña, el primer monocable del mundo en transportar pasajeros en largas distancias. ¿Qué ingeniero lo diseñó?',
+              kind: 'choice',
+              options: [
+                'Agustín Codazzi',
+                'James F. Lindsay',
+                'Felipe Heineken',
+                'W. Brokate'
+              ],
+              correctIndex: 1
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'soup',
@@ -776,6 +1477,16 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           rows: 10,
           id: 'soup7',
           soup: ['FELIBRES', 'CABLE', 'FORD', 'CARO', 'GAMARRA', 'CINE']
+        },
+        requiresCompletion: true
+      },
+      {
+        type: 'puzzle',
+        data: {
+          rows: 4,
+          columns: 4,
+          image: 'mission_15.jpg',
+          id: 'jigs6'
         },
         requiresCompletion: true
       },
@@ -800,9 +1511,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🗽 Del cerro de la muerte al Cristo de bronce\n\nEntre 1935 y 1959, Ocaña vivió una época de oro en su cultura. En 1935, el antiguo "cerro de la horca" (donde casi ejecutan a Leonelda) fue transformado por completo: allí se instaló una imponente estatua de **Cristo Rey** de 3,5 toneladas hecha en Barcelona, España, ¡que tuvo que subir a la cima en tres partes usando el Cable Aéreo!\n\nAdemás, en 1940 colocaron el busto de Santander en la Plaza 29 de Mayo, con un secreto genial: ¡fue fundido reciclando monedas de peso viejas de la época del prócer!\n\n### 🚰 De tinajas a grifos y cielos abiertos\nLa ciudad creció a pasos agigantados:\n- **El Acueducto (1937):** Tras siglo y medio tomando agua en tinajas, por fin llegó el agua potable limpia desde el río Tejo.\n- **El Mercado Cubierto (1942):** Diseñado por el arquitecto italiano Aladino Benigni.\n- **El Aeropuerto (1952):** Se inauguró la pista de Aguas Claras.\n- **Nuevos barrios:** Nacieron el Barrio Obrero, La Primavera y Primero de Mayo.\n\n### 🎭 Carnavales y el Desfile de los Genitores\nPara celebrar la vida, en 1946 se realizó el primer Carnaval oficial. Y el **3 de enero de 1959** nació la tradición más hermosa de la ciudad: el **Desfile de los Genitores**, una obra de teatro gigante por las calles que revive toda la historia de Ocaña desde la época indígena.\n\n### ⚡ Épocas de tensión política y religiosa\nNo todo fue fiesta. En 1948, tras el asesinato de Jorge Eliécer Gaitán (quien había visitado Ocaña en 1947), estalló la violencia bipartidista que dejó tragedias en la región. Además, existía una fuerte intolerancia religiosa: el cementerio católico segregaba a los suicidas, los protestantes tuvieron que crear su propio cementerio y, en 1957, un atentado con bomba en un templo protestante conmocionó al país.',
           speech:
             'Del cerro de la muerte al Cristo de bronce. Entre mil novecientos treinta y cinco y mil novecientos cincuenta y nueve, Ocaña vivió una transformación increíble. El antiguo cerro de la horca fue cambiado para siempre al instalar la majestuosa estatua de Cristo Rey, traída desde Barcelona en tres piezas usando el Cable Aéreo. En mil novecientos cuarenta colocaron el busto de Santander, fundido con monedas viejas recicladas. La ciudad se modernizó: llegó el agua potable del río Tejo en mil novecientos treinta y siete, se construyó el mercado público y en mil novecientos cincuenta y dos se abrió el aeropuerto de Aguas Claras. En la cultura nacieron las fiestas más queridas, como el primer Carnaval en mil novecientos cuarenta y seis y el Desfile de los Genitores en mil novecientos cincuenta y nueve. Sin embargo, también fueron años difíciles marcados por la violencia política tras la visita y asesinato de Gaitán, y episodios de fuerte intolerancia religiosa.',
-          cap: 'Antepasados XVI',
           img: 'mission_16.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m16',
+          questions: [
+            {
+              id: 'info45',
+              question:
+                'La estatua de bronce de Cristo Rey, encargada por el sacerdote jesuita Ramón Rosero, llegó a Ocaña a través del Cable Aéreo. ¿Dónde fue fabricada?',
+              kind: 'choice',
+              options: [
+                'En París, Francia, por la firma Ribón & Corral.',
+                'En Roma, Italia, en los talleres del Vaticano.',
+                'En Barcelona, España, por el fundidor Barberi de la casa Bochaca.',
+                'En Londres, Inglaterra, por el ingeniero James F. Lindsay.'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info46',
+              question:
+                'En 1940 se instaló un busto de Francisco de Paula Santander en la Plaza 29 de Mayo. ¿Cuál es el secreto del material con que fue hecho?',
+              kind: 'choice',
+              options: [
+                'Está hecho con bronce reciclado de las monedas que circulaban en la época de Santander.',
+                'Fue tallado con piedras de la antigua casa de la familia Ibáñez-Arias.',
+                'Fue fundido con piezas de hierro sobrantes del Cable Aéreo.',
+                'Está hecho con las armas incautadas a Los Colorados.'
+              ],
+              correctIndex: 0
+            },
+            {
+              id: 'info47',
+              question:
+                'El 3 de enero de 1959 se realizó por primera vez el Desfile de los Genitores, que recorre la historia de Ocaña en cuadros y comparsas. ¿En qué obra se basó?',
+              kind: 'choice',
+              options: [
+                'En el periódico literario "Espigas" de Los Felibres.',
+                'En la "Revista Hacaritama" de Luis Eduardo Páez Courvel.',
+                'En el libro "La fundación de Ocaña" del Centro de Historia.',
+                'En el libro "Los Genitores", del escritor Euquerio Amaya.'
+              ],
+              correctIndex: 3
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'crossword',
@@ -866,9 +1624,56 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
           body: '## 🎓 Escuelas y Universidades para el futuro\n\nEn los años 60 y 70, Ocaña se modernizó abriendo nuevos espacios educativos. Se fundó el **Colegio Agustina Ferro** (en honor a la valiente heroína local fusilada en 1820), el colegio John F. Kennedy y finalmente, tras décadas de intentos, nació la universidad **UFPSO** en 1974. Además, el histórico convento de San Francisco se transformó en un gran Complejo Histórico para resguardar la memoria de la ciudad.\n\n## 📖 El sacerdote ocañero y Cien Años de Soledad\n¿Sabías que Ocaña está directamente conectada con la novela más importante de Colombia? El sacerdote ocañero Francisco C. Angarita fue párroco en Aracataca. Allí fue testigo de la terrible "Masacre de las Bananeras" de 1928, y sus testimonios ayudaron a denunciar la masacre. Pero eso no es todo: ¡en 1930 este mismo cura ocañero **bautizó al niño Gabriel García Márquez**!\n\n## 🏘️ La ciudad crece... sin orden\nA partir de 1963, Ocaña empezó a crecer de manera acelerada y desordenada debido a las **"invasiones"**. Por la falta de vivienda y la fuerte migración rural, cientos de familias ocuparon terrenos improvisados. Estos años también trajeron mucha agitación política: la visita del "cura guerrillero" Camilo Torres, la instalación del Batallón Santander y un cambio histórico en 1988, cuando los ciudadanos eligieron por primera vez a un alcalde por votación popular: Jesús Claro Ovallos.\n\n## 🚔 El milagro en el Puente Pumarejo\nEn 1981, un ladrón argentino asaltó el santuario y robó la imagen de la Virgen de Torcoroma y sus joyas. Pero ocurrió algo sacado de una película: cuando el ladrón escapaba por el puente Pumarejo (cerca de Barranquilla), un policía llamado Yurgen Trujillo Carrascal... **¡que casualmente era ocañero!**, tuvo la corazonada de requisar el carro del argentino sin saber siquiera que había ocurrido un robo en su tierra natal, ¡y recuperó la Virgen!',
           speech:
             'Ocaña contemporánea. En los años sesenta y setenta, la ciudad se modernizó fundando colegios como el Agustina Ferro, el John F. Kennedy y la universidad UFPSO. Un dato literario increíble es que el sacerdote ocañero Francisco Angarita fue testigo de la Masacre de las Bananeras y, en mil novecientos treinta, bautizó al famoso escritor Gabriel García Márquez. A partir de mil novecientos sesenta y tres, la ciudad empezó a crecer de forma desordenada debido a las invasiones de tierras lideradas por migrantes. También fueron años agitados por la visita del cura Camilo Torres, la creación del Batallón Santander y la elección del primer alcalde por voto popular en mil novecientos ochenta y ocho. Finalmente, la ciudad vivió un evento dramático en mil novecientos ochenta y uno: un argentino se robó la Virgen de Torcoroma. Sin embargo, fue recuperada de forma casi milagrosa cerca de Barranquilla por un policía ocañero llamado Yurgen Trujillo, que detuvo y revisó el carro del ladrón guiado simplemente por una corazonada.',
-          cap: 'Antepasados XVII',
           img: 'mission_17.jpg'
         }
+      },
+      {
+        type: 'question',
+        data: {
+          id: 'questions_m17',
+          questions: [
+            {
+              id: 'info48',
+              question:
+                '¿Con qué propósito se creó el Colegio Agustina Ferro en 1961?',
+              kind: 'choice',
+              options: [
+                'Formar a los futuros líderes políticos de la región.',
+                'Beneficiar a la juventud femenina de escasos recursos de la ciudad.',
+                'Crear un instituto técnico para los hijos de comerciantes extranjeros.',
+                'Rendir homenaje a las tropas del Batallón Santander.'
+              ],
+              correctIndex: 1
+            },
+            {
+              id: 'info49',
+              question:
+                '¿Qué hizo en 1930 el sacerdote ocañero Francisco C. Angarita?',
+              kind: 'choice',
+              options: [
+                'Construyó la iglesia de Fátima en el barrio La Primavera.',
+                'Fundó la Universidad Francisco de Paula Santander.',
+                'Bautizó al futuro Premio Nobel de Literatura Gabriel García Márquez.',
+                'Escondió en su parroquia al sacerdote guerrillero Camilo Torres.'
+              ],
+              correctIndex: 2
+            },
+            {
+              id: 'info50',
+              question:
+                'En la madrugada del 11 de marzo de 1981 robaron la imagen de la Virgen de Torcoroma. ¿Dónde encontró el policía ocañero Yurgen Trujillo Carrascal el vehículo con la imagen?',
+              kind: 'choice',
+              options: [
+                'En las selvas del Catatumbo, cerca de la frontera con Venezuela.',
+                'En la vía hacia Bucaramanga, a la salida del barrio La Torcoroma.',
+                'En el aeropuerto de Aguas Claras, antes de que despegara un vuelo.',
+                'En un retén policial en el puente Pumarejo, cerca de Barranquilla.'
+              ],
+              correctIndex: 3
+            }
+          ]
+        },
+        requiresCompletion: true
       },
       {
         type: 'soup',
@@ -881,24 +1686,15 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
         requiresCompletion: true
       },
       {
-        type: 'ar',
+        type: 'puzzle',
         data: {
-          model: 'jeep_rescate.glb',
-          speech:
-            'Frente a ti tienes un jeep como el que protagonizó la noche más angustiosa de la Ocaña del siglo veinte. En la madrugada del once de marzo de mil novecientos ochenta y uno, un ladrón argentino y dos cómplices asaltaron el santuario de Torcoroma, se llevaron la imagen de la Virgen, sus joyas y los copones, y huyeron en un vehículo como este. Mientras la ciudad entera salía a las calles a exigir que la encontraran, el jeep avanzaba por la carretera hacia la costa. Imagina la escena en el retén del puente Pumarejo, cerca de Barranquilla: un policía ocañero llamado Yurgen Trujillo Carrascal detiene el carro. No sabe nada del robo en su tierra natal, pero una corazonada le dice que debe revisarlo. Abre la puerta, busca entre el equipaje y ahí está: la Virgen de Torcoroma. Dos días después, una caravana de ochenta personas la trajo de vuelta a casa. Al mirar este jeep, estás viendo el escenario de lo que muchos ocañeros todavía llaman un milagro.'
-        }
+          rows: 4,
+          columns: 4,
+          image: 'mission_17.jpg',
+          id: 'jigs7'
+        },
+        requiresCompletion: true
       }
     ]
   }
 }
-
-// {
-//         type: 'question',
-//         data: {
-//           question:
-//             'El nombre "Carates" duró más de 200 años en documentos oficiales. ¿Qué dice eso sobre el poder que tienen los que escriben la historia para definir a otros pueblos?',
-//           desc: 'Piensa en quién tenía el poder de escribir en esa época y qué pasaba con las versiones de los propios indígenas sobre sí mismos.',
-//           id: 'info1'
-//         },
-//         requiresCompletion: true
-//       }

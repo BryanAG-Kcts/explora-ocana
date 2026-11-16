@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { ImageBackground, ScrollView, View } from 'react-native'
 import { EnrichedMarkdownText } from 'react-native-enriched-markdown'
 import { useResolveClassNames } from 'uniwind'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
 import { Text } from '@/components/ui/text'
@@ -44,10 +43,6 @@ export function Concept({ concept }: Props) {
         resizeMode='cover'
       >
         <View className='items-start gap-2 p-4 bg-background/30'>
-          <Badge>
-            <Text>{concept.cap}</Text>
-          </Badge>
-
           <Text variant='h2'>{concept.title}</Text>
         </View>
       </ImageBackground>

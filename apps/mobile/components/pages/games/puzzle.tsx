@@ -58,6 +58,8 @@ const SPRING_CONFIG = {
   stiffness: 380
 }
 
+const IMAGES_BASE_URL = `${process.env.EXPO_PUBLIC_AXIOS_BASE_URL}api/assets/images/global/quiz/`
+
 function PuzzlePiece({
   index,
   image,
@@ -428,7 +430,7 @@ export function Puzzle({ puzzle, onComplete, sectionId }: Props) {
   return (
     <ScrollView className='flex-1 bg-background'>
       <Rompecabezas
-        image={puzzle.image}
+        image={{ uri: `${IMAGES_BASE_URL}${puzzle.image}` }}
         rows={puzzle.rows}
         columns={puzzle.columns}
         width={320}

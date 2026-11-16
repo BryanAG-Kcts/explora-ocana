@@ -27,10 +27,10 @@ export const learningRoute = [
       'Siembra según la luna, caza con arcos de qricua y descubre qué comían y cómo vestían.',
       0.8,
       'book',
-      'quiz-1'
+      'quiz1'
     ),
     new Node(
-      'quiz-1',
+      'quiz1',
       'quiz',
       'Desafío: Primeros pueblos',
       '¿Recuerdas el origen del nombre "Carates", el territorio Argutacaca y su vida cotidiana?',
@@ -54,10 +54,10 @@ export const learningRoute = [
       'Explora las urnas funerarias halladas en 1932 y los secretos de la Piedra Gorda de El Hatillo.',
       0.32,
       'chestCard',
-      'quiz-2'
+      'quiz2'
     ),
     new Node(
-      'quiz-2',
+      'quiz2',
       'quiz',
       'Prueba: Sociedad y hallazgos',
       '¿Qué tanto sabes de la organización Argutacaca, sus rituales funerarios y los petroglifos?',
@@ -82,10 +82,10 @@ export const learningRoute = [
       'La primera empresa de Ocaña, sus iglesias, la caída de la población indígena y la leyenda de Antón García.',
       0.5,
       'gear',
-      'quiz-3'
+      'quiz3'
     ),
     new Node(
-      'quiz-3',
+      'quiz3',
       'quiz',
       'Desafío: Época colonial',
       'Pon a prueba lo que sabes de la fundación, los encomenderos y el jinete fantasma más famoso.',
@@ -101,10 +101,10 @@ export const learningRoute = [
       'Conoce a las yerbateras perseguidas por la Inquisición y el grito de libertad en el Alto del Hatillo.',
       0.8,
       'crystal',
-      'quiz-4'
+      'quiz4'
     ),
     new Node(
-      'quiz-4',
+      'quiz4',
       'quiz',
       'Prueba: La rebelión',
       '¿Recuerdas cómo se salvó Leonelda y quiénes acudieron a su llamado?',
@@ -120,10 +120,10 @@ export const learningRoute = [
       'Descubre el hallazgo de 1711 en la montaña de Torcoroma, los exvotos y el robo que conmocionó a Ocaña.',
       0.5,
       'chestCard',
-      'quiz-5'
+      'quiz5'
     ),
     new Node(
-      'quiz-5',
+      'quiz5',
       'quiz',
       'Reto: Fe y milagros',
       'Demuestra cuánto sabes sobre la patrona, el santuario nacional y la familia Melo.',
@@ -139,10 +139,10 @@ export const learningRoute = [
       'Desde las noticias que trajo Antonio Quintero Copete hasta la llegada de Bolívar y el Batallón Libertador.',
       0.2,
       'paper',
-      'quiz-6'
+      'quiz6'
     ),
     new Node(
-      'quiz-6',
+      'quiz6',
       'quiz',
       'Desafío: Libertad',
       'Supera esta prueba sobre el recibimiento a Bolívar, el acta de 1813 y los ocañeros que combatieron.',
@@ -167,10 +167,10 @@ export const learningRoute = [
       'La familia Ibáñez-Arias, los romances de Santander y Bolívar, y el origen del Partido Conservador.',
       0.68,
       'puzzle',
-      'quiz-7'
+      'quiz7'
     ),
     new Node(
-      'quiz-7',
+      'quiz7',
       'quiz',
       'Desafío: Terror y pasiones',
       '¿Recuerdas a los mártires, a Los Colorados y las historias de las hermanas Ibáñez?',
@@ -186,10 +186,10 @@ export const learningRoute = [
       'Del sueño de Miranda y Bolívar a la Convención de Ocaña de 1828 y la disolución de la nación.',
       0.68,
       'compass',
-      'quiz-8'
+      'quiz8'
     ),
     new Node(
-      'quiz-8',
+      'quiz8',
       'quiz',
       'Reto: La gran nación',
       'Demuestra cuánto sabes de la Gran Colombia y de lo que pasó en la Convención de Ocaña.',
@@ -205,10 +205,10 @@ export const learningRoute = [
       'La creación de la provincia, la Columna de los Esclavos, la Comisión Corográfica y la Ocaña cosmopolita.',
       0.32,
       'book',
-      'quiz-9'
+      'quiz9'
     ),
     new Node(
-      'quiz-9',
+      'quiz9',
       'quiz',
       'Desafío: Libertad y progreso',
       '¿Qué recuerdas de la abolición de la esclavitud y del auge comercial de Ocaña?',
@@ -224,10 +224,10 @@ export const learningRoute = [
       'Los Felibres, el Colegio Caro, el primer carro, la luz eléctrica y el asombroso Cable Aéreo.',
       0.32,
       'gear',
-      'quiz-10'
+      'quiz10'
     ),
     new Node(
-      'quiz-10',
+      'quiz10',
       'quiz',
       'Prueba: Ciudad moderna',
       'Pon a prueba lo que sabes de los escritores, los inventos y las obras que transformaron Ocaña.',
@@ -243,10 +243,10 @@ export const learningRoute = [
       'Monumentos, acueducto, carnaval y Genitores, en tiempos de violencia política y religiosa.',
       0.68,
       'crystal',
-      'quiz-11'
+      'quiz11'
     ),
     new Node(
-      'quiz-11',
+      'quiz11',
       'quiz',
       'Reto: Patrimonio y conflicto',
       '¿Recuerdas los monumentos, las fiestas y los episodios de violencia de mediados del siglo XX?',
@@ -262,10 +262,10 @@ export const learningRoute = [
       'Nuevos colegios, la universidad, las invasiones, el cura que bautizó a Gabo y el rescate de la Virgen.',
       0.68,
       'paper',
-      'quiz-12'
+      'quiz12'
     ),
     new Node(
-      'quiz-12',
+      'quiz12',
       'quiz',
       'Desafío final',
       'La última prueba: demuestra todo lo que has aprendido sobre la historia de Ocaña.',

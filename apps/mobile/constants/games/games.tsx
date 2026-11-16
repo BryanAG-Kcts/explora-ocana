@@ -1,4 +1,3 @@
-import type { ImageSourcePropType } from 'react-native'
 import { Ar } from '@/components/pages/games/ar'
 import { Concept } from '@/components/pages/games/concept'
 import { Crossword } from '@/components/pages/games/crossword'
@@ -82,7 +81,6 @@ export interface AR_STEP {
 }
 
 export interface CONCEPT_STEP {
-  cap: string
   title: string
   subtitle: string
   speech: string
@@ -92,17 +90,32 @@ export interface CONCEPT_STEP {
   isVertical?: boolean
 }
 
-export interface QUESTION_STEP {
-  question: string
-  desc: string
+interface BASE_QUESTION_ITEM {
   id: string
-  img: string
+  question: string
+  desc?: string
+}
+
+export interface OPEN_QUESTION_ITEM extends BASE_QUESTION_ITEM {
+  kind?: 'open'
+}
+
+export interface CHOICE_QUESTION_ITEM extends BASE_QUESTION_ITEM {
+  kind: 'choice'
+  options: string[]
+  correctIndex: number
+}
+
+export type QUESTION_ITEM = OPEN_QUESTION_ITEM | CHOICE_QUESTION_ITEM
+export interface QUESTION_STEP {
+  id: string
+  questions: QUESTION_ITEM[]
 }
 
 export interface PUZZLES_STEP {
   rows: number
   columns: number
-  image: ImageSourcePropType
+  image: string
   id: string
 }
 
