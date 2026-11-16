@@ -614,7 +614,7 @@ export const MISSIONS: Record<string, GAMES_TREE> = {
       {
         type: 'ar',
         data: {
-          model: 'esqueleto.glb',
+          model: 'nicolasa.glb',
           speech:
             'Frente a ti está Nicolasa Ibáñez, la ocañera que puso de cabeza a la política de la Gran Colombia. Observa su vestido de la época, su peinado elegante y su postura segura. Dicen que su belleza era grande, pero que su inteligencia era todavía más dominante. Imagina su vida: en mil ochocientos trece se casó sin entusiasmo con el realista Antonio José Caro, y fue el propio Simón Bolívar quien actuó como padrino de esa boda. Dos años después, el joven Francisco de Paula Santander llegó a Ocaña y se enamoró de ella, en un romance que toda Bogotá conocía como un secreto a voces. Nicolasa no fue solo la protagonista de un escándalo: cuando Santander fue condenado a muerte por conspirar contra Bolívar, fue ella quien intercedió para que le cambiaran la pena por el destierro. Y de su vida nació otra historia que marcó al país: su hijo, José Eusebio Caro, fundaría años después el Partido Conservador Colombiano. Mirarla es recordar que, detrás de los grandes próceres, hubo mujeres que movieron los hilos del poder.'
         }
