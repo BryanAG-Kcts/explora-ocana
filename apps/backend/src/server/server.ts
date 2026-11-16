@@ -1,14 +1,14 @@
 import cors from 'cors'
 import express, { type Express } from 'express'
-import { authRouter } from '../routes/auth.route'
-import { environment } from './environment'
-import { ragRouter } from '../routes/rag.route'
+import { activitiesRouter } from '../routes/activities.route'
 import { assetsRouter } from '../routes/assets.route'
+import { authRouter } from '../routes/auth.route'
 import { dataRouter } from '../routes/data.route'
-import { userRouter } from '../routes/user.route'
 import { groupRouter } from '../routes/group.route'
 import { missionsRouter } from '../routes/missions.route'
-import { activitiesRouter } from '../routes/activities.route'
+import { ragRouter } from '../routes/rag.route'
+import { userRouter } from '../routes/user.route'
+import { environment } from './environment'
 
 export class Server {
   app: Express
@@ -39,10 +39,14 @@ export class Server {
   start() {
     this.middlewares()
     this.routes()
-    this.app.listen(environment.port, () => {
-      console.log(
-        `Example app listening at http://localhost:${environment.port}`
-      )
-    })
+    if (process.env.NODE_ENV !== 'production') {
+      this.app.listen(environment.port, () => {
+        console.log(
+          `Example app listening at http://localhost:${environment.port}`
+        )
+      })
+    }
+
+    return this.app
   }
 }
