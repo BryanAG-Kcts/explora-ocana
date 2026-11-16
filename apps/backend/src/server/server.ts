@@ -39,7 +39,7 @@ export class Server {
   start() {
     this.middlewares()
     this.routes()
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.VERCEL !== 'production') {
       this.app.listen(environment.port, () => {
         console.log(
           `Example app listening at http://localhost:${environment.port}`
