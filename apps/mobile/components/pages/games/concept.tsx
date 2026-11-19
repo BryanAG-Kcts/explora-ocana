@@ -75,6 +75,7 @@ export function Concept({ concept }: Props) {
           markdownStyle={{
             paragraph: { color: (markdownStyle.color as string) || '#000' },
             h2: { color: (markdownStyle.color as string) || '#000' },
+            h3: { color: (markdownStyle.color as string) || '#000' },
             list: { color: (markdownStyle.color as string) || '#000' },
             blockquote: {
               backgroundColor:

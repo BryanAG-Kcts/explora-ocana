@@ -1,14 +1,15 @@
 import path from 'node:path'
 import type { Request, Response } from 'express'
 
+const ASSETS_BASE = path.resolve(__dirname, '../assets')
 export const assetsController = {
   serveFile: (req: Request, res: Response) => {
-    const ASSETS_BASE = path.resolve(process.cwd(), 'src/assets')
     const filepath = (req.params.filepath as string[]).join('/')
 
-    const filePath = path.join(ASSETS_BASE, filepath)
-    res.sendFile(filePath, err => {
-      if (err) res.status(404).json({ message: 'Archivo no encontrado' })
+    res.sendFile(filepath, { root: ASSETS_BASE }, err => {
+      if (err && !res.headersSent) {
+        res.status(404).json({ message: 'Archivo no encontrado' })
+      }
     })
   }
 }

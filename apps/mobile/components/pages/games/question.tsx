@@ -117,8 +117,8 @@ export function Question({ question, onComplete, sectionId }: Props) {
           const isSelected = index === selected
 
           let style = 'border-border bg-secondary'
-          if (revealed && isCorrect) style = 'border-green-500 bg-green-50'
-          else if (revealed && isSelected) style = 'border-red-500 bg-red-50'
+          if (revealed && isCorrect) style = 'border-green-500 bg-green-50 dark:bg-green-900'
+          else if (revealed && isSelected) style = 'border-red-500 bg-red-50 dark:bg-red-900'
           else if (revealed) style = 'border-border bg-secondary opacity-60'
 
           return (
@@ -128,8 +128,8 @@ export function Question({ question, onComplete, sectionId }: Props) {
               disabled={revealed || isSubmitting}
               className={`flex-row items-center gap-3 border rounded-xl p-4 ${style}`}
             >
-              <Text className='font-bold text-gray-700'>{LETTERS[index]})</Text>
-              <Text className='flex-1 text-gray-900'>{option}</Text>
+              <Text className='font-bold'>{LETTERS[index]})</Text>
+              <Text className='flex-1'>{option}</Text>
             </Pressable>
           )
         })}
@@ -160,7 +160,7 @@ export function Question({ question, onComplete, sectionId }: Props) {
         keyboardShouldPersistTaps='handled'
       >
         {total > 1 && (
-          <Text variant='muted' className='text-gray-500 text-sm text-center'>
+          <Text variant='muted' className='text-sm text-center'>
             {answered} de {total} preguntas respondidas
           </Text>
         )}
@@ -176,11 +176,11 @@ export function Question({ question, onComplete, sectionId }: Props) {
                   Pregunta {index + 1} de {total}
                 </Text>
               )}
-              <Text variant='h3' className='text-gray-900 font-bold'>
+              <Text variant='h3' className='font-bold'>
                 {q.question}
               </Text>
               {q.desc ? (
-                <Text variant='muted' className='text-gray-500 text-sm'>
+                <Text variant='muted' className='text-sm'>
                   {q.desc}
                 </Text>
               ) : null}

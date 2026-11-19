@@ -10,11 +10,20 @@
       "node": "22.13.0"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_AXIOS_BASE_URL": "https://explora-ocana-backend.vercel.app/"
+      }
     },
     "production": {
       "autoIncrement": true,
-      "node": "22.13.0"
+      "node": "22.13.0",
+      "env": {
+        "EXPO_PUBLIC_AXIOS_BASE_URL": "https://explora-ocana-backend.vercel.app/"
+      }
     }
   },
   "submit": {
